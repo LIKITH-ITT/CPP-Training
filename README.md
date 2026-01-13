@@ -1,4 +1,4 @@
-# 📘 Coding Guidelines
+# Coding Guidelines
 
 These guidelines define the coding style, structure, and practices followed in this repository.  
 They are derived strictly from the existing codebase and reflect how the programs are actually written.
