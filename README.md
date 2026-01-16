@@ -37,17 +37,20 @@ Example:
 ## 3. Naming Conventions
 
 ### Variables
-- Short, meaningful names are used:
+- Descriptive, meaningful names in camelCase are used:
 
-    int n, option;
-    float num, div;
+    int number, option;
+    float numerator, divisor;
     bool decimal, negative;
 
 ### Functions
-- camelCase naming is followed:
+- camelCase naming is followed with name starting from a verb:
 
-    atofFunction()
-    pattern()
+    convertStringToFloat()
+    printPattern()
+
+### Indexing
+- Use meaningful names instead of i, j
 
 ---
 
@@ -73,9 +76,9 @@ Example:
     while(true)
 
 - User choices are handled using switch-case
-- Program termination uses:
+- Program termination:
 
-    exit(0);
+    Use a bool variable to terminate
 
 ---
 
