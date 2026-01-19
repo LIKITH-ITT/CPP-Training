@@ -9,7 +9,7 @@ bool isDigit(char ch) {
     return (ch >= '0' && ch <= '9');
 }
 
-float stringToFloat(const std::string &input) {
+float convertStringToFloat(const std::string &input) {
     float num = 0.0f, div = 1.0f;
     bool decimal = false, negative = false;
     bool hasNumberStarted = false;
@@ -77,8 +77,9 @@ float stringToFloat(const std::string &input) {
 int main() {
     std::string input;
     int choice;
+    bool loopRunning = true;
 
-    while (true) {
+    while (loopRunning) {
         std::cout << "Enter your choice:\n";
         std::cout << "1. Enter a string\n";
         std::cout << "2. Exit program\n";
@@ -90,16 +91,17 @@ int main() {
                 std::cout << "Enter a string:\n";
                 std::getline(std::cin, input);
 
-                float result = stringToFloat(input);
+                float result = convertStringToFloat(input);
                 std::cout << result << std::endl;
                 break;
             }
             case 2: {
-                return 0;
+                loopRunning = false;
             }
             default: {
                 std::cout << "Enter a valid option...\n";
             }
         }
     }
+    return 0;
 }
