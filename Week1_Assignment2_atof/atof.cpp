@@ -1,78 +1,112 @@
 #include <iostream>
 #include <string>
 
-bool isAlphabet(char ch) {
-    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+bool isAlphabet(char character) {
+    return (character >= 'a' && character <= 'z') ||
+           (character >= 'A' && character <= 'Z');
 }
 
-bool isDigit(char ch) {
-    return (ch >= '0' && ch <= '9');
+bool isDigit(char character) {
+    return (character >= '0' && character <= '9');
+}
+
+bool isSpace(char character) {
+    return character == ' ';
+}
+
+bool isDecimalPoint(char character) {
+    return character == '.';
+}
+
+bool isPlusSign(char character) {
+    return character == '+';
+}
+
+bool isMinusSign(char character) {
+    return character == '-';
+}
+
+bool shouldStopParsingOnSpace(bool hasNumberStarted) {
+    return hasNumberStarted;
+}
+
+bool isInvalidAlphabet(char character) {
+    return isAlphabet(character);
+}
+
+bool isSecondDecimal(bool decimalUsed) {
+    return decimalUsed;
 }
 
 float convertStringToFloat(const std::string &input) {
-    float num = 0.0f, div = 1.0f;
-    bool decimal = false, negative = false;
+    float number = 0.0f;
+    float divisor = 1.0f;
+
+    bool decimalUsed = false;
+    bool negative = false;
     bool hasNumberStarted = false;
 
-        for (int i = 0; i < input.length(); i++) {
+    for (int index = 0; index < input.length(); index++) {
+        char currentChar = input[index];
 
-        // Alphabet validation
-        if (isAlphabet(input[i])) {
+        if (isInvalidAlphabet(currentChar)) {
             break;
         }
-        // Space handling
-        else if (input[i] == ' ') {
+
+        if (isSpace(currentChar)) {
+            if (shouldStopParsingOnSpace(hasNumberStarted)) {
+                break;
+            }
+            continue;
+        }
+
+        if (isDecimalPoint(currentChar)) {
+            if (isSecondDecimal(decimalUsed)) {
+                break;
+            }
+            decimalUsed = true;
+            continue;
+        }
+
+        if (isPlusSign(currentChar)) {
             if (hasNumberStarted) {
                 break;
             }
             continue;
         }
-        // Decimal point
-        else if (input[i] == '.') {
-            if (!decimal) {
-                decimal = true;
-            } else {
-                break;
-            }
-        }
-        // Plus sign
-        else if (input[i] == '+') {
-            if (hasNumberStarted) {
-                break;
-            }
-        }
-        // Minus sign
-        else if (input[i] == '-') {
-            if (!hasNumberStarted && !decimal) {
+
+        if (isMinusSign(currentChar)) {
+            if (!hasNumberStarted && !decimalUsed) {
                 negative = true;
-            } else {
-                break;
+                continue;
             }
-        }
-        // Digit handling
-        else if (isDigit(input[i])) {
-            hasNumberStarted = true;
-            num = num * 10 + (input[i] - '0');
-            if (decimal) {
-                div *= 10;
-            }
-        }
-        // Any other invalid character
-        else {
             break;
         }
+
+        if (isDigit(currentChar)) {
+            hasNumberStarted = true;
+            number = number * 10 + (currentChar - '0');
+
+            if (decimalUsed) {
+                divisor *= 10;
+            }
+            continue;
+        }
+
+        break;
     }
 
-    if (decimal) {
-        num /= div;
+    if (decimalUsed) {
+        number /= divisor;
     }
 
     if (negative) {
-        num = -num;
+        number = -number;
     }
 
-    return num;
+    return number;
 }
+
 
 int main() {
     std::string input;
