@@ -1,72 +1,79 @@
 #include <iostream>
 
-void printPattern(int size) {
-    int totalRows = 2 * size - 1;
+void printLeftPattern(int elementCount) {
+    for (int index = 0; index < elementCount; index++) {
+        std::cout << (index % 2 == 0 ? 1 : 0) << " ";
+    }
+}
 
-    for (int rowIndex = 0; rowIndex < totalRows; rowIndex++) 
-    {
+void printMiddlePattern(int totalRows) {
+    for (int index = 0; index < totalRows; index++) {
+        std::cout << (index % 2 == 0 ? 1 : 0) << " ";
+    }
+}
 
-        int elementCount = (rowIndex < size)? rowIndex + 1 : totalRows - rowIndex;
-
-        if (rowIndex == totalRows / 2) 
-        {
-            for (int columnIndex = 0; columnIndex < totalRows; columnIndex++) 
-            {
-                std::cout << (columnIndex % 2 == 0 ? 1 : 0) << " ";
-            }
-            std::cout << std::endl;
-        } else 
-        {
-            for (int leftIndex = 0; leftIndex < elementCount; leftIndex++) 
-            {
-                std::cout << (leftIndex % 2 == 0 ? 1 : 0) << " ";
-            }
-
-            int spaceCount = (totalRows - 2 * elementCount) * 2;
-            for (int spaceIndex = 0; spaceIndex < spaceCount; spaceIndex++) 
-            {
-                std::cout << " ";
-            }
-
-            for (int rightIndex = 0; rightIndex < elementCount; rightIndex++) 
-            {
-                std::cout << (rightIndex % 2 == 0 ? 1 : 0);
-                if (rightIndex != elementCount - 1) 
-                {
-                    std::cout << " ";
-                }
-            }
-
-            std::cout << std::endl;
+void printRightPattern(int elementCount) {
+    for (int index = 0; index < elementCount; index++) {
+        std::cout << (index % 2 == 0 ? 1 : 0);
+        if (index != elementCount - 1) {
+            std::cout << " ";
         }
     }
 }
 
-int main() {
-    int size, choice;
+void printSpaces(int spaceCount) {
+    for (int index = 0; index < spaceCount; index++) {
+        std::cout << " ";
+    }
+}
 
-    while (true) 
-    {
-        std::cout << "1. Print pattern\n2. Exit the program\n(Choose an option)\n";
+void printPattern(int size) {
+    int totalRows = 2 * size - 1;
+
+    for (int rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+        int elementCount =
+            (rowIndex < size) ? rowIndex + 1 : totalRows - rowIndex;
+
+        if (rowIndex == totalRows / 2) {
+            printMiddlePattern(totalRows);
+        } else {
+            printLeftPattern(elementCount);
+
+            int spaceCount = (totalRows - 2 * elementCount) * 2;
+            printSpaces(spaceCount);
+
+            printRightPattern(elementCount);
+        }
+
+        std::cout << std::endl;
+    }
+}
+
+int main() {
+    int size;
+    int choice;
+    bool loopRunning = true;
+
+    while (loopRunning) {
+        std::cout << "1. Print pattern\n";
+        std::cout << "2. Exit the program\n";
+        std::cout << "Enter your choice:\n";
+
         std::cin >> choice;
 
-        if (std::cin.fail()) 
-        {
+        if (std::cin.fail()) {
             std::cin.clear();
-            std::cin.ignore(100, '\n');
+            std::cin.ignore(1000, '\n');
             std::cout << "Invalid input. Please enter a number.\n";
             continue;
         }
 
-        switch (choice) 
-        {
-            case 1: 
-            {
+        switch (choice) {
+            case 1:
                 std::cout << "Enter the size of the pattern: ";
                 std::cin >> size;
 
-                if (std::cin.fail()) 
-                {
+                if (std::cin.fail()) {
                     std::cin.clear();
                     std::cin.ignore(1000, '\n');
                     std::cout << "Invalid input. Please enter a valid number.\n";
@@ -75,16 +82,16 @@ int main() {
 
                 printPattern(size);
                 break;
-            }
-            case 2: 
-            {
+
+            case 2:
                 std::cout << "Exiting the program...";
-                return 0;
-            }
-            default: 
-            {
+                loopRunning = false;
+                break;
+
+            default:
                 std::cout << "Enter the right option...\n";
-            }
         }
     }
+
+    return 0;
 }
