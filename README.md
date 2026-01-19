@@ -86,3 +86,21 @@ Example:
 - Indentation: 4 spaces
 - Blank lines separate logical blocks
 - Code is formatted for readability and clarity
+
+---
+
+### 7. Custom Header File Structure
+
+When custom header files are used, the project follows a separated source and header directory structure.
+
+Directory Layout
+project-directory/
+├── source/
+│   ├── main.cpp
+│   ├── otherSourceFiles.cpp
+│
+├── include/
+│   ├── header1.h
+│   ├── header2.h
+
+---
