@@ -21,7 +21,7 @@ Each .cpp file follows this order:
 3. main() function
 
 Example:
-
+    
     #include <iostream>
 
     void helperFunction() {
@@ -94,13 +94,14 @@ Example:
 When custom header files are used, the project follows a separated source and header directory structure.
 
 Directory Layout
-project-directory/
-├── source/
-│   ├── main.cpp
-│   ├── otherSourceFiles.cpp
-│
-├── include/
-│   ├── header1.h
-│   ├── header2.h
+
+    project-directory/
+    ├── source/
+    │   ├── main.cpp
+    │   ├── otherSourceFiles.cpp
+    │
+    ├── include/
+    │   ├── header1.h
+    │   ├── header2.h
 
 ---
