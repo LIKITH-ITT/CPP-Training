@@ -1,5 +1,5 @@
 #include "divide.h"
 
-double divide(int a, int b) {
+double divide(double a, double b) {
     return (b == 0) ? 0.0 : double(a) / b;
 }

@@ -1,27 +1,29 @@
 #include <iostream>
 #include <dlfcn.h>
 
-typedef int    (*int_func)(int, int);
-typedef double (*double_func)(int, int);
+typedef double (*func)(double, double);
 
-int main() {
+int main() 
+{
     void* handle = dlopen("lib/libmathdynamic.so", RTLD_LAZY);
-    if (!handle) {
+    if (!handle) 
+    {
         std::cerr << dlerror();
         return 1;
     }
 
-    int_func add = (int_func)dlsym(handle, "add");
-    int_func subtract = (int_func)dlsym(handle, "subtract");
-    int_func multiply = (int_func)dlsym(handle, "multiply");
-    double_func divide = (double_func)dlsym(handle, "divide");
+    func add = (func)dlsym(handle, "add");
+    func subtract = (func)dlsym(handle, "subtract");
+    func multiply = (func)dlsym(handle, "multiply");
+    func divide = (func)dlsym(handle, "divide");
 
-    int firstNumber = 0;
-    int secondNumber = 0;
+    double firstOperand = 0;
+    double secondOperand = 0;
     int menuChoice;
-    bool loopRunning = true;
+    bool isLoopRunning = true;
 
-    while (loopRunning) {
+    while (isLoopRunning) 
+    {
         std::cout << "\n-----------Explicit Dynamic Linking-----------\n";
 
         std::cout << "\nChoose operation:\n";
@@ -33,47 +35,66 @@ int main() {
         std::cout << "Enter choice (1-5): ";
         std::cin >> menuChoice;
 
-        if(menuChoice == 5){
-            std::cout << "Exiting the program...\n";
-            loopRunning = false;
-            break;
-        }
-
-        std::cout << "Enter two integers: ";
-        std::cin >> firstNumber >> secondNumber;     
-
-        if (std::cin.fail()) {
+        if (std::cin.fail()) 
+        {
             std::cin.clear();
             std::cin.ignore(1000, '\n');
-            std::cout << "Invalid input. Please enter a number.\n";
+            std::cout << "\nInvalid input. Please enter a number.\n";
             continue;
         }
 
-        switch (menuChoice) {
+        if(menuChoice == 5)
+        {
+            std::cout << "Exiting the program...\n";
+            isLoopRunning = false;
+            break;
+        }
+
+        if(menuChoice <1 || menuChoice > 5)
+        {
+        std::cout << "\nInvalid choice\n";
+        continue;
+        }
+        
+        std::cout << "Enter the first operand:";
+        std::cin >> firstOperand; 
+        std::cout << "Enter the second operand:";  
+        std::cin >> secondOperand; 
+
+        if (std::cin.fail()) 
+        {
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            std::cout << "\nInvalid input. Please enter a number(1 - 5).\n";
+            continue;
+        }
+
+        switch (menuChoice) 
+        {
             case 1:
-                std::cout << "\nResult: " << add(firstNumber, secondNumber) << '\n';
+                std::cout << "\nResult: " << add(firstOperand, secondOperand) << '\n';
                 break;
 
             case 2:
-                std::cout << "\nResult: " << subtract(firstNumber, secondNumber)  << '\n';
+                std::cout << "\nResult: " << subtract(firstOperand, secondOperand)  << '\n';
                 break;
 
             case 3:
-                std::cout << "\nResult: " << multiply(firstNumber, secondNumber)  << '\n';
+                std::cout << "\nResult: " << multiply(firstOperand, secondOperand)  << '\n';
                 break;
 
             case 4:
-                if (secondNumber == 0) {
+                if (secondOperand == 0) 
+                {
                     std::cout << "\nError: Division by zero\n";
-                } else {
-                    std::cout << "\nResult: " << divide(firstNumber, secondNumber)  << '\n';
+                } 
+                else 
+                {
+                    std::cout << "\nResult: " << divide(firstOperand, secondOperand)  << '\n';
                 }
                 break;
-
-            default:
-                std::cout << "\nInvalid choice\n";
-            }
-        }        
-
+        }
+    } 
+    
     dlclose(handle);
 }

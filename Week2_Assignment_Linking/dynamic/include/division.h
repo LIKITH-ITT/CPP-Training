@@ -1,12 +1,12 @@
-#ifndef ADD_H
-#define ADD_H
+#ifndef DIVISION_H
+#define DIVISION_H
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int add(int, int);
+double divide(double, double);
 
 
 #ifdef __cplusplus

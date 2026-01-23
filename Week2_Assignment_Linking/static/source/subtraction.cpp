@@ -1,5 +1,5 @@
 #include "subtract.h"
 
-int subtract(int a, int b) {
+double subtract(double a, double b) {
     return a - b;
 }

@@ -1,12 +1,13 @@
-#ifndef SUBTRACT_H
-#define SUBTRACT_H
+#ifndef ADDITION_H
+#define ADDITION_H
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int subtract(int, int);
+double add(double, double);
+
 
 #ifdef __cplusplus
 }
