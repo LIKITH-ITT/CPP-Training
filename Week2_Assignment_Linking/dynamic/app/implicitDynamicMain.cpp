@@ -1,8 +1,8 @@
 #include <iostream>
-#include "add.h"
-#include "subtract.h"
-#include "multiply.h"
-#include "divide.h"
+#include "addition.h"
+#include "subtraction.h"
+#include "multiplication.h"
+#include "division.h"
 
 int main() 
 {
