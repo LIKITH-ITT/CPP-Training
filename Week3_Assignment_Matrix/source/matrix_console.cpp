@@ -1,5 +1,5 @@
 #include <iostream>
-#include "matrix_io.h"
+#include "matrix_console.h"
 #include "validate_input.h"
 
 void getMatrixInput(int** const& matrix, const int& rows, const int& columns)

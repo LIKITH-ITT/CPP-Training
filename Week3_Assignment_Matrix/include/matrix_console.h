@@ -1,5 +1,5 @@
-#ifndef MATRIX_IO_H
-#define MATRIX_IO_H
+#ifndef MATRIX_CONSOLE_H
+#define MATRIX_CONSOLE_H
 
 void getMatrixInput(int** const& matrix, const int& rows, const int& columns);
 
