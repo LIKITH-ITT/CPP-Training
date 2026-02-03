@@ -10,7 +10,6 @@ int main()
     int& r = a;
     int* ptr = &r;
 
-    cout << "===== CASE 2 =====\n";
 
     cout << "a   = " << a << endl;
     cout << "p   = " << p << endl;
