@@ -1,24 +1,30 @@
 #include <iostream>
-#include "menu_handler.h"
-#include "validate_input.h"
+#include "menuHandler.h"
+#include "matrixOperations.h"
+#include "validateInput.h"
 
-int displayMenuAndGetChoice()
+int getMenuChoice()
 {
-    std::cout << "\n----- Matrix Operations -----\n";
-    std::cout << "1. Addition\n";
-    std::cout << "2. Multiplication\n";
-    std::cout << "3. Exit\n";
-    std::cout << "Enter choice: ";
-
     int menuChoice;
     getValidatedInput(menuChoice, 1, 3);
     
     return menuChoice;
 }
 
-MatrixOperation selectOperation(const int menuChoice, bool& shouldContinue)
+void displayMenu()
 {
-    MatrixOperation selectedOperation = nullptr;
+    std::cout << "\n----- Matrix Operations -----\n";
+    std::cout << "1. Addition\n";
+    std::cout << "2. Multiplication\n";
+    std::cout << "3. Exit\n";
+    std::cout << "\nEnter choice: ";
+
+    
+}
+
+MatrixOperationFunction selectOperation(int menuChoice, bool& shouldContinue)
+{
+    MatrixOperationFunction selectedOperation = nullptr;
 
     switch (menuChoice)
     {
@@ -31,7 +37,6 @@ MatrixOperation selectOperation(const int menuChoice, bool& shouldContinue)
             break;
 
         case 3:
-            //shouldExit = true;
             shouldContinue = false;
             break;
 

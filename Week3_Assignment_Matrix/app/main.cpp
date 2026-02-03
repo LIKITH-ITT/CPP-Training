@@ -1,19 +1,20 @@
 #include <iostream>
-#include "menu_handler.h"
-#include "matrix_workflow.h"
+#include "menuHandler.h"
+#include "matrixWorkflow.h"
 
 int main()
 {
     bool isProgramRunning = true;
 
-    while (isProgramRunning) 
+    while (isProgramRunning)
     {
-        int menuChoice = displayMenuAndGetChoice();
-        bool shouldContinue = false;
+        displayMenu();
+        int menuChoice = getMenuChoice();
         
-        MatrixOperation selectedOperation = selectOperation(menuChoice, isProgramRunning);
+        MatrixOperationFunction selectedOperation = selectOperation(menuChoice, isProgramRunning);
         
-        if (!isProgramRunning) {
+        if (!isProgramRunning)
+        {
             continue;
         }
         
