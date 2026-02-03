@@ -52,6 +52,9 @@ Example:
 ### Indexing
 - Use meaningful names instead of i, j
 
+### Type Names
+- Noun with proper case
+
 ---
 
 ## 4. Input & Output Handling
