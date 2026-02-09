@@ -19,8 +19,6 @@ public:
     Matrix(const Matrix& other);
     ~Matrix();
 
-    Matrix& operator=(const Matrix& other);
-
     int getRows() const;
     int getColumns() const;
     int** getData() const;
