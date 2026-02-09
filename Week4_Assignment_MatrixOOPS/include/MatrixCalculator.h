@@ -2,18 +2,33 @@
 #define MATRIX_CALCULATOR_H
 
 #include "Matrix.h"
-#include "MatrixDimension.h"
+
+enum class MenuOption
+{
+    ADDITION = 1,
+    MULTIPLICATION,
+    EXIT
+};
 
 class MatrixCalculator
 {
 private:
-    void performAdditionOperation();
-    void performMultiplicationOperation();
+    bool isProgramRunning;
+
+    void displayMenu() const;
+    MenuOption getMenuChoice();
     
-    bool getDimensionsForOperation(MatrixDimension& firstDimension, MatrixDimension& secondDimension, int operationType);
+    void getDimensionsFromConsole(int& rows, int& columns, const char* matrixName);
+    void readMatrixFromConsole(Matrix& matrix);
+    void printMatrix(const Matrix& matrix) const;
+    
+    void addMatrix();
+    void multiplyMatrix();
 
 public:
-    void executeOperation(int operationType);
+    MatrixCalculator();
+
+    void run();
 };
 
 #endif

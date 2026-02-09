@@ -1,7 +1,9 @@
+#include "Validator.h"
+#include "Logger.h"
 #include <iostream>
-#include "InputValidator.h"
+#include <limits>
 
-bool InputValidator::hasExtraCharactersInInput()
+bool Validator::hasExtraCharactersInInput()
 {
     char bufferCharacter;
 
@@ -14,7 +16,7 @@ bool InputValidator::hasExtraCharactersInInput()
     return false;
 }
 
-void InputValidator::getValidatedInput(int& value, int minimumValue, int maximumValue)
+void Validator::getValidatedInput(int& value, int minimumValue, int maximumValue)
 {
     while (true)
     {
@@ -27,8 +29,8 @@ void InputValidator::getValidatedInput(int& value, int minimumValue, int maximum
         }
 
         std::cin.clear();
-        std::cin.ignore(1000, '\n');
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        std::cout << "***Invalid input. Enter a value again between " << minimumValue << " and " << maximumValue << ": ";
+        std::cout << Logger::ERROR_INVALID_INPUT << minimumValue << " and " << maximumValue << ": ";
     }
 }

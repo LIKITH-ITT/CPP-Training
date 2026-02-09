@@ -1,48 +1,35 @@
 #include "Matrix.h"
-#include "InputValidator.h"
 
 void Matrix::allocateMemory()
 {
-    data = new int*[rows]();
+    matrixElements = new int*[rows]();
     
     for (int rowIndex = 0; rowIndex < rows; rowIndex++)
     {
-        data[rowIndex] = new int[columns]();
+        matrixElements[rowIndex] = new int[columns]();
     }
 }
 
 void Matrix::deallocateMemory()
 {
-    if (data == nullptr)
+    if (matrixElements == nullptr)
         return;
 
     for (int rowIndex = 0; rowIndex < rows; rowIndex++)
     {
-        delete[] data[rowIndex];
+        delete[] matrixElements[rowIndex];
     }
     
-    delete[] data;
-    data = nullptr;
+    delete[] matrixElements;
+    matrixElements = nullptr;
 }
 
-void Matrix::initializeToZero()
-{
-    for (int rowIndex = 0; rowIndex < rows; rowIndex++)
-    {
-        for (int columnIndex = 0; columnIndex < columns; columnIndex++)
-        {
-            data[rowIndex][columnIndex] = 0;
-        }
-    }
-}
-
-Matrix::Matrix(int rows, int columns) : rows(rows), columns(columns), data(nullptr)
+Matrix::Matrix(int rows, int columns) : rows(rows), columns(columns), matrixElements(nullptr)
 {
     allocateMemory();
-    initializeToZero();
 }
 
-Matrix::Matrix(const Matrix& other) : rows(other.rows), columns(other.columns), data(nullptr)
+Matrix::Matrix(const Matrix& other) : rows(other.rows), columns(other.columns), matrixElements(nullptr)
 {
     allocateMemory();
     
@@ -50,7 +37,7 @@ Matrix::Matrix(const Matrix& other) : rows(other.rows), columns(other.columns), 
     {
         for (int columnIndex = 0; columnIndex < columns; columnIndex++)
         {
-            data[rowIndex][columnIndex] = other.data[rowIndex][columnIndex];
+            matrixElements[rowIndex][columnIndex] = other.matrixElements[rowIndex][columnIndex];
         }
     }
 }
@@ -70,36 +57,12 @@ int Matrix::getColumns() const
     return columns;
 }
 
-int** Matrix::getData() const
+int** Matrix::getMatrixElements() const
 {
-    return data;
+    return matrixElements;
 }
 
-void Matrix::inputFromConsole()
-{
-    for (int rowIndex = 0; rowIndex < rows; rowIndex++)
-    {
-        for (int columnIndex = 0; columnIndex < columns; columnIndex++)
-        {
-            std::cout << "Enter element [" << rowIndex << "][" << columnIndex << "]: ";
-            InputValidator::getValidatedInput(data[rowIndex][columnIndex], 1, 10);
-        }
-    }
-}
-
-void Matrix::displayToConsole() const
-{
-    for (int rowIndex = 0; rowIndex < rows; rowIndex++)
-    {
-        for (int columnIndex = 0; columnIndex < columns; columnIndex++)
-        {
-            std::cout << data[rowIndex][columnIndex] << " ";
-        }
-        std::cout << '\n';
-    }
-}
-
-Matrix Matrix::add(const Matrix& other) const
+Matrix Matrix::operator+(const Matrix& other) const
 {
     Matrix result(rows, columns);
 
@@ -107,14 +70,14 @@ Matrix Matrix::add(const Matrix& other) const
     {
         for (int columnIndex = 0; columnIndex < columns; columnIndex++)
         {
-            result.data[rowIndex][columnIndex] = data[rowIndex][columnIndex] + other.data[rowIndex][columnIndex];
+            result.matrixElements[rowIndex][columnIndex] = matrixElements[rowIndex][columnIndex] + other.matrixElements[rowIndex][columnIndex];
         }
     }
 
     return result;
 }
 
-Matrix Matrix::multiply(const Matrix& other) const
+Matrix Matrix::operator*(const Matrix& other) const
 {
     Matrix result(rows, other.columns);
 
@@ -122,9 +85,9 @@ Matrix Matrix::multiply(const Matrix& other) const
     {
         for (int resultColumnIndex = 0; resultColumnIndex < other.columns; resultColumnIndex++)
         {
-            for (int sumIndex = 0; sumIndex < columns; sumIndex++)
+            for (int commonIndex = 0; commonIndex < columns; commonIndex++)
             {
-                result.data[resultRowIndex][resultColumnIndex] += data[resultRowIndex][sumIndex] * other.data[sumIndex][resultColumnIndex];
+                result.matrixElements[resultRowIndex][resultColumnIndex] += matrixElements[resultRowIndex][commonIndex] * other.matrixElements[commonIndex][resultColumnIndex];
             }
         }
     }
@@ -132,12 +95,25 @@ Matrix Matrix::multiply(const Matrix& other) const
     return result;
 }
 
-bool Matrix::canAddWith(const Matrix& other) const
+Matrix& Matrix::operator=(const Matrix& other)
 {
-    return (rows == other.rows && columns == other.columns);
-}
+    if (this == &other)
+        return *this;
 
-bool Matrix::canMultiplyWith(const Matrix& other) const
-{
-    return (columns == other.rows);
+    deallocateMemory();
+    
+    rows = other.rows;
+    columns = other.columns;
+    
+    allocateMemory();
+    
+    for (int rowIndex = 0; rowIndex < rows; rowIndex++)
+    {
+        for (int columnIndex = 0; columnIndex < columns; columnIndex++)
+        {
+            matrixElements[rowIndex][columnIndex] = other.matrixElements[rowIndex][columnIndex];
+        }
+    }
+
+    return *this;
 }

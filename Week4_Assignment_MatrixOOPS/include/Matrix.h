@@ -1,18 +1,15 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include <iostream>
-
 class Matrix
 {
 private:
     int rows;
     int columns;
-    int** data;
+    int** matrixElements;
 
     void allocateMemory();
     void deallocateMemory();
-    void initializeToZero();
 
 public:
     Matrix(int rows, int columns);
@@ -21,16 +18,14 @@ public:
 
     int getRows() const;
     int getColumns() const;
-    int** getData() const;
+    int** getMatrixElements() const;
 
-    void inputFromConsole();
-    void displayToConsole() const;
+    Matrix operator+(const Matrix& other) const;
+    
+    Matrix operator*(const Matrix& other) const;
+    
+    Matrix& operator=(const Matrix& other);
 
-    Matrix add(const Matrix& other) const;
-    Matrix multiply(const Matrix& other) const;
-
-    bool canAddWith(const Matrix& other) const;
-    bool canMultiplyWith(const Matrix& other) const;
 };
 
 #endif

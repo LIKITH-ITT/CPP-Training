@@ -1,7 +1,7 @@
-#ifndef INPUT_VALIDATOR_H
-#define INPUT_VALIDATOR_H
+#ifndef VALIDATOR_H
+#define VALIDATOR_H
 
-class InputValidator
+class Validator
 {
 private:
     static bool hasExtraCharactersInInput();

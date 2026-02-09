@@ -1,9 +1,9 @@
-#include "Menu.h"
+#include "MatrixCalculator.h"
 
 int main()
 {
-    Menu menu;
-    menu.run();
+    MatrixCalculator calculator;
+    calculator.run();
 
     return 0;
 }
