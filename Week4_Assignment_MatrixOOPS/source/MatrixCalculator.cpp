@@ -67,7 +67,6 @@ void MatrixCalculator::addMatrix()
     getDimensionsFromConsole(rowsA, columnsA, "A");
     getDimensionsFromConsole(rowsB, columnsB, "B");
 
-    // Check if dimensions are valid for addition
     if (rowsA != rowsB || columnsA != columnsB)
     {
         Logger::printAdditionError(rowsA, columnsA, rowsB, columnsB);
