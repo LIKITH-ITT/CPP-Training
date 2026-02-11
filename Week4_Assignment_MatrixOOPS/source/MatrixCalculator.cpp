@@ -7,7 +7,7 @@ MatrixCalculator::MatrixCalculator() : isProgramRunning(true)
 {
 }
 
-void MatrixCalculator::displayMenu() const
+void MatrixCalculator::displayMenu()
 {
     Logger::printMenu();
 }
@@ -44,7 +44,7 @@ void MatrixCalculator::readMatrixFromConsole(Matrix& matrix)
     }
 }
 
-void MatrixCalculator::printMatrix(const Matrix& matrix) const
+void MatrixCalculator::printMatrix(Matrix& matrix)
 {
     int** matrixElements = matrix.getMatrixElements();
     int rows = matrix.getRows();

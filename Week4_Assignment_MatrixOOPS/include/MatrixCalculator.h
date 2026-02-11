@@ -15,12 +15,12 @@ class MatrixCalculator
 private:
     bool isProgramRunning;
 
-    void displayMenu() const;
+    void displayMenu();
     MenuOption getMenuChoice();
     
     void getDimensionsFromConsole(int& rows, int& columns, const char* matrixName);
     void readMatrixFromConsole(Matrix& matrix);
-    void printMatrix(const Matrix& matrix) const;
+    void printMatrix(Matrix& matrix);
     
     void addMatrix();
     void multiplyMatrix();

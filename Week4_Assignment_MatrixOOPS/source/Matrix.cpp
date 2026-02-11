@@ -47,22 +47,22 @@ Matrix::~Matrix()
     deallocateMemory();
 }
 
-int Matrix::getRows() const
+int Matrix::getRows()
 {
     return rows;
 }
 
-int Matrix::getColumns() const
+int Matrix::getColumns()
 {
     return columns;
 }
 
-int** Matrix::getMatrixElements() const
+int** Matrix::getMatrixElements()
 {
     return matrixElements;
 }
 
-Matrix Matrix::operator+(const Matrix& other) const
+Matrix Matrix::operator+(Matrix& other)
 {
     Matrix result(rows, columns);
 
@@ -77,7 +77,7 @@ Matrix Matrix::operator+(const Matrix& other) const
     return result;
 }
 
-Matrix Matrix::operator*(const Matrix& other) const
+Matrix Matrix::operator*(Matrix& other)
 {
     Matrix result(rows, other.columns);
 
@@ -95,7 +95,7 @@ Matrix Matrix::operator*(const Matrix& other) const
     return result;
 }
 
-Matrix& Matrix::operator=(const Matrix& other)
+Matrix& Matrix::operator=(Matrix& other)
 {
     if (this == &other)
         return *this;

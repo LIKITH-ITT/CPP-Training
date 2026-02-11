@@ -16,15 +16,15 @@ public:
     Matrix(const Matrix& other);
     ~Matrix();
 
-    int getRows() const;
-    int getColumns() const;
-    int** getMatrixElements() const;
+    int getRows();
+    int getColumns();
+    int** getMatrixElements();
 
-    Matrix operator+(const Matrix& other) const;
+    Matrix operator+(Matrix& other);
     
-    Matrix operator*(const Matrix& other) const;
+    Matrix operator*(Matrix& other);
     
-    Matrix& operator=(const Matrix& other);
+    Matrix& operator=(Matrix& other);
 
 };
 

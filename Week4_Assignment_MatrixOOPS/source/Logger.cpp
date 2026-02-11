@@ -23,7 +23,7 @@ const std::string Logger::EXIT_MESSAGE = "\nProgram exited successfully.";
 
 const int Logger::MIN_DIMENSION = 1;
 const int Logger::MAX_DIMENSION = 10;
-const int Logger::MIN_ELEMENT_VALUE = 1;
+const int Logger::MIN_ELEMENT_VALUE = -10;
 const int Logger::MAX_ELEMENT_VALUE = 10;
 const int Logger::MIN_MENU_CHOICE = 1;
 const int Logger::MAX_MENU_CHOICE = 3;
