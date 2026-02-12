@@ -53,8 +53,20 @@ Example:
 - Use meaningful names instead of i, j
 
 ### Type Names
-- Noun with proper case
+- Noun with PascalCase
 
+### Class Names
+- Noun with PascalCase
+
+### Method Names
+- Verb with camelCase
+
+### Class Member Names
+- prefix with a underscore.
+  Example
+
+    int _balance;
+  
 ---
 
 ## 4. Input & Output Handling
