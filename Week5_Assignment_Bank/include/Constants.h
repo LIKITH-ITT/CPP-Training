@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include <string_view>
+#include <string>
 
 namespace Constants 
 {
@@ -13,7 +13,7 @@ namespace Constants
     constexpr int ACCOUNT_NUMBER_LENGTH = 8;
 
     const std::string ADMIN_USERNAME = "admin";
-    const std::string ADMIN_PASSWORD = "admin123";
+    const std::string ADMIN_PASSWORD = "Admin123";
     const long ADMIN_ID = 99999999;
 
 

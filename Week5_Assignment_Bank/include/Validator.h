@@ -63,7 +63,7 @@ public:
     
     static bool isValidAmount(double amount) 
     {
-        return amount > 0 && amount <= 999999999.99;
+        return amount > 0;
     }
     
     static bool isValidAccountNumber(long long accNum) 

@@ -333,6 +333,7 @@ int BankSystem::getIntInput()
         std::cout << Logger::INVALID_INPUT << "\n";
         std::cout << "Please enter a number: ";
     }
+    
     return value;
 }
 
