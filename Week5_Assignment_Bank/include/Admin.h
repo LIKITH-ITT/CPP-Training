@@ -26,8 +26,7 @@ public:
     std::string getAdminName();
     void displayMenu() override;
     
-    void createAccount(AccountHolder*** accountHolders, int* totalAccounts, int* arrayCapacity,
-                      long* nextAccountNumber, long* nextTransactionNumber);
+    void createAccount(AccountHolder*** accountHolders, int* totalAccounts, int* arrayCapacity, long* nextAccountNumber, long* nextTransactionNumber);
     void deleteAccount(AccountHolder*** accountHolders, int* totalAccounts);
     void searchAccount(AccountHolder*** accountHolders, int totalAccounts);
     void viewAllAccounts(AccountHolder*** accountHolders, int totalAccounts);

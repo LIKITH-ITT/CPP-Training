@@ -7,7 +7,7 @@ namespace Logger
     constexpr const char* WELCOME_MESSAGE = "========== BANKING SYSTEM ==========";
     constexpr const char* GOODBYE_MESSAGE = "Thank you for using our Banking System!";
     constexpr const char* INVALID_CHOICE = "Invalid choice! Please try again.";
-    constexpr const char* INVALID_INPUT = "Invalid input! Please enter a valid number.";
+    constexpr const char* INVALID_INPUT = "Invalid input! Please enter a valid input.";
 
     constexpr const char* MAIN_MENU_HEADER = "\n========== MAIN MENU ==========";
     constexpr const char* ADMIN_MENU_HEADER = "\n========== ADMIN MENU ==========";

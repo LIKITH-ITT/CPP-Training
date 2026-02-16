@@ -61,8 +61,7 @@ void AccountHolder::viewBalance()
     std::cout << "\n========== ACCOUNT BALANCE ==========\n";
     std::cout << Logger::LABEL_ACCOUNT_NUMBER << _account->getAccountNumber() << "\n";
     std::cout << Logger::LABEL_ACCOUNT_HOLDER << _name << "\n";
-    std::cout << Logger::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) 
-              << _account->getBalance() << "\n";
+    std::cout << Logger::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _account->getBalance() << "\n";
     std::cout << "=====================================\n";
 }
 
@@ -82,8 +81,7 @@ void AccountHolder::printAccountDetails()
     std::cout << Logger::LABEL_ACCOUNT_NUMBER << _account->getAccountNumber() << "\n";
     std::cout << Logger::LABEL_ACCOUNT_HOLDER << _name << "\n";
     std::cout << Logger::LABEL_EMAIL << _email << "\n";
-    std::cout << Logger::LABEL_BALANCE << std::fixed << std::setprecision(2) 
-              << _account->getBalance() << "\n";
+    std::cout << Logger::LABEL_BALANCE << std::fixed << std::setprecision(2) << _account->getBalance() << "\n";
     std::cout << Logger::LABEL_STATUS << _account->getStatus() << "\n";
     std::cout << Logger::LABEL_CREATED_AT << _account->getCreationDateTime() << "\n";
     std::cout << Logger::LABEL_TOTAL_TRANSACTIONS << _account->getTransactionCount() << "\n";

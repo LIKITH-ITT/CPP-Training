@@ -46,7 +46,7 @@ void Transaction::setNext(Transaction* nextTxn)
 
 std::string Transaction::getDateTime()  
 {
-    char buffer[80];
+    char buffer[20];
     struct tm* timeinfo = std::localtime(&_timestamp);
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
     return std::string(buffer);

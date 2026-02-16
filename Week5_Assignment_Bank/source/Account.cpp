@@ -62,7 +62,7 @@ void Account::deactivate()
 
 std::string Account::getCreationDateTime()  
 {
-    char buffer[80];
+    char buffer[30];
     struct tm* timeinfo = std::localtime(&_createdAt);
     std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
     return std::string(buffer);

@@ -132,8 +132,7 @@ void BankSystem::handleAdminMenu()
         switch (static_cast<AdminMenu>(choice))
         {
             case AdminMenu::CREATE_ACCOUNT:
-                _admin->createAccount(_accountHolders, _totalAccounts, _arrayCapacity, 
-                                   _nextAccountNumber, _nextTransactionNumber);
+                _admin->createAccount(_accountHolders, _totalAccounts, _arrayCapacity, _nextAccountNumber, _nextTransactionNumber);
                 break;
             case AdminMenu::DELETE_ACCOUNT:
                 _admin->deleteAccount(_accountHolders, _totalAccounts);
@@ -209,8 +208,7 @@ void BankSystem::handleDeposit(AccountHolder* holder)
         Transaction* txn = new Transaction("Deposit", amount, *_nextTransactionNumber);
         (*_nextTransactionNumber)++;
         holder->getAccount()->addTransaction(txn);
-        std::cout << Logger::SUCCESS_DEPOSIT << std::fixed 
-                  << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
+        std::cout << Logger::SUCCESS_DEPOSIT << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
     }
     else
     {
@@ -221,8 +219,7 @@ void BankSystem::handleDeposit(AccountHolder* holder)
 void BankSystem::handleWithdraw(AccountHolder* holder)
 {
     double amount;
-    std::cout << Logger::INFO_CURRENT_BALANCE << std::fixed << std::setprecision(2) 
-              << holder->getAccount()->getBalance() << "\n";
+    std::cout << Logger::INFO_CURRENT_BALANCE << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
     std::cout << Logger::PROMPT_AMOUNT_WITHDRAW;
     amount = getDoubleInput();
     
@@ -237,8 +234,7 @@ void BankSystem::handleWithdraw(AccountHolder* holder)
         Transaction* txn = new Transaction("Withdrawal", amount, *_nextTransactionNumber);
         (*_nextTransactionNumber)++;
         holder->getAccount()->addTransaction(txn);
-        std::cout << Logger::SUCCESS_WITHDRAWAL << std::fixed 
-                  << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
+        std::cout << Logger::SUCCESS_WITHDRAWAL << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
     }
     else
     {
