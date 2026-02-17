@@ -79,7 +79,7 @@ void Admin::createAccount(AccountHolder*** accountHolders, int* totalAccounts, i
     
     do {
         std::cout << Logger::PROMPT_INITIAL_DEPOSIT << Constants::MIN_DEPOSIT_AMOUNT << "): Rs. ";
-        initialDeposit = getDoubleInput();
+        initialDeposit = getDepositAmount();
         if (initialDeposit < Constants::MIN_DEPOSIT_AMOUNT) {
             std::cout << Logger::ERROR_MIN_DEPOSIT << Constants::MIN_DEPOSIT_AMOUNT << "\n";
         }
@@ -216,9 +216,9 @@ void Admin::viewAllAccounts(AccountHolder*** accountHolders, int totalAccounts)
               << std::setw(20) << "Created At" << std::endl;
     std::cout << std::string(108, '-') << std::endl;
     
-    for (int i = 0; i < totalAccounts; i++) 
+    for (int account = 0; account < totalAccounts; account++) 
     {
-        AccountHolder* holder = (*accountHolders)[i];
+        AccountHolder* holder = (*accountHolders)[account];
         std::cout << std::left << std::setw(12) << holder->getAccount()->getAccountNumber()
                   << std::setw(22) << holder->getName()
                   << std::setw(28) << holder->getEmail()
@@ -243,7 +243,7 @@ long Admin::getAccountNumberInput()
     return accNum;
 }
 
-double Admin::getDoubleInput() 
+double Admin::getDepositAmount() 
 {
     double value;
     while (!(std::cin >> value)) 
@@ -270,9 +270,9 @@ void Admin::addAccountHolder(AccountHolder* holder, AccountHolder*** accountHold
         
         AccountHolder** newArray = new AccountHolder*[newCapacity];
         
-        for (int i = 0; i < *totalAccounts; i++) 
+        for (int account = 0; account < *totalAccounts; account++) 
         {
-            newArray[i] = (*accountHolders)[i];
+            newArray[account] = (*accountHolders)[account];
         }
         
         if (*accountHolders != nullptr) 
@@ -290,10 +290,10 @@ void Admin::addAccountHolder(AccountHolder* holder, AccountHolder*** accountHold
 
 AccountHolder* Admin::findAccountByNumber(AccountHolder*** accountHolders, int totalAccounts, long accNum) 
 {
-    for (int i = 0; i < totalAccounts; i++) {
-        if ((*accountHolders)[i]->getAccount()->getAccountNumber() == accNum) 
+    for (int account = 0; account < totalAccounts; account++) {
+        if ((*accountHolders)[account]->getAccount()->getAccountNumber() == accNum) 
         {
-            return (*accountHolders)[i];
+            return (*accountHolders)[account];
         }
     }
     return nullptr;
@@ -304,39 +304,28 @@ AccountHolder* Admin::findAccountByName(AccountHolder*** accountHolders, int tot
     std::string searchName = name;
     std::transform(searchName.begin(), searchName.end(), searchName.begin(), ::tolower);
     
-    for (int i = 0; i < totalAccounts; i++) 
+    for (int account = 0; account < totalAccounts; account++) 
     {
-        std::string holderName = (*accountHolders)[i]->getName();
+        std::string holderName = (*accountHolders)[account]->getName();
         std::transform(holderName.begin(), holderName.end(), holderName.begin(), ::tolower);
         
         if (holderName == searchName) 
         {
-            return (*accountHolders)[i];
+            return (*accountHolders)[account];
         }
     }
-    
-    for (int i = 0; i < totalAccounts; i++) 
-    {
-        std::string holderName = (*accountHolders)[i]->getName();
-        std::transform(holderName.begin(), holderName.end(), holderName.begin(), ::tolower);
         
-        if (holderName.find(searchName) != std::string::npos) 
-        {
-            return (*accountHolders)[i];
-        }
-    }
-    
     return nullptr;
 }
 
 bool Admin::removeAccountHolder(AccountHolder*** accountHolders, int* totalAccounts, long accNum) 
 {
     int index = -1;
-    for (int i = 0; i < *totalAccounts; i++) 
+    for (int account = 0; account < *totalAccounts; account++) 
     {
-        if ((*accountHolders)[i]->getAccount()->getAccountNumber() == accNum) 
+        if ((*accountHolders)[account]->getAccount()->getAccountNumber() == accNum) 
         {
-            index = i;
+            index = account;
             break;
         }
     }
@@ -348,9 +337,9 @@ bool Admin::removeAccountHolder(AccountHolder*** accountHolders, int* totalAccou
     
     delete (*accountHolders)[index];
     
-    for (int i = index; i < *totalAccounts - 1; i++) 
+    for (int account = index; account < *totalAccounts - 1; account++) 
     {
-        (*accountHolders)[i] = (*accountHolders)[i + 1];
+        (*accountHolders)[account] = (*accountHolders)[account + 1];
     }
     
     (*totalAccounts)--;

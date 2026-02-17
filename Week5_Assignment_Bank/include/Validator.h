@@ -6,16 +6,15 @@
 #include <cctype>
 #include "Constants.h"
 
-class Validator 
+namespace Validator 
 {
-public:
-    static bool isValidEmail(const std::string& email) 
+    inline bool isValidEmail(const std::string& email) 
     {
         std::regex pattern(R"(^[a-zA-Z0-9._]+@[a-zA-Z0-9-]+\.com$)");
         return std::regex_match(email, pattern);
     }
     
-    static bool isValidName(const std::string& name) 
+    inline bool isValidName(const std::string& name) 
     {
         if (name.length() < Constants::MIN_NAME_LENGTH || name.length() > Constants::MAX_NAME_LENGTH) 
         {
@@ -42,7 +41,7 @@ public:
         return hasAlpha;
     }
     
-    static bool isValidPassword(const std::string& password) 
+    inline bool isValidPassword(const std::string& password) 
     {
         if (password.length() < Constants::MIN_PASSWORD_LENGTH || password.length() > Constants::MAX_PASSWORD_LENGTH) 
         {
@@ -61,17 +60,17 @@ public:
         return hasUpper && hasLower && hasDigit;
     }
     
-    static bool isValidAmount(double amount) 
+    inline bool isValidAmount(double amount) 
     {
         return amount > 0;
     }
     
-    static bool isValidAccountNumber(long long accNum) 
+    inline bool isValidAccountNumber(long long accNum) 
     {
         return accNum >= Constants::INITIAL_ACCOUNT_NUMBER;
     }
     
-    static bool isValidUsername(const std::string& username) 
+    inline bool isValidUsername(const std::string& username) 
     {
         if (username.empty() || username.length() > 20) {
             return false;
@@ -87,6 +86,6 @@ public:
         
         return true;
     }
-};
+}
 
 #endif

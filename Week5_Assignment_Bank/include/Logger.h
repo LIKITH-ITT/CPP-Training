@@ -6,8 +6,8 @@ namespace Logger
 
     constexpr const char* WELCOME_MESSAGE = "========== BANKING SYSTEM ==========";
     constexpr const char* GOODBYE_MESSAGE = "Thank you for using our Banking System!";
-    constexpr const char* INVALID_CHOICE = "Invalid choice! Please try again.";
-    constexpr const char* INVALID_INPUT = "Invalid input! Please enter a valid input.";
+    constexpr const char* INVALID_CHOICE = "***Invalid choice! Please try again.***";
+    constexpr const char* INVALID_INPUT = "***Invalid input! Please enter a valid input.***";
 
     constexpr const char* MAIN_MENU_HEADER = "\n========== MAIN MENU ==========";
     constexpr const char* ADMIN_MENU_HEADER = "\n========== ADMIN MENU ==========";
@@ -65,7 +65,7 @@ namespace Logger
     constexpr const char* ERROR_ACCOUNT_DEACTIVATED = "\nAccount has been deactivated! Please contact admin.";
     constexpr const char* ERROR_ACCOUNT_NOT_FOUND = "\nAccount not found!";
     constexpr const char* ERROR_INVALID_NAME = "Invalid name! Name should contain only alphabets and spaces (2-50 characters).";
-    constexpr const char* ERROR_INVALID_EMAIL = "Invalid email format! Please enter a valid email.";
+    constexpr const char* ERROR_INVALID_EMAIL = "Invalid email format! Please enter a valid email.(Ex: example@gmail.com)";
     constexpr const char* ERROR_INVALID_PASSWORD = "Invalid password! Must be 6-20 characters with uppercase, lowercase, and digit.";
     constexpr const char* ERROR_PASSWORD_MISMATCH = "\nPasswords do not match! Account creation failed.";
     constexpr const char* ERROR_INVALID_AMOUNT = "Invalid amount! Please enter a positive value.";

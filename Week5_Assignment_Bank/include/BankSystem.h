@@ -11,7 +11,6 @@ class BankSystem
 private:
     void displayMainMenu();
     void handleLogin();
-    void handleRegistration();
     void handleAdminMenu();
     void handleCustomerMenu(AccountHolder* holder);
     void handleDeposit(AccountHolder* holder);

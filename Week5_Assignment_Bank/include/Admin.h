@@ -10,7 +10,7 @@ class Admin : public User
 {
 private:
     long  getAccountNumberInput();
-    double getDoubleInput();
+    double getDepositAmount();
     std::string getStringInput();
     void addAccountHolder(AccountHolder* holder, AccountHolder*** accountHolders, int* totalAccounts, int* arrayCapacity);
     AccountHolder* findAccountByNumber(AccountHolder*** accountHolders, int totalAccounts, long accNum);

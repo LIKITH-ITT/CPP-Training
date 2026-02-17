@@ -29,9 +29,9 @@ BankSystem::~BankSystem()
 {
     if (*_accountHolders != nullptr)
     {
-        for (int i = 0; i < *_totalAccounts; i++)
+        for (int account = 0; account < *_totalAccounts; account++)
         {
-            delete (*_accountHolders)[i];
+            delete (*_accountHolders)[account];
         }
         delete[] (*_accountHolders);
     }
@@ -287,9 +287,9 @@ void BankSystem::addAccountHolder(AccountHolder* holder)
         
         AccountHolder** newArray = new AccountHolder*[newCapacity];
         
-        for (int i = 0; i < *_totalAccounts; i++)
+        for (int account = 0; account < *_totalAccounts; account++)
         {
-            newArray[i] = (*_accountHolders)[i];
+            newArray[account] = (*_accountHolders)[account];
         }
         
         if (*_accountHolders != nullptr)
@@ -307,11 +307,11 @@ void BankSystem::addAccountHolder(AccountHolder* holder)
 
 AccountHolder* BankSystem::findAccountHolderByUsernameOrEmail(std::string& usernameOrEmail)
 {
-    for (int i = 0; i < *_totalAccounts; i++)
+    for (int account = 0; account < *_totalAccounts; account++)
     {
-        AccountHolder* holder = (*_accountHolders)[i];
-        std::string accNumStr = std::to_string(holder->getAccount()->getAccountNumber());
-        if (accNumStr == usernameOrEmail)
+        AccountHolder* holder = (*_accountHolders)[account];
+        std::string accountNumber = std::to_string(holder->getAccount()->getAccountNumber());
+        if (accountNumber == usernameOrEmail)
         {
             return holder;
         }
@@ -326,39 +326,67 @@ AccountHolder* BankSystem::findAccountHolderByUsernameOrEmail(std::string& usern
 int BankSystem::getIntInput()
 {
     int value;
-    while (!(std::cin >> value))
+    char extra;
+
+    while (true)
     {
+        if (std::cin >> value)
+        {
+            if (std::cin.peek() == '\n')
+            {
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                return value;
+            }
+        }
+
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << Logger::INVALID_INPUT << "\n";
-        std::cout << "Please enter a number: ";
+        std::cout << "Please enter again: ";
     }
-    
-    return value;
 }
 
 double BankSystem::getDoubleInput()
 {
     double value;
-    while (!(std::cin >> value))
+
+    while (true)
     {
+        if (std::cin >> value)
+        {
+            if (std::cin.peek() == '\n')
+            {
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                if (value > 0)
+                    return value;
+            }
+        }
+
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << Logger::INVALID_INPUT << "\n";
-        std::cout << "Please enter a number: ";
+        std::cout << "Please enter again: ";
     }
-    return value;
 }
 
 long BankSystem::getLongInput()
 {
     long value;
-    while (!(std::cin >> value))
+
+    while (true)
     {
+        if (std::cin >> value)
+        {
+            if (std::cin.peek() == '\n')
+            {
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                return value;
+            }
+        }
+
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << Logger::INVALID_INPUT << "\n";
-        std::cout << "Please enter a number: ";
+        std::cout << "Please enter again: ";
     }
-    return value;
 }

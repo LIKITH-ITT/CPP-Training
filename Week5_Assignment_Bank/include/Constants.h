@@ -14,7 +14,7 @@ namespace Constants
 
     const std::string ADMIN_USERNAME = "admin";
     const std::string ADMIN_PASSWORD = "Admin123";
-    const long ADMIN_ID = 99999999;
+    constexpr long ADMIN_ID = 99999999;
 
 
     constexpr int MIN_PASSWORD_LENGTH = 6;

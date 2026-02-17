@@ -3,10 +3,10 @@
 #include <iomanip>
 #include <sstream>
 
-Transaction::Transaction(const std::string& txnType, double amt, long txnNum) 
+Transaction::Transaction(const std::string& txnType, double amt, long txnNumber) 
 {
     std::ostringstream oss;
-    oss << Constants::TRANSACTION_PREFIX << std::setw(9) << std::setfill('0') << txnNum;
+    oss << Constants::TRANSACTION_PREFIX << std::setw(9) << std::setfill('0') << txnNumber;
     _transactionID = oss.str();
     _type = txnType;
     _amount = amt;
@@ -45,11 +45,11 @@ void Transaction::setNext(Transaction* nextTxn)
 }
 
 std::string Transaction::getDateTime()  
-{
-    char buffer[20];
+{   
+    char timeBuffer[20];
     struct tm* timeinfo = std::localtime(&_timestamp);
-    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", timeinfo);
-    return std::string(buffer);
+    std::strftime(timeBuffer, sizeof(timeBuffer), "%Y-%m-%d %H:%M:%S", timeinfo);
+    return std::string(timeBuffer);
 }
 
 void Transaction::print()  
