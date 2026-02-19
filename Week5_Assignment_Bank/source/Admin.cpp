@@ -1,7 +1,7 @@
 #include "Admin.h"
 #include "AccountHolder.h"
 #include "Validator.h"
-#include "Logger.h"
+#include "UIStrings.h"
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -22,14 +22,14 @@ std::string Admin::getAdminName()
 
 void Admin::displayMenu() 
 {
-    std::cout << Logger::ADMIN_MENU_HEADER << "\n";
-    std::cout << static_cast<int>(AdminMenu::CREATE_ACCOUNT) << ". " << Logger::MENU_CREATE_ACCOUNT << "\n";
-    std::cout << static_cast<int>(AdminMenu::DELETE_ACCOUNT) << ". " << Logger::MENU_DELETE_ACCOUNT << "\n";
-    std::cout << static_cast<int>(AdminMenu::SEARCH_ACCOUNT) << ". " << Logger::MENU_SEARCH_ACCOUNT << "\n";
-    std::cout << static_cast<int>(AdminMenu::VIEW_ALL_ACCOUNTS) << ". " << Logger::MENU_VIEW_ALL_ACCOUNTS << "\n";
-    std::cout << static_cast<int>(AdminMenu::EXIT) << ". " << Logger::MENU_LOGOUT << "\n";
-    std::cout << Logger::SEPARATOR_DASHES << "\n";
-    std::cout << Logger::PROMPT_ENTER_CHOICE;
+    std::cout << UIStrings::ADMIN_MENU_HEADER << "\n";
+    std::cout << static_cast<int>(AdminMenu::CREATE_ACCOUNT) << ". " << UIStrings::MENU_CREATE_ACCOUNT << "\n";
+    std::cout << static_cast<int>(AdminMenu::DELETE_ACCOUNT) << ". " << UIStrings::MENU_DELETE_ACCOUNT << "\n";
+    std::cout << static_cast<int>(AdminMenu::SEARCH_ACCOUNT) << ". " << UIStrings::MENU_SEARCH_ACCOUNT << "\n";
+    std::cout << static_cast<int>(AdminMenu::VIEW_ALL_ACCOUNTS) << ". " << UIStrings::MENU_VIEW_ALL_ACCOUNTS << "\n";
+    std::cout << static_cast<int>(AdminMenu::EXIT) << ". " << UIStrings::MENU_LOGOUT << "\n";
+    std::cout << UIStrings::SEPARATOR_DASHES << "\n";
+    std::cout << UIStrings::PROMPT_ENTER_CHOICE;
 }
 
 void Admin::createAccount(AccountHolder*** accountHolders, int* totalAccounts, int* arrayCapacity, long* nextAccountNumber, long* nextTransactionNumber) 
@@ -38,50 +38,71 @@ void Admin::createAccount(AccountHolder*** accountHolders, int* totalAccounts, i
     std::string name, email, password, confirmPassword;
     double initialDeposit;
     
-    std::cout << Logger::CREATE_ACCOUNT_HEADER << "\n";
+    std::cout << UIStrings::CREATE_ACCOUNT_HEADER << "\n";
     
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     do 
     {
-        std::cout << Logger::PROMPT_FULL_NAME;
+        std::cout << UIStrings::PROMPT_FULL_NAME;
         std::getline(std::cin, name);
         if (!Validator::isValidName(name)) {
-            std::cout << Logger::ERROR_INVALID_NAME << "\n";
+            std::cout << UIStrings::ERROR_INVALID_NAME << "\n";
         }
     } while (!Validator::isValidName(name));
     
     do 
     {
-        std::cout << Logger::PROMPT_EMAIL;
+        std::cout << UIStrings::PROMPT_EMAIL;
         std::cin >> email;
         if (!Validator::isValidEmail(email)) {
-            std::cout << Logger::ERROR_INVALID_EMAIL << "\n";
+            std::cout << UIStrings::ERROR_INVALID_EMAIL << "\n";
         }
     } while (!Validator::isValidEmail(email));
     
     do 
     {
-        std::cout << Logger::PROMPT_NEW_PASSWORD;
+        std::cout << UIStrings::PROMPT_NEW_PASSWORD;
         std::cin >> password;
         if (!Validator::isValidPassword(password)) {
-            std::cout << Logger::ERROR_INVALID_PASSWORD << "\n";
+            std::cout << UIStrings::ERROR_INVALID_PASSWORD << "\n";
         }
     } while (!Validator::isValidPassword(password));
     
-    std::cout << Logger::PROMPT_CONFIRM_PASSWORD;
-    std::cin >> confirmPassword;
-    
-    if (password != confirmPassword) 
+    int attempts = 0;
+    bool matched = false;
+
+    while (attempts < 3)
     {
-        std::cout << Logger::ERROR_PASSWORD_MISMATCH << "\n";
+        std::cout << UIStrings::PROMPT_CONFIRM_PASSWORD;
+        std::cin >> confirmPassword;
+
+        if (password == confirmPassword)
+        {
+            matched = true;
+            break;
+        }
+
+        attempts++;
+        std::cout << UIStrings::ERROR_PASSWORD_MISMATCH << "\n";
+
+        if (attempts < 3)
+        {
+            std::cout << "Attempts remaining: " << (3 - attempts) << "\n";
+        }
+    }
+
+    if (!matched)
+    {
+        std::cout << UIStrings::ERROR_CONFIRM_PASSWORD;
         return;
     }
+
     
     do {
-        std::cout << Logger::PROMPT_INITIAL_DEPOSIT << Constants::MIN_DEPOSIT_AMOUNT << "): Rs. ";
+        std::cout << UIStrings::PROMPT_INITIAL_DEPOSIT << Constants::MIN_DEPOSIT_AMOUNT << "): Rs. ";
         initialDeposit = getDepositAmount();
         if (initialDeposit < Constants::MIN_DEPOSIT_AMOUNT) {
-            std::cout << Logger::ERROR_MIN_DEPOSIT << Constants::MIN_DEPOSIT_AMOUNT << "\n";
+            std::cout << UIStrings::ERROR_MIN_DEPOSIT << Constants::MIN_DEPOSIT_AMOUNT << "\n";
         }
     } while (initialDeposit < Constants::MIN_DEPOSIT_AMOUNT);
     
@@ -96,31 +117,31 @@ void Admin::createAccount(AccountHolder*** accountHolders, int* totalAccounts, i
     
     addAccountHolder(newHolder, accountHolders, totalAccounts, arrayCapacity);
     
-    std::cout << Logger::SUCCESS_ACCOUNT_CREATED << "\n";
-    std::cout << Logger::LABEL_ACCOUNT_NUMBER << accNum << "\n";
-    std::cout << Logger::LABEL_ACCOUNT_HOLDER << name << "\n";
-    std::cout << Logger::LABEL_EMAIL << email << "\n";
-    std::cout << Logger::LABEL_INITIAL_BALANCE << std::fixed << std::setprecision(2) << initialDeposit << "\n";
-    std::cout << Logger::LABEL_STATUS << "Active\n";
-    std::cout << Logger::SEPARATOR_EQUALS << "\n";
+    std::cout << UIStrings::SUCCESS_ACCOUNT_CREATED << "\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << accNum << "\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_HOLDER << name << "\n";
+    std::cout << UIStrings::LABEL_EMAIL << email << "\n";
+    std::cout << UIStrings::LABEL_INITIAL_BALANCE << std::fixed << std::setprecision(2) << initialDeposit << "\n";
+    std::cout << UIStrings::LABEL_STATUS << "Active\n";
+    std::cout << UIStrings::SEPARATOR_EQUALS << "\n";
 }
 
 void Admin::deleteAccount(AccountHolder*** accountHolders, int* totalAccounts) 
 {
-    std::cout << Logger::DELETE_ACCOUNT_HEADER << "\n";
+    std::cout << UIStrings::DELETE_ACCOUNT_HEADER << "\n";
     long accNum = getAccountNumberInput();
     
     AccountHolder* holder = findAccountByNumber(accountHolders, *totalAccounts, accNum);
     if (holder != nullptr) 
     {
-        std::cout << Logger::INFO_ACCOUNT_DETAILS_BEFORE_DELETE;
-        std::cout << Logger::LABEL_ACCOUNT_NUMBER << holder->getAccount()->getAccountNumber() << "\n";
-        std::cout << Logger::LABEL_ACCOUNT_HOLDER << holder->getName() << "\n";
-        std::cout << Logger::LABEL_BALANCE << std::fixed << std::setprecision(2) 
+        std::cout << UIStrings::INFO_ACCOUNT_DETAILS_BEFORE_DELETE;
+        std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << holder->getAccount()->getAccountNumber() << "\n";
+        std::cout << UIStrings::LABEL_ACCOUNT_HOLDER << holder->getName() << "\n";
+        std::cout << UIStrings::LABEL_BALANCE << std::fixed << std::setprecision(2) 
                   << holder->getAccount()->getBalance() << "\n";
-        std::cout << Logger::LABEL_STATUS << holder->getAccount()->getStatus() << "\n\n";
+        std::cout << UIStrings::LABEL_STATUS << holder->getAccount()->getStatus() << "\n\n";
         
-        std::cout << Logger::PROMPT_CONFIRM_DELETE;
+        std::cout << UIStrings::PROMPT_CONFIRM_DELETE;
         std::string confirm;
         std::cin >> confirm;
         
@@ -130,30 +151,30 @@ void Admin::deleteAccount(AccountHolder*** accountHolders, int* totalAccounts)
         {
             if (removeAccountHolder(accountHolders, totalAccounts, accNum)) 
             {
-                std::cout << Logger::SUCCESS_ACCOUNT_DELETED << "\n";
-                std::cout << Logger::INFO_DATA_REMOVED << "\n";
+                std::cout << UIStrings::SUCCESS_ACCOUNT_DELETED << "\n";
+                std::cout << UIStrings::INFO_DATA_REMOVED << "\n";
             } else 
             {
-                std::cout << Logger::ERROR_DELETE_FAILED << "\n";
+                std::cout << UIStrings::ERROR_DELETE_FAILED << "\n";
             }
         } else 
         {
-            std::cout << Logger::INFO_DELETE_CANCELLED << "\n";
+            std::cout << UIStrings::INFO_DELETE_CANCELLED << "\n";
         }
     } 
     else 
     {
-        std::cout << Logger::ERROR_ACCOUNT_NOT_FOUND << "\n";
+        std::cout << UIStrings::ERROR_ACCOUNT_NOT_FOUND << "\n";
     }
 }
 
 void Admin::searchAccount(AccountHolder*** accountHolders, int totalAccounts) 
 {
-    std::cout << Logger::SEARCH_ACCOUNT_HEADER << "\n";
+    std::cout << UIStrings::SEARCH_ACCOUNT_HEADER << "\n";
     std::cout << "Search by:\n";
-    std::cout << Logger::SEARCH_BY_NUMBER << "\n";
-    std::cout << Logger::SEARCH_BY_NAME << "\n";
-    std::cout << Logger::PROMPT_SEARCH_CHOICE;
+    std::cout << UIStrings::SEARCH_BY_NUMBER << "\n";
+    std::cout << UIStrings::SEARCH_BY_NAME << "\n";
+    std::cout << UIStrings::PROMPT_SEARCH_CHOICE;
     
     int choice;
     while (!(std::cin >> choice) || (choice != 1 && choice != 2)) 
@@ -174,42 +195,42 @@ void Admin::searchAccount(AccountHolder*** accountHolders, int totalAccounts)
     {
         std::cin.ignore();
         std::string name;
-        std::cout << Logger::PROMPT_ACCOUNT_HOLDER_NAME;
+        std::cout << UIStrings::PROMPT_ACCOUNT_HOLDER_NAME;
         std::getline(std::cin, name);
         holder = findAccountByName(accountHolders, totalAccounts, name);
     }
     
     if (holder != nullptr) 
     {
-        std::cout << Logger::ACCOUNT_FOUND_HEADER << "\n";
-        std::cout << Logger::LABEL_ACCOUNT_NUMBER << holder->getAccount()->getAccountNumber() << "\n";
-        std::cout << Logger::LABEL_ACCOUNT_HOLDER << holder->getName() << "\n";
-        std::cout << Logger::LABEL_EMAIL << holder->getEmail() << "\n";
-        std::cout << Logger::LABEL_BALANCE << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
-        std::cout << Logger::LABEL_STATUS << holder->getAccount()->getStatus() << "\n";
-        std::cout << Logger::LABEL_CREATED_AT << holder->getAccount()->getCreationDateTime() << "\n";
-        std::cout << Logger::LABEL_TOTAL_TRANSACTIONS << holder->getAccount()->getTransactionCount() << "\n";
+        std::cout << UIStrings::ACCOUNT_FOUND_HEADER << "\n";
+        std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << holder->getAccount()->getAccountNumber() << "\n";
+        std::cout << UIStrings::LABEL_ACCOUNT_HOLDER << holder->getName() << "\n";
+        std::cout << UIStrings::LABEL_EMAIL << holder->getEmail() << "\n";
+        std::cout << UIStrings::LABEL_BALANCE << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
+        std::cout << UIStrings::LABEL_STATUS << holder->getAccount()->getStatus() << "\n";
+        std::cout << UIStrings::LABEL_CREATED_AT << holder->getAccount()->getCreationDateTime() << "\n";
+        std::cout << UIStrings::LABEL_TOTAL_TRANSACTIONS << holder->getAccount()->getTransactionCount() << "\n";
         std::cout << "===================================\n";
     } 
     else 
     {
-        std::cout << Logger::ERROR_ACCOUNT_NOT_FOUND << "\n";
+        std::cout << UIStrings::ERROR_ACCOUNT_NOT_FOUND << "\n";
     }
 }
 
 void Admin::viewAllAccounts(AccountHolder*** accountHolders, int totalAccounts) 
 {
-    std::cout << Logger::ALL_ACCOUNTS_HEADER << "\n";
-    std::cout << Logger::INFO_TOTAL_ACCOUNTS << totalAccounts << "\n\n";
+    std::cout << UIStrings::ALL_ACCOUNTS_HEADER << "\n";
+    std::cout << UIStrings::INFO_TOTAL_ACCOUNTS << totalAccounts << "\n\n";
     
     if (totalAccounts == 0) 
     {
-        std::cout << Logger::INFO_NO_ACCOUNTS << "\n";
+        std::cout << UIStrings::INFO_NO_ACCOUNTS << "\n";
         return;
     }
     
     std::cout << std::left << std::setw(12) << "Account No."
-              << std::setw(22) << Logger::LABEL_NAME
+              << std::setw(22) << UIStrings::LABEL_NAME
               << std::setw(28) << "Email"
               << std::setw(15) << "Balance"
               << std::setw(13) << "Status"
@@ -233,7 +254,7 @@ void Admin::viewAllAccounts(AccountHolder*** accountHolders, int totalAccounts)
 long Admin::getAccountNumberInput() 
 {
     long accNum;
-    std::cout << Logger::PROMPT_ACCOUNT_NUMBER;
+    std::cout << UIStrings::PROMPT_ACCOUNT_NUMBER;
     while (!(std::cin >> accNum)) 
     {
         std::cin.clear();

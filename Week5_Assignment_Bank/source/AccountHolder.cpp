@@ -1,5 +1,5 @@
 #include "AccountHolder.h"
-#include "Logger.h"
+#include "UIStrings.h"
 #include "Constants.h"
 #include <iostream>
 #include <iomanip>
@@ -43,7 +43,7 @@ void AccountHolder::displayMenu() {
     std::cout << static_cast<int>(CustomerMenu::CHANGE_PASSWORD) << ". Change Password\n";
     std::cout << static_cast<int>(CustomerMenu::EXIT) << ". Logout\n";
     std::cout << "===================================\n";
-    std::cout << Logger::PROMPT_ENTER_CHOICE;
+    std::cout << UIStrings::PROMPT_ENTER_CHOICE;
 }
 
 bool AccountHolder::performWithdraw(double amount) 
@@ -59,9 +59,9 @@ bool AccountHolder::performDeposit(double amount)
 void AccountHolder::viewBalance()  
 {
     std::cout << "\n========== ACCOUNT BALANCE ==========\n";
-    std::cout << Logger::LABEL_ACCOUNT_NUMBER << _account->getAccountNumber() << "\n";
-    std::cout << Logger::LABEL_ACCOUNT_HOLDER << _name << "\n";
-    std::cout << Logger::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _account->getBalance() << "\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << _account->getAccountNumber() << "\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_HOLDER << _name << "\n";
+    std::cout << UIStrings::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _account->getBalance() << "\n";
     std::cout << "=====================================\n";
 }
 
@@ -78,12 +78,12 @@ void AccountHolder::printBankStatement()
 void AccountHolder::printAccountDetails()  
 {
     std::cout << "\n========== ACCOUNT DETAILS ==========\n";
-    std::cout << Logger::LABEL_ACCOUNT_NUMBER << _account->getAccountNumber() << "\n";
-    std::cout << Logger::LABEL_ACCOUNT_HOLDER << _name << "\n";
-    std::cout << Logger::LABEL_EMAIL << _email << "\n";
-    std::cout << Logger::LABEL_BALANCE << std::fixed << std::setprecision(2) << _account->getBalance() << "\n";
-    std::cout << Logger::LABEL_STATUS << _account->getStatus() << "\n";
-    std::cout << Logger::LABEL_CREATED_AT << _account->getCreationDateTime() << "\n";
-    std::cout << Logger::LABEL_TOTAL_TRANSACTIONS << _account->getTransactionCount() << "\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << _account->getAccountNumber() << "\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_HOLDER << _name << "\n";
+    std::cout << UIStrings::LABEL_EMAIL << _email << "\n";
+    std::cout << UIStrings::LABEL_BALANCE << std::fixed << std::setprecision(2) << _account->getBalance() << "\n";
+    std::cout << UIStrings::LABEL_STATUS << _account->getStatus() << "\n";
+    std::cout << UIStrings::LABEL_CREATED_AT << _account->getCreationDateTime() << "\n";
+    std::cout << UIStrings::LABEL_TOTAL_TRANSACTIONS << _account->getTransactionCount() << "\n";
     std::cout << "=====================================\n";
 }

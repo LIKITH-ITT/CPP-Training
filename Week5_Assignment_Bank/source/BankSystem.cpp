@@ -1,10 +1,9 @@
 #include "BankSystem.h"
 #include "Constants.h"
-#include "Logger.h"
+#include "UIStrings.h"
 #include <iostream>
 #include <iomanip>
-#include <limits>
-
+#include<InputHandler.h>
 BankSystem::BankSystem()
 {
     _admin = new Admin();
@@ -46,13 +45,13 @@ BankSystem::~BankSystem()
 
 void BankSystem::run()
 {
-    std::cout << Logger::WELCOME_MESSAGE << "\n";
+    std::cout << UIStrings::WELCOME_MESSAGE << "\n";
     
     bool running = true;
     while (running)
     {
         displayMainMenu();
-        int choice = getIntInput();
+        int choice = InputHandler::getIntInput();
         
         switch (static_cast<MainMenu>(choice))
         {
@@ -61,36 +60,36 @@ void BankSystem::run()
                 break;
             case MainMenu::EXIT:
                 running = false;
-                std::cout << Logger::GOODBYE_MESSAGE << "\n";
+                std::cout << UIStrings::GOODBYE_MESSAGE << "\n";
                 break;
             default:
-                std::cout << Logger::INVALID_CHOICE << "\n";
+                std::cout << UIStrings::INVALID_CHOICE << "\n";
         }
     }
 }
 
 void BankSystem::displayMainMenu()
 {
-    std::cout << Logger::MAIN_MENU_HEADER << "\n";
-    std::cout << static_cast<int>(MainMenu::LOGIN) << ". " << Logger::MENU_LOGIN << "\n";
-    std::cout << static_cast<int>(MainMenu::EXIT) << ". " << Logger::MENU_EXIT << "\n";
-    std::cout << Logger::SEPARATOR_DASHES << "\n";
-    std::cout << Logger::PROMPT_ENTER_CHOICE;
+    std::cout << UIStrings::MAIN_MENU_HEADER << "\n";
+    std::cout << static_cast<int>(MainMenu::LOGIN) << ". " << UIStrings::MENU_LOGIN << "\n";
+    std::cout << static_cast<int>(MainMenu::EXIT) << ". " << UIStrings::MENU_EXIT << "\n";
+    std::cout << UIStrings::SEPARATOR_DASHES << "\n";
+    std::cout << UIStrings::PROMPT_ENTER_CHOICE;
 }
 
 void BankSystem::handleLogin()
 {
     std::string username, password;
     
-    std::cout << Logger::LOGIN_HEADER << "\n";
-    std::cout << Logger::PROMPT_USERNAME;
+    std::cout << UIStrings::LOGIN_HEADER << "\n";
+    std::cout << UIStrings::PROMPT_USERNAME;
     std::cin >> username;
-    std::cout << Logger::PROMPT_PASSWORD;
+    std::cout << UIStrings::PROMPT_PASSWORD;
     std::cin >> password;
     
     if (username == Constants::ADMIN_USERNAME && _admin->authenticate(password))
     {
-        std::cout << Logger::INFO_WELCOME_ADMIN << _admin->getAdminName() << "!\n";
+        std::cout << UIStrings::INFO_WELCOME_ADMIN << _admin->getAdminName() << "!\n";
         handleAdminMenu();
     }
     else
@@ -100,23 +99,23 @@ void BankSystem::handleLogin()
         {
             if (!holder->getAccount()->getIsActive())
             {
-                std::cout << Logger::ERROR_ACCOUNT_DEACTIVATED << "\n";
+                std::cout << UIStrings::ERROR_ACCOUNT_DEACTIVATED << "\n";
                 return;
             }
             
             if (holder->authenticate(password))
             {
-                std::cout << Logger::INFO_WELCOME_USER << holder->getName() << "!\n";
+                std::cout << UIStrings::INFO_WELCOME_USER << holder->getName() << "!\n";
                 handleCustomerMenu(holder);
             }
             else
             {
-                std::cout << Logger::ERROR_INVALID_CREDENTIALS << "\n";
+                std::cout << UIStrings::ERROR_INVALID_CREDENTIALS << "\n";
             }
         }
         else
         {
-            std::cout << Logger::ERROR_INVALID_CREDENTIALS << "\n";
+            std::cout << UIStrings::ERROR_INVALID_CREDENTIALS << "\n";
         }
     }
 }
@@ -127,7 +126,7 @@ void BankSystem::handleAdminMenu()
     while (running)
     {
         _admin->displayMenu();
-        int choice = getIntInput();
+        int choice = InputHandler::getIntInput();
         
         switch (static_cast<AdminMenu>(choice))
         {
@@ -145,10 +144,10 @@ void BankSystem::handleAdminMenu()
                 break;
             case AdminMenu::EXIT:
                 running = false;
-                std::cout << Logger::SUCCESS_LOGOUT << "\n";
+                std::cout << UIStrings::SUCCESS_LOGOUT << "\n";
                 break;
             default:
-                std::cout << Logger::INVALID_CHOICE << "\n";
+                std::cout << UIStrings::INVALID_CHOICE << "\n";
         }
     }
 }
@@ -159,7 +158,7 @@ void BankSystem::handleCustomerMenu(AccountHolder* holder)
     while (running)
     {
         holder->displayMenu();
-        int choice = getIntInput();
+        int choice = InputHandler::getIntInput();
         
         switch (static_cast<CustomerMenu>(choice))
         {
@@ -183,10 +182,10 @@ void BankSystem::handleCustomerMenu(AccountHolder* holder)
                 break;
             case CustomerMenu::EXIT:
                 running = false;
-                std::cout << Logger::SUCCESS_LOGOUT << "\n";
+                std::cout << UIStrings::SUCCESS_LOGOUT << "\n";
                 break;
             default:
-                std::cout << Logger::INVALID_CHOICE << "\n";
+                std::cout << UIStrings::INVALID_CHOICE << "\n";
         }
     }
 }
@@ -194,12 +193,12 @@ void BankSystem::handleCustomerMenu(AccountHolder* holder)
 void BankSystem::handleDeposit(AccountHolder* holder)
 {
     double amount;
-    std::cout << Logger::PROMPT_AMOUNT_DEPOSIT;
-    amount = getDoubleInput();
+    std::cout << UIStrings::PROMPT_AMOUNT_DEPOSIT;
+    amount = InputHandler::getDoubleInput();
     
     if (!Validator::isValidAmount(amount))
     {
-        std::cout << Logger::ERROR_INVALID_AMOUNT << "\n";
+        std::cout << UIStrings::ERROR_INVALID_AMOUNT << "\n";
         return;
     }
     
@@ -208,24 +207,24 @@ void BankSystem::handleDeposit(AccountHolder* holder)
         Transaction* txn = new Transaction("Deposit", amount, *_nextTransactionNumber);
         (*_nextTransactionNumber)++;
         holder->getAccount()->addTransaction(txn);
-        std::cout << Logger::SUCCESS_DEPOSIT << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
+        std::cout << UIStrings::SUCCESS_DEPOSIT << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
     }
     else
     {
-        std::cout << Logger::ERROR_DEPOSIT_FAILED << "\n";
+        std::cout << UIStrings::ERROR_DEPOSIT_FAILED << "\n";
     }
 }
 
 void BankSystem::handleWithdraw(AccountHolder* holder)
 {
     double amount;
-    std::cout << Logger::INFO_CURRENT_BALANCE << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
-    std::cout << Logger::PROMPT_AMOUNT_WITHDRAW;
-    amount = getDoubleInput();
+    std::cout << UIStrings::INFO_CURRENT_BALANCE << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
+    std::cout << UIStrings::PROMPT_AMOUNT_WITHDRAW;
+    amount = InputHandler::getDoubleInput();
     
     if (!Validator::isValidAmount(amount))
     {
-        std::cout << Logger::ERROR_INVALID_AMOUNT << "\n";
+        std::cout << UIStrings::ERROR_INVALID_AMOUNT << "\n";
         return;
     }
     
@@ -234,11 +233,11 @@ void BankSystem::handleWithdraw(AccountHolder* holder)
         Transaction* txn = new Transaction("Withdrawal", amount, *_nextTransactionNumber);
         (*_nextTransactionNumber)++;
         holder->getAccount()->addTransaction(txn);
-        std::cout << Logger::SUCCESS_WITHDRAWAL << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
+        std::cout << UIStrings::SUCCESS_WITHDRAWAL << std::fixed << std::setprecision(2) << holder->getAccount()->getBalance() << "\n";
     }
     else
     {
-        std::cout << Logger::ERROR_INSUFFICIENT_BALANCE << "\n";
+        std::cout << UIStrings::ERROR_INSUFFICIENT_BALANCE << "\n";
     }
 }
 
@@ -246,27 +245,27 @@ void BankSystem::handleChangePassword(AccountHolder* holder)
 {
     std::string oldPassword, newPassword, confirmPassword;
     
-    std::cout << Logger::PROMPT_CURRENT_PASSWORD;
+    std::cout << UIStrings::PROMPT_CURRENT_PASSWORD;
     std::cin >> oldPassword;
     
     if (!holder->authenticate(oldPassword))
     {
-        std::cout << Logger::ERROR_INCORRECT_PASSWORD << "\n";
+        std::cout << UIStrings::ERROR_INCORRECT_PASSWORD << "\n";
         return;
     }
     
     do
     {
-        std::cout << Logger::PROMPT_NEW_PASSWORD;
+        std::cout << UIStrings::PROMPT_NEW_PASSWORD;
         std::cin >> newPassword;
         if (!Validator::isValidPassword(newPassword))
         {
-            std::cout << Logger::ERROR_INVALID_PASSWORD << "\n";
+            std::cout << UIStrings::ERROR_INVALID_PASSWORD << "\n";
         }
     }
     while (!Validator::isValidPassword(newPassword));
     
-    std::cout << Logger::PROMPT_CONFIRM_NEW_PASSWORD;
+    std::cout << UIStrings::PROMPT_CONFIRM_NEW_PASSWORD;
     std::cin >> confirmPassword;
     
     if (newPassword != confirmPassword)
@@ -276,7 +275,7 @@ void BankSystem::handleChangePassword(AccountHolder* holder)
     }
     
     holder->setPassword(newPassword);
-    std::cout << Logger::SUCCESS_PASSWORD_CHANGED << "\n";
+    std::cout << UIStrings::SUCCESS_PASSWORD_CHANGED << "\n";
 }
 
 void BankSystem::addAccountHolder(AccountHolder* holder)
@@ -321,72 +320,4 @@ AccountHolder* BankSystem::findAccountHolderByUsernameOrEmail(std::string& usern
         }
     }
     return nullptr;
-}
-
-int BankSystem::getIntInput()
-{
-    int value;
-    char extra;
-
-    while (true)
-    {
-        if (std::cin >> value)
-        {
-            if (std::cin.peek() == '\n')
-            {
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                return value;
-            }
-        }
-
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << Logger::INVALID_INPUT << "\n";
-        std::cout << "Please enter again: ";
-    }
-}
-
-double BankSystem::getDoubleInput()
-{
-    double value;
-
-    while (true)
-    {
-        if (std::cin >> value)
-        {
-            if (std::cin.peek() == '\n')
-            {
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                if (value > 0)
-                    return value;
-            }
-        }
-
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << Logger::INVALID_INPUT << "\n";
-        std::cout << "Please enter again: ";
-    }
-}
-
-long BankSystem::getLongInput()
-{
-    long value;
-
-    while (true)
-    {
-        if (std::cin >> value)
-        {
-            if (std::cin.peek() == '\n')
-            {
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                return value;
-            }
-        }
-
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << Logger::INVALID_INPUT << "\n";
-        std::cout << "Please enter again: ";
-    }
 }

@@ -1,7 +1,7 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef UISTRINGS_H
+#define UISTRINGS_H
 
-namespace Logger 
+namespace UIStrings 
 {
 
     constexpr const char* WELCOME_MESSAGE = "========== BANKING SYSTEM ==========";
@@ -53,6 +53,7 @@ namespace Logger
     constexpr const char* PROMPT_ACCOUNT_HOLDER_NAME = "Enter Account Holder Name: ";
     constexpr const char* PROMPT_CONFIRM_DELETE = "Are you sure you want to DELETE this account? (yes/no): ";
     constexpr const char* PROMPT_ENTER_CHOICE = "Enter your choice: ";
+    constexpr const char* PROMPT_AGAIN = "Please enter again: ";
 
     constexpr const char* SUCCESS_ACCOUNT_CREATED = "\n========== ACCOUNT CREATED SUCCESSFULLY ==========";
     constexpr const char* SUCCESS_ACCOUNT_DELETED = "\nAccount deleted successfully!";
@@ -75,6 +76,7 @@ namespace Logger
     constexpr const char* ERROR_INCORRECT_PASSWORD = "Incorrect current password!";
     constexpr const char* ERROR_DELETE_FAILED = "\nFailed to delete account!";
     constexpr const char* ERROR_MIN_DEPOSIT = "Initial deposit must be at least Rs. ";
+    constexpr const char* ERROR_CONFIRM_PASSWORD = "Maximum attempts exceeded. Account creation cancelled.\n";
 
     constexpr const char* INFO_WELCOME_ADMIN = "\nWelcome ";
     constexpr const char* INFO_WELCOME_USER = "\nWelcome ";
@@ -102,6 +104,7 @@ namespace Logger
     constexpr const char* LABEL_TRANSACTION_ID = "Transaction ID";
     constexpr const char* LABEL_TYPE = "Type";
     constexpr const char* LABEL_AMOUNT = "Amount";
+    constexpr const char* LABEL_MINI_STATEMENT = "\n========== MINI STATEMENT ==========\n";
 
     constexpr const char* VALIDATION_NAME_RULE = "Invalid name! Name should contain only alphabets and spaces (2-50 characters).";
     constexpr const char* VALIDATION_EMAIL_RULE = "Invalid email format! Please enter a valid email (example@gmail.com).";

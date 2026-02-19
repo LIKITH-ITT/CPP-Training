@@ -1,7 +1,7 @@
 #include "Account.h"
 #include "Constants.h"
 #include <iostream>
-#include "Logger.h"
+#include "UIStrings.h"
 #include <iomanip>
 
 Account::Account(long accNum, double initialDeposit) 
@@ -104,9 +104,9 @@ bool Account::withdraw(double amount)
 }
 
 void Account::printMiniStatement()  {
-    std::cout << "\n========== MINI STATEMENT ==========\n";
-    std::cout << Logger::LABEL_ACCOUNT_NUMBER << _accountNumber << "\n";
-    std::cout << Logger::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _balance << "\n\n";
+    std::cout << UIStrings::LABEL_MINI_STATEMENT;
+    std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << _accountNumber << "\n";
+    std::cout << UIStrings::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _balance << "\n\n";
     
     if (_transactionHead == nullptr) 
     {
@@ -114,17 +114,17 @@ void Account::printMiniStatement()  {
         return;
     }
     
-    std::cout << std::left << std::setw(22) << Logger::LABEL_DATE_TIME
-              << std::setw(18) << Logger::LABEL_TRANSACTION_ID
-              << std::setw(20) << Logger::LABEL_TYPE
-              << std::right << std::setw(12) << Logger::LABEL_AMOUNT << std::endl;
+    std::cout << std::left << std::setw(22) << UIStrings::LABEL_DATE_TIME
+              << std::setw(18) << UIStrings::LABEL_TRANSACTION_ID
+              << std::setw(20) << UIStrings::LABEL_TYPE
+              << std::right << std::setw(12) << UIStrings::LABEL_AMOUNT << std::endl;
     std::cout << std::string(72, '-') << std::endl;
     
     Transaction* current = _transactionHead;
     int count = 0;
     while (current != nullptr && count < Constants::STATEMENT_DISPLAY_LIMIT) 
     {
-        current->print();
+        std::cout << current->getTransaction() << std::endl;
         current = current->getNext();
         count++;
     }
@@ -134,8 +134,8 @@ void Account::printMiniStatement()  {
 void Account::printFullStatement()  
 {
     std::cout << "\n========== FULL STATEMENT ==========\n";
-    std::cout << Logger::LABEL_ACCOUNT_NUMBER << _accountNumber << "\n";
-    std::cout << Logger::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _balance << "\n\n";
+    std::cout << UIStrings::LABEL_ACCOUNT_NUMBER << _accountNumber << "\n";
+    std::cout << UIStrings::LABEL_CURRENT_BALANCE << std::fixed << std::setprecision(2) << _balance << "\n\n";
     
     if (_transactionHead == nullptr) 
     {
@@ -143,16 +143,16 @@ void Account::printFullStatement()
         return;
     }
     
-    std::cout << std::left << std::setw(22) << Logger::LABEL_DATE_TIME
-              << std::setw(18) << Logger::LABEL_TRANSACTION_ID
-              << std::setw(20) << Logger::LABEL_TYPE
-              << std::right << std::setw(12) << Logger::LABEL_AMOUNT << std::endl;
+    std::cout << std::left << std::setw(22) << UIStrings::LABEL_DATE_TIME
+              << std::setw(18) << UIStrings::LABEL_TRANSACTION_ID
+              << std::setw(20) << UIStrings::LABEL_TYPE
+              << std::right << std::setw(12) << UIStrings::LABEL_AMOUNT << std::endl;
     std::cout << std::string(72, '-') << std::endl;
     
     Transaction* current = _transactionHead;
     while (current != nullptr) 
     {
-        current->print();
+        current->getTransaction();
         current = current->getNext();
     }
     std::cout << std::string(72, '=') << "\n";

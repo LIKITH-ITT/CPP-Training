@@ -3,11 +3,16 @@
 #include <iomanip>
 #include <sstream>
 
-Transaction::Transaction(const std::string& txnType, double amt, long txnNumber) 
+Transaction::Transaction(const std::string& txnType, double amt, long txnNumber)
 {
-    std::ostringstream oss;
-    oss << Constants::TRANSACTION_PREFIX << std::setw(9) << std::setfill('0') << txnNumber;
-    _transactionID = oss.str();
+    std::string numberString = std::to_string(txnNumber);
+
+    while (numberString.length() < 9)
+    {
+        numberString = "0" + numberString;
+    }
+
+    _transactionID = Constants::TRANSACTION_PREFIX + numberString;
     _type = txnType;
     _amount = amt;
     _timestamp = std::time(nullptr);
@@ -52,11 +57,16 @@ std::string Transaction::getDateTime()
     return std::string(timeBuffer);
 }
 
-void Transaction::print()  
+std::string Transaction::getTransaction()
 {
-    std::cout << std::left << std::setw(22) << getDateTime()
-              << std::setw(18) << _transactionID
-              << std::setw(20) << _type
-              << std::right << std::setw(12) << std::fixed << std::setprecision(2) 
-              << _amount << std::endl;
+    std::ostringstream oss;
+
+    oss << std::left << std::setw(22) << getDateTime()
+        << std::setw(18) << _transactionID
+        << std::setw(20) << _type
+        << std::right << std::setw(12)
+        << std::fixed << std::setprecision(2)
+        << _amount;
+
+    return oss.str();
 }

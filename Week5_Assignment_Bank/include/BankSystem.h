@@ -18,9 +18,6 @@ private:
     void handleChangePassword(AccountHolder* holder);
     void addAccountHolder(AccountHolder* holder);
     AccountHolder* findAccountHolderByUsernameOrEmail( std::string& usernameOrEmail);
-    int getIntInput();
-    double getDoubleInput();
-    long getLongInput();
     
     Admin* _admin;
     AccountHolder*** _accountHolders;

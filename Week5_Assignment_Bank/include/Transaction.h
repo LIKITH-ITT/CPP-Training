@@ -24,7 +24,7 @@ public:
     Transaction* getNext() ;
     void setNext(Transaction* nextTxn);
     std::string getDateTime() ;
-    void print() ;
+    std::string getTransaction() ;
 };
 
 #endif
