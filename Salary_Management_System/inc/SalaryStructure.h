@@ -18,11 +18,11 @@ public:
     SalaryStructure();
     SalaryStructure(double basicSalary);
 
-    double getBasicSalary() const;
-    double getBonus() const;
-    double getDeduction() const;
-    double getNetSalary() const;
-    int getLeavesTaken() const;
+    double getBasicSalary();
+    double getBonus();
+    double getDeduction();
+    double getNetSalary();
+    int getLeavesTaken();
 
     void setBasicSalary(double amount);
     void setBonus(double amount);
@@ -38,7 +38,6 @@ public:
     static double computeDeduction(double basicSalary, int leavesTaken);
     static double computeNetSalary(double basicSalary, int leavesTaken);
 
-    void display() const;
 };
 
 #endif

@@ -144,7 +144,8 @@ namespace InputValidator
         {
             std::cout << prompt;
             std::getline(std::cin, input);
-            if (isValidEmail(input)) return input;
+            if (isValidEmail(input)) 
+                return input;
             std::cout << "  [!] Invalid email format. Try again.\n";
         }
     }
@@ -171,7 +172,7 @@ namespace InputValidator
             std::getline(std::cin, input);
             if (isValidPassword(input)) 
                 return input;
-            std::cout << "  [!] Password must be 6–30 characters and contain uppercase, lowercase, digit, and special character.\n";        
+            std::cout << "  [!] Password must be 6-30 characters and contain uppercase, lowercase, digit, and special character.\n";        
         }
     }
 
@@ -182,7 +183,8 @@ namespace InputValidator
         {
             std::cout << prompt;
             std::getline(std::cin, input);
-            if (isValidDate(input)) return input;
+            if (isValidDate(input)) 
+                return input;
             std::cout << "  [!] Invalid date. Use DD/MM/YYYY format. Try again.\n";
         }
     }
@@ -194,7 +196,8 @@ namespace InputValidator
         {
             std::cout << prompt;
             std::getline(std::cin, input);
-            if (isValidName(input)) return input;
+            if (isValidName(input)) 
+                return input;
             std::cout << "  [!] Name must be 2-50 letters only. Try again.\n";
         }
     }

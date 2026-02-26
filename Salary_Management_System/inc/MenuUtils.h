@@ -70,48 +70,6 @@ namespace MenuUtils
         std::cout << UIStrings::PROMPT_CHOICE;
     }
 
-//     inline int getMenuChoice(int minVal, int maxVal) 
-//     {
-//         int choice;
-//         while (true) 
-//         {
-//             std::cin >> choice;
-//             if (!std::cin.fail() && choice >= minVal && choice <= maxVal) 
-//             {
-//                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//                 return choice;
-//             }
-//             std::cin.clear();
-//             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//             std::cout << UIStrings::ERR_INVALID_CHOICE << minVal << "-" << maxVal << ": ";
-//         }
-//     }
-
-// //fix
-//     inline int getMenuChoice(int minVal, int maxVal)
-//     {
-//         int choice;
-
-//         while (true)
-//         {
-//             if (std::cin >> choice)
-//             {
-//                 std::cin >> std::ws;   
-
-//                 if (std::cin.peek() == '\n' &&
-//                     choice >= minVal && choice <= maxVal)
-//                 {
-//                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//                     return choice;
-//                 }
-//             }
-
-//             std::cin.clear();
-//             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-//             std::cout << UIStrings::ERR_INVALID_CHOICE
-//                     << minVal << "-" << maxVal << ": ";
-//         }
-//     }
 inline int getMenuChoice(int minVal, int maxVal)
 {
     std::string input;

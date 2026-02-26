@@ -10,10 +10,10 @@ private:
 public:
     Admin(const std::string& username, const std::string& password);
 
-    std::string getUsername() const;
-    std::string getPassword() const;
+    std::string getUsername() ;
+    std::string getPassword() ;
 
-    bool authenticate(const std::string& username, const std::string& password) const;
+    bool authenticate( std::string& username, std::string& password) ;
 };
 
 #endif
