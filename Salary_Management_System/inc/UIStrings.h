@@ -86,7 +86,7 @@ namespace UIStrings
     constexpr char LABEL_LEAVES_TAKEN[]    = "  Leaves Taken   : ";
     constexpr char LABEL_ALLOC_LVS[]       = "  Allocated Leave: ";
     constexpr char LABEL_LEAVE_BAL2[]      = "  Leave Balance  : ";
-    constexpr char LABEL_DAILY_RATE[]      = "  Daily Rate     : ";
+    constexpr char LABEL_DAILY_RATE[]      = "  Daily Wage     : ";
     constexpr char LABEL_BONUS[]           = "  Bonus (+)      : ";
     constexpr char LABEL_DEDUCTION[]       = "  Deduction (-)  : ";
     constexpr char LABEL_NET_SAL[]         = "  NET SALARY     : ";
@@ -112,10 +112,7 @@ namespace UIStrings
     constexpr char CURR_LEAVES_TAKEN[]     = "  Current leaves taken: ";
     constexpr char ALLOC_LEAVES_LABEL[]    = "  Allocated leaves    : ";
 
-    constexpr char MSG_EMP_ADDED[]         = "\n  [OK] Employee added successfully.\n";
-    constexpr char MSG_EMP_UPDATED[]       = "\n  [OK] Employee updated successfully.\n";
-    constexpr char MSG_EMP_DELETED[]       = "  [OK] Employee deleted.\n";
-    constexpr char MSG_GRANT_OK[]          = "\n  [OK] Admin access granted to ";
+    constexpr char MSG_GRANT_OK[]          = "\n  [SUCCESS] Admin access granted to ";
     constexpr char MSG_REVOKE_OK[]         = "\n  [OK] Admin access revoked from ";
     constexpr char MSG_SHUTDOWN[]           = "\n  Program ended...!\n";
     constexpr char MSG_DELETING[]          = "\n  Deleting: ";
@@ -129,6 +126,11 @@ namespace UIStrings
     constexpr char ERR_DEL_CANCELLED[]     = "[!] Deletion cancelled.\n";
     constexpr char ERR_NO_EMPLOYEES[]      = "\n  No employees found.\n";
     constexpr char ERR_INVALID_CHOICE[]    = "[!] Invalid choice. Enter ";
+    constexpr char ERR_EMAIL_EXISTS[]      = "Add failed: email already exists - ";
+    constexpr char ERR_UPDATE_FAILED[]     = "Update failed: employee not found - ";
+
+    constexpr char FAILED_LOGIN[]          = "Failed login attempt.";
+    constexpr char SUCCESS_SYSTEM_ADMIN[]  = "System admin logged in.";
 
     constexpr char YES[]                   = "Yes";
     constexpr char NO[]                    = "No";

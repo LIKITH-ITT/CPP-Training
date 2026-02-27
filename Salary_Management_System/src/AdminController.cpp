@@ -11,12 +11,11 @@ AdminController::AdminController(Admin& admin, EmployeeManager& em, Employee* se
 
 void AdminController::run() 
 {
-    bool active = true;
-    while (active) 
+    bool isRunning = true;
+    while (isRunning) 
     {
         MenuUtils::displayAdminMenu();
-        int raw = MenuUtils::getMenuChoice(1, 8);
-        AdminMenuOption choice = static_cast<AdminMenuOption>(raw);
+        AdminMenuOption choice = static_cast<AdminMenuOption>(MenuUtils::getMenuChoice(1, 8));
 
         switch (choice) 
         {
@@ -43,7 +42,7 @@ void AdminController::run()
                 break;
             case AdminMenuOption::LOGOUT:
                 Logger::info("Admin logged out.");
-                active = false;
+                isRunning = false;
                 break;
         }
     }
@@ -76,18 +75,15 @@ void AdminController::handleViewEmployees()
 void AdminController::handleUpdateEmployee() 
 {
     MenuUtils::displayHeader(UIStrings::HEADER_UPDATE_EMP);
-    std::string id = InputValidator::getValidatedString(UIStrings::PROMPT_EMP_ID, 1, 20);
+    std::string id = InputValidator::getValidatedString(UIStrings::PROMPT_EMP_ID, 1, 10);
 
-    if (employeeManager.updateEmployee(id))
-        std::cout << UIStrings::MSG_EMP_UPDATED;
-    else
-        std::cout << UIStrings::ERR_NOT_FOUND;
+    employeeManager.updateEmployee(id);
 }
 
 void AdminController::handleDeleteEmployee() 
 {
     MenuUtils::displayHeader(UIStrings::HEADER_DELETE_EMP);
-    std::string id = InputValidator::getValidatedString(UIStrings::PROMPT_EMP_ID, 1, 20);
+    std::string id = InputValidator::getValidatedString(UIStrings::PROMPT_EMP_ID, 1, 10);
 
     Employee* emp = employeeManager.findByID(id);
     if (!emp) 
@@ -105,7 +101,6 @@ void AdminController::handleDeleteEmployee()
     if (confirm == 'y' || confirm == 'Y') 
     {
         employeeManager.deleteEmployee(id);
-        std::cout << UIStrings::MSG_EMP_DELETED;
     } 
     else 
     {
@@ -122,10 +117,10 @@ void AdminController::handleViewSalaries()
 void AdminController::handleGrantAdminAccess() 
 {
     MenuUtils::displayHeader(UIStrings::HEADER_GRANT_ADMIN);
-    std::string id = InputValidator::getValidatedString(UIStrings::PROMPT_EMP_ID, 1, 20);
+    std::string id = InputValidator::getValidatedString(UIStrings::PROMPT_EMP_ID, 1, 10);
 
     if (employeeManager.grantAdminAccess(id))
-        Logger::info(UIStrings::MSG_GRANT_OK + id);    
+        std::cout << (UIStrings::MSG_GRANT_OK + id);    
     else
         std::cout << UIStrings::ERR_NOT_FOUND;
 }
@@ -142,8 +137,6 @@ void AdminController::handleRevokeAdminAccess()
         return;
     }
 
-    if (employeeManager.revokeAdminAccess(id))
-        std::cout << UIStrings::MSG_REVOKE_OK << id << ".\n";
-    else
+    if (!employeeManager.revokeAdminAccess(id))
         std::cout << UIStrings::ERR_NOT_FOUND;
 }

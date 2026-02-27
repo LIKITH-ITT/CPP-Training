@@ -12,8 +12,8 @@ AuthController::AuthController(Admin& admin, EmployeeManager& em) : admin(admin)
 
 void AuthController::run() 
 {
-    bool running = true;
-    while (running) 
+    bool isRunning = true;
+    while (isRunning) 
     {
         MenuUtils::displayMainMenu();
         MainMenuOption choice = static_cast<MainMenuOption>(MenuUtils::getMenuChoice(1, 2));
@@ -27,7 +27,7 @@ void AuthController::run()
 
                 if (isAdminLogin) 
                 {
-                    Logger::info("System admin logged in.");
+                    Logger::info(UIStrings::SUCCESS_SYSTEM_ADMIN);
                     AdminController adminControl(admin, employeeManager);
                     adminControl.run();
                 } 
@@ -38,20 +38,20 @@ void AuthController::run()
                     else 
                     {
                         Logger::info("Employee logged in: " + employee->getEmployeeID());
-                        EmployeeController employeeCtrl(*employee, employeeManager);
-                        employeeCtrl.run();
+                        EmployeeController employeeControl(*employee, employeeManager);
+                        employeeControl.run();
                     }
                 } 
                 else 
                 {
                     std::cout << UIStrings::ERR_LOGIN_FAILED;
-                    Logger::warning("Failed login attempt.");
+                    Logger::warning(UIStrings::FAILED_LOGIN);
                 }
                 break;
             }
             case MainMenuOption::EXIT:
                 std::cout << UIStrings::MSG_SHUTDOWN;
-                running = false;
+                isRunning = false;
                 break;
         }
     }
@@ -79,8 +79,8 @@ Employee* AuthController::performLogin(bool& isAdminLogin)
 
 void AuthController::handleDualAccessLogin(Employee* employee) 
 {
-    bool sessionActive = true;
-    while (sessionActive) 
+    bool isActive = true;
+    while (isActive) 
     {
         MenuUtils::displayRoleSelectionMenu();
         RoleMenuOption choice = static_cast<RoleMenuOption>(MenuUtils::getMenuChoice(1, 3));
@@ -97,13 +97,13 @@ void AuthController::handleDualAccessLogin(Employee* employee)
             case RoleMenuOption::EMPLOYEE_CONTROLS: 
             {
                 Logger::info(employee->getEmployeeID() + " entered employee mode.");
-                EmployeeController employeeCtrl(*employee, employeeManager);
-                employeeCtrl.run();
+                EmployeeController employeeControl(*employee, employeeManager);
+                employeeControl.run();
                 break;
             }
             case RoleMenuOption::LOGOUT:
                 Logger::info(employee->getEmployeeID() + " logged out from dual-access session.");
-                sessionActive = false;
+                isActive = false;
                 break;
         }
     }

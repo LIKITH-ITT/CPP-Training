@@ -7,8 +7,7 @@
 #include <iomanip>
 #include <sstream>
 
-EmployeeManager::EmployeeManager()
-    : size(0), capacity(INITIAL_CAPACITY), nextEmployeeID(INITIAL_EMP_ID) 
+EmployeeManager::EmployeeManager() : size(0), capacity(INITIAL_CAPACITY), nextEmployeeID(INITIAL_EMP_ID) 
 {
     employees = new Employee*[capacity];
 }
@@ -52,10 +51,11 @@ bool EmployeeManager::addEmployee(std::string& name, std::string& dob,
 {
     if (findByEmail(email) != nullptr) 
     {
-        Logger::warning("Add failed: email already exists - " + email);
+        Logger::warning(UIStrings::ERR_EMAIL_EXISTS + email);
         return false;
     }
-    if (size == capacity) resize();
+    if (size == capacity) 
+        resize();
 
     std::string id  = generateEmployeeID();
     employees[size] = new Employee(id, name, dob, email, phone, department, position, basicSalary, password);
@@ -69,7 +69,7 @@ bool EmployeeManager::updateEmployee(std::string& employeeID)
     Employee* emp = findByID(employeeID);
     if (!emp) 
     {
-        Logger::warning("Update failed: employee not found - " + employeeID);
+        Logger::warning(UIStrings::ERR_UPDATE_FAILED + employeeID);
         return false;
     }
 
@@ -144,7 +144,8 @@ bool EmployeeManager::deleteEmployee(std::string& employeeID)
             for (int j = i; j < size - 1; j++) employees[j] = employees[j + 1];
             size--;
             Logger::info("Employee deleted: " + employeeID);
-            if (size < capacity / 2) shrink();
+            if (size < capacity / 2) 
+                shrink();
             return true;
         }
     }
@@ -155,14 +156,16 @@ bool EmployeeManager::deleteEmployee(std::string& employeeID)
 Employee* EmployeeManager::findByID(std::string& employeeID) 
 {
     for (int i = 0; i < size; i++)
-        if (employees[i]->getEmployeeID() == employeeID) return employees[i];
+        if (employees[i]->getEmployeeID() == employeeID) 
+            return employees[i];
     return nullptr;
 }
 
 Employee* EmployeeManager::findByEmail(std::string& email) 
 {
     for (int i = 0; i < size; i++)
-        if (employees[i]->getEmail() == email) return employees[i];
+        if (employees[i]->getEmail() == email) 
+            return employees[i];
     return nullptr;
 }
 
