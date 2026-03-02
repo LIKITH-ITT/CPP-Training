@@ -8,7 +8,7 @@
 #include "Logger.h"
 #include <iostream>
 
-AuthController::AuthController(Admin& admin, EmployeeManager& em) : admin(admin), employeeManager(em) {}
+AuthController::AuthController(const Admin& admin, EmployeeManager& em) : admin(admin), employeeManager(em) {}
 
 void AuthController::run() 
 {

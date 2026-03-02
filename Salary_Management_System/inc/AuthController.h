@@ -7,7 +7,7 @@
 
 class AuthController {
 private:
-    Admin& admin;
+    const Admin& admin;
     EmployeeManager& employeeManager;
 
     Employee* performLogin(bool& isAdminLogin);
@@ -15,7 +15,7 @@ private:
     void handleDualAccessLogin(Employee* emp);
 
 public:
-    AuthController(Admin& admin, EmployeeManager& em);
+    AuthController(const Admin& admin, EmployeeManager& em);
     void run();
 };
 

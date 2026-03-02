@@ -12,17 +12,17 @@ namespace UIStrings
     constexpr char TITLE_EMP_PANEL[]       = "EMPLOYEE PANEL";
     constexpr char TITLE_ROLE_SELECT[]     = "SELECT CONTROL MODE";
 
-    constexpr char HEADER_ADD_EMP[]           = "ADD EMPLOYEE";
-    constexpr char HEADER_ALL_EMP[]           = "ALL EMPLOYEES";
-    constexpr char HEADER_UPDATE_EMP[]        = "UPDATE EMPLOYEE";
-    constexpr char HEADER_DELETE_EMP[]        = "DELETE EMPLOYEE";
-    constexpr char HEADER_ALL_SALARIES[]      = "ALL SALARIES";
-    constexpr char HEADER_GRANT_ADMIN[]       = "GRANT ADMIN ACCESS";
-    constexpr char HEADER_REVOKE_ADMIN[]      = "REVOKE ADMIN ACCESS";
-    constexpr char HEADER_MY_DETAILS[]        = "MY DETAILS";
-    constexpr char HEADER_MY_LEAVE[]          = "MY LEAVE BALANCE";
-    constexpr char HEADER_MY_SALARY[]         = "MY SALARY";
-    constexpr char HEADER_RECORD_LEAVES[]     = "RECORD LEAVES";
+    constexpr char HEADER_ADD_EMP[]        = "ADD EMPLOYEE";
+    constexpr char HEADER_ALL_EMP[]        = "ALL EMPLOYEES";
+    constexpr char HEADER_UPDATE_EMP[]     = "UPDATE EMPLOYEE";
+    constexpr char HEADER_DELETE_EMP[]     = "DELETE EMPLOYEE";
+    constexpr char HEADER_ALL_SALARIES[]   = "ALL SALARIES";
+    constexpr char HEADER_GRANT_ADMIN[]    = "GRANT ADMIN ACCESS";
+    constexpr char HEADER_REVOKE_ADMIN[]   = "REVOKE ADMIN ACCESS";
+    constexpr char HEADER_MY_DETAILS[]     = "MY DETAILS";
+    constexpr char HEADER_MY_LEAVE[]       = "MY LEAVE BALANCE";
+    constexpr char HEADER_MY_SALARY[]      = "MY SALARY";
+    constexpr char HEADER_RECORD_LEAVES[]  = "RECORD LEAVES";
 
     constexpr char MENU_MAIN_LOGIN[]       = "  [1] Login\n";
     constexpr char MENU_MAIN_EXIT[]        = "  [2] Exit\n";
@@ -48,7 +48,7 @@ namespace UIStrings
 
     constexpr char PROMPT_CHOICE[]         = "  Choice: ";
     constexpr char PROMPT_CONTINUE[]       = "\n  Press Enter to continue...";
-    constexpr char PROMPT_ID[]       = "  Employee ID / Admin ID: ";
+    constexpr char PROMPT_ID[]             = "  Employee ID / Admin ID: ";
     constexpr char PROMPT_PASSWORD[]       = "  Password              : ";
     constexpr char PROMPT_EMP_ID[]         = "  Employee ID: ";
     constexpr char PROMPT_CONFIRM_DEL[]    = "  Are you sure? (y/n): ";
@@ -102,7 +102,7 @@ namespace UIStrings
     constexpr char COL_DEDUCTION[]         = "Deduction";
     constexpr char COL_NET[]               = "Net Salary";
 
-    constexpr char UPDATE_BLANK_ENTER[]     = "\n  Leave blank and press Enter to keep current value.\n\n";
+    constexpr char UPDATE_BLANK_ENTER[]    = "\n  Leave blank and press Enter to keep current value.\n\n";
     constexpr char UPDATE_INVALID_NAME[]   = "[!] Invalid name, kept original.\n";
     constexpr char UPDATE_INVALID_DATE[]   = "[!] Invalid date, kept original.\n";
     constexpr char UPDATE_INVALID_EMAIL[]  = "[!] Invalid email, kept original.\n";
@@ -114,7 +114,7 @@ namespace UIStrings
 
     constexpr char MSG_GRANT_OK[]          = "\n  [SUCCESS] Admin access granted to ";
     constexpr char MSG_REVOKE_OK[]         = "\n  [OK] Admin access revoked from ";
-    constexpr char MSG_SHUTDOWN[]           = "\n  Program ended...!\n";
+    constexpr char MSG_SHUTDOWN[]          = "\n  Program ended...!\n";
     constexpr char MSG_DELETING[]          = "\n  Deleting: ";
     constexpr char MSG_TOTAL_EMP[]         = "\n  Total: ";
     constexpr char MSG_TOTAL_EMP_SUFFIX[]  = " employee(s).\n";

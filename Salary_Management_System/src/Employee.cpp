@@ -1,36 +1,94 @@
 #include "Employee.h"
 #include "Constants.h"
 
-Employee::Employee(std::string& id, std::string& name,
-                   std::string& dob, std::string& email,
-                   std::string& phone, std::string& department, 
-                   std::string& position,double basicSalary, std::string& password)
-                    : employeeID(id), name(name), dob(dob), email(email),
-                    phone(phone), department(department), position(position),
-                    password(password), hasAdminAccess(false),
-                    salary(basicSalary) {}
+Employee::Employee(const std::string& id, const  std::string& name,
+                   const  std::string& dob, const  std::string& email, 
+                   const std::string& phone, const std::string& department, 
+                   const std::string& position, const double basicSalary, 
+                   const  std::string& password)
+: employeeID(id), name(name), dob(dob), email(email),phone(phone), department(department), position(position),password(password), hasAdminAccess(false),salary(basicSalary) {}
 
-std::string Employee::getEmployeeID(){ return employeeID; }
-std::string Employee::getName()      { return name; }
-std::string Employee::getDob()       { return dob; }
-std::string Employee::getEmail()     { return email; }
-std::string Employee::getPhone()     { return phone; }
-std::string Employee::getDepartment(){ return department; }
-std::string Employee::getPosition()  { return position; }
-std::string Employee::getPassword()  { return password; }
-bool Employee::getHasAdminAccess()   { return hasAdminAccess; }
-SalaryStructure Employee::getSalary(){ return salary; }
-int Employee::getLeavesTaken()       { return salary.getLeavesTaken(); }
-double Employee::getBasicSalary()    { return salary.getBasicSalary(); }
+std::string Employee::getEmployeeID() const
+{
+    return employeeID; 
+}
+std::string Employee::getName() const     
+{
+    return name; 
+}
+std::string Employee::getDob() const       
+{
+    return dob;
+}
+std::string Employee::getEmail() const     
+{
+    return email; 
+}
+std::string Employee::getPhone() const    
+{
+    return phone; 
+}
+std::string Employee::getDepartment() const
+{
+    return department; 
+}
+std::string Employee::getPosition() const 
+{
+    return position; 
+}
+std::string Employee::getPassword() const
+{
+    return password; 
+}
+bool Employee::getHasAdminAccess() const  
+{
+    return hasAdminAccess; 
+}
+SalaryStructure Employee::getSalary() const
+{
+    return salary; 
+}
+int Employee::getLeavesTaken() const     
+{
+    return salary.getLeavesTaken(); 
+}
+double Employee::getBasicSalary() const  
+{
+    return salary.getBasicSalary(); 
+}
 
-void Employee::setName(std::string& n)        { name = n; }
-void Employee::setDob(std::string& d)         { dob = d; }
-void Employee::setEmail(std::string& e)       { email = e; }
-void Employee::setPhone(std::string& p)       { phone = p; }
-void Employee::setDepartment(std::string& d)  { department = d; }
-void Employee::setPosition(std::string& p)    { position = p; }
-void Employee::setPassword(std::string& p)    { password = p; }
-void Employee::setHasAdminAccess(bool access) { hasAdminAccess = access; }
+void Employee::setName(const std::string& n)        
+{ 
+    name = n; 
+}
+void Employee::setDob(const std::string& d)         
+{ 
+    dob = d; 
+}
+void Employee::setEmail(const std::string& e)       
+{ 
+    email = e; 
+}
+void Employee::setPhone(const std::string& p)       
+{ 
+    phone = p; 
+}
+void Employee::setDepartment(const std::string& d)  
+{ 
+    department = d; 
+}
+void Employee::setPosition(const std::string& p)    
+{ 
+    position = p; 
+}
+void Employee::setPassword(const std::string& p)    
+{ 
+    password = p; 
+}
+void Employee::setHasAdminAccess(bool access) 
+{ 
+    hasAdminAccess = access; 
+}
 
 void Employee::setBasicSalary(double amount) 
 {

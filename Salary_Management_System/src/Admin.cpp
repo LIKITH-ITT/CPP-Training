@@ -2,16 +2,16 @@
 
 Admin::Admin(const std::string& username, const std::string& password) : username(username), password(password) {}
 
-std::string Admin::getUsername()
+std::string Admin::getUsername() const
 {
     return username; 
 }
-std::string Admin::getPassword()
+std::string Admin::getPassword() const
 {
     return password; 
 }
 
-bool Admin::authenticate(std::string& u, std::string& p)
+bool Admin::authenticate(const std::string& u,const std::string& p) const
 {
     return username == u && password == p;
 }

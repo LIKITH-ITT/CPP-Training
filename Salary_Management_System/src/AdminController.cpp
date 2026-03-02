@@ -6,8 +6,7 @@
 #include "Logger.h"
 #include <iostream>
 
-AdminController::AdminController(Admin& admin, EmployeeManager& em, Employee* sessionEmployee)
-: admin(admin), employeeManager(em), sessionEmployee(sessionEmployee) {}
+AdminController::AdminController(const Admin& admin, EmployeeManager& em, const Employee* sessionEmployee) : admin(admin), employeeManager(em), sessionEmployee(sessionEmployee) {}
 
 void AdminController::run() 
 {

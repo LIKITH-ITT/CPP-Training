@@ -16,19 +16,19 @@ private:
 
 public:
     SalaryStructure();
-    SalaryStructure(double basicSalary);
+    SalaryStructure(const double basicSalary);
 
-    double getBasicSalary();
-    double getBonus();
-    double getDeduction();
-    double getNetSalary();
-    int getLeavesTaken();
+    double getBasicSalary() const;
+    double getBonus() const;
+    double getDeduction() const;
+    double getNetSalary() const;
+    int getLeavesTaken() const;
 
-    void setBasicSalary(double amount);
-    void setBonus(double amount);
-    void setDeduction(double amount);
-    void setNetSalary(double amount);
-    void setLeavesTaken(int leaves);
+    void setBasicSalary(const double amount);
+    void setBonus(const double amount);
+    void setDeduction(const double amount);
+    void setNetSalary(const double amount);
+    void setLeavesTaken(const int leaves);
 
     void compute();
 

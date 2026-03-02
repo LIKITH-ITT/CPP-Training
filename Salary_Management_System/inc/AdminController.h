@@ -7,9 +7,9 @@
 
 class AdminController {
 private:
-    Admin& admin;
+    const Admin& admin;
     EmployeeManager& employeeManager;
-    Employee* sessionEmployee; 
+    const Employee* sessionEmployee; 
 
     void handleAddEmployee();
     void handleViewEmployees();
@@ -20,7 +20,7 @@ private:
     void handleRevokeAdminAccess();
 
 public:
-    AdminController(Admin& admin, EmployeeManager& employeeManager, Employee* sessionEmployee = nullptr);
+    AdminController(const Admin& admin, EmployeeManager& employeeManager, const Employee* sessionEmployee = nullptr);
     void run();
 };
 

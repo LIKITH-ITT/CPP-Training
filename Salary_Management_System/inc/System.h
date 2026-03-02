@@ -8,7 +8,7 @@
 class System 
 {
 private:
-    Admin admin;
+    const Admin admin;
     EmployeeManager employeeManager;
     AuthController authController;
 

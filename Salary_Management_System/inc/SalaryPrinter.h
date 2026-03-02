@@ -9,7 +9,7 @@
 
 namespace SalaryPrinter
 {
-    inline void display(SalaryStructure& salary) 
+    inline void display(const SalaryStructure& salary)
     {
         std::cout << std::fixed << std::setprecision(2);
         std::cout << UIStrings::SALARY_HEADER;

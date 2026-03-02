@@ -44,10 +44,10 @@ void EmployeeManager::shrink()
     capacity  = newCapacity;
 }
 
-bool EmployeeManager::addEmployee(std::string& name, std::string& dob,
-                                   std::string& email, std::string& phone,
-                                   std::string& department, std::string& position,
-                                   double basicSalary, std::string& password) 
+bool EmployeeManager::addEmployee(const std::string& name, const std::string& dob,
+                                  const std::string& email, const std::string& phone,
+                                  const std::string& department, const std::string& position,
+                                  const double basicSalary, const std::string& password) 
 {
     if (findByEmail(email) != nullptr) 
     {
@@ -64,7 +64,7 @@ bool EmployeeManager::addEmployee(std::string& name, std::string& dob,
     return true;
 }
 
-bool EmployeeManager::updateEmployee(std::string& employeeID) 
+bool EmployeeManager::updateEmployee(const std::string& employeeID) 
 {
     Employee* emp = findByID(employeeID);
     if (!emp) 
@@ -134,7 +134,7 @@ bool EmployeeManager::updateEmployee(std::string& employeeID)
     return true;
 }
 
-bool EmployeeManager::deleteEmployee(std::string& employeeID) 
+bool EmployeeManager::deleteEmployee(const std::string& employeeID)
 {
     for (int i = 0; i < size; i++) 
     {
@@ -153,7 +153,7 @@ bool EmployeeManager::deleteEmployee(std::string& employeeID)
     return false;
 }
 
-Employee* EmployeeManager::findByID(std::string& employeeID) 
+Employee* EmployeeManager::findByID(const std::string& employeeID) const
 {
     for (int i = 0; i < size; i++)
         if (employees[i]->getEmployeeID() == employeeID) 
@@ -161,7 +161,7 @@ Employee* EmployeeManager::findByID(std::string& employeeID)
     return nullptr;
 }
 
-Employee* EmployeeManager::findByEmail(std::string& email) 
+Employee* EmployeeManager::findByEmail(const std::string& email) const
 {
     for (int i = 0; i < size; i++)
         if (employees[i]->getEmail() == email) 
@@ -169,7 +169,7 @@ Employee* EmployeeManager::findByEmail(std::string& email)
     return nullptr;
 }
 
-Employee* EmployeeManager::authenticate(std::string& employeeID, std::string& password) 
+Employee* EmployeeManager::authenticate(const std::string& employeeID, const std::string& password) const
 {
     Employee* emp = findByID(employeeID);
     if (emp && emp->getPassword() == password) 
@@ -177,7 +177,7 @@ Employee* EmployeeManager::authenticate(std::string& employeeID, std::string& pa
     return nullptr;
 }
 
-void EmployeeManager::displayAllEmployees() 
+void EmployeeManager::displayAllEmployees() const
 {
     if (size == 0) 
     {
@@ -204,7 +204,7 @@ void EmployeeManager::displayAllEmployees()
     }
 }
 
-void EmployeeManager::displayAllSalaries() 
+void EmployeeManager::displayAllSalaries() const
 {
     if (size == 0) 
     {
@@ -238,7 +238,7 @@ void EmployeeManager::displayAllSalaries()
     }
 }
 
-void EmployeeManager::displayDetails(Employee& emp)
+void EmployeeManager::displayDetails(const Employee& emp) const
 {
     std::cout << UIStrings::DETAIL_HEADER;
     std::cout << UIStrings::LABEL_ID << emp.getEmployeeID() << "\n";
@@ -252,7 +252,7 @@ void EmployeeManager::displayDetails(Employee& emp)
     std::cout << UIStrings::DETAIL_FOOTER;
 }
 
-void EmployeeManager::displayLeaveInfo(Employee& emp)
+void EmployeeManager::displayLeaveInfo(const Employee& emp) const
 {
     std::cout << UIStrings::LEAVE_HEADER;
     std::cout << UIStrings::LABEL_ALLOC_LEAVES << ALLOCATED_LEAVES << "\n";
@@ -261,14 +261,14 @@ void EmployeeManager::displayLeaveInfo(Employee& emp)
     std::cout << UIStrings::LEAVE_FOOTER;
 }
 
-void EmployeeManager::displaySalaryInfo(Employee& emp) 
+void EmployeeManager::displaySalaryInfo(const Employee& emp) const
 {
     SalaryStructure salary = emp.getSalary();
     salary.compute();
     SalaryPrinter::display(salary);
 }
 
-bool EmployeeManager::grantAdminAccess(std::string& employeeID) 
+bool EmployeeManager::grantAdminAccess(const std::string& employeeID) 
 {
     Employee* emp = findByID(employeeID);
     if (!emp) return false;
@@ -276,7 +276,7 @@ bool EmployeeManager::grantAdminAccess(std::string& employeeID)
     return true;
 }
 
-bool EmployeeManager::revokeAdminAccess(std::string& employeeID) 
+bool EmployeeManager::revokeAdminAccess(const std::string& employeeID) 
 {
     Employee* emp = findByID(employeeID);
     if (!emp) return false;
@@ -285,14 +285,14 @@ bool EmployeeManager::revokeAdminAccess(std::string& employeeID)
     return true;
 }
 
-std::string EmployeeManager::generateEmployeeID() 
+std::string EmployeeManager::generateEmployeeID()
 {
     std::ostringstream oss;
     oss << "EMP" << nextEmployeeID++;
     return oss.str();
 }
 
-int EmployeeManager::getTotalEmployees() 
+int EmployeeManager::getTotalEmployees() const
 {
     return size;
 }

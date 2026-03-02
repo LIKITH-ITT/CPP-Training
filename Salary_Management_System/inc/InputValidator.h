@@ -3,17 +3,11 @@
 
 #include <iostream>
 #include <string>
-#include <sstream>
 #include <limits>
 #include <regex>
 
 namespace InputValidator 
 {
-
-    inline bool isNonEmpty(const std::string& input) 
-    {
-        return !input.empty();
-    }
 
     inline bool isValidLength(const std::string& input, int min, int max) 
     {
@@ -86,7 +80,7 @@ namespace InputValidator
         {
             std::cout << prompt;
             std::getline(std::cin, input);
-            if (isNonEmpty(input) && isValidLength(input, minLen, maxLen)) 
+            if (!input.empty() && isValidLength(input, minLen, maxLen)) 
                 return input;
             std::cout << "  [!] Input must be " << minLen << "-" << maxLen << " characters. Try again.\n";
         }

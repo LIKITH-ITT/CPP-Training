@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <limits>
 #include <sstream>
 #include "Constants.h"
 #include "UIStrings.h"
@@ -11,17 +10,12 @@
 namespace MenuUtils 
 {
 
-    inline void displaySeparator() 
-    {
-        std::cout << UIStrings::SEPARATOR;
-    }
-
     inline void displayHeader(const char* title) 
     {
         std::cout << UIStrings::NEWLINE;
-        displaySeparator();
+        std::cout << UIStrings::SEPARATOR;
         std::cout << "    " << title << UIStrings::NEWLINE;
-        displaySeparator();
+        std::cout << UIStrings::SEPARATOR;
     }
 
     inline void displayMainMenu() 
@@ -29,7 +23,7 @@ namespace MenuUtils
         displayHeader(UIStrings::TITLE_SYSTEM);
         std::cout << UIStrings::MENU_MAIN_LOGIN;
         std::cout << UIStrings::MENU_MAIN_EXIT;
-        displaySeparator();
+        std::cout << UIStrings::SEPARATOR;
         std::cout << UIStrings::PROMPT_CHOICE;
     }
 
@@ -44,7 +38,7 @@ namespace MenuUtils
         std::cout << UIStrings::MENU_ADMIN_GRANT;
         std::cout << UIStrings::MENU_ADMIN_REVOKE;
         std::cout << UIStrings::MENU_ADMIN_LOGOUT;
-        displaySeparator();
+        std::cout << UIStrings::SEPARATOR;
         std::cout << UIStrings::PROMPT_CHOICE;
     }
 
@@ -56,7 +50,7 @@ namespace MenuUtils
         std::cout << UIStrings::MENU_EMP_SALARY;
         std::cout << UIStrings::MENU_EMP_RECORD;
         std::cout << UIStrings::MENU_EMP_LOGOUT;
-        displaySeparator();
+        std::cout << UIStrings::SEPARATOR;
         std::cout << UIStrings::PROMPT_CHOICE;
     }
 
@@ -66,32 +60,32 @@ namespace MenuUtils
         std::cout << UIStrings::MENU_ROLE_ADMIN;
         std::cout << UIStrings::MENU_ROLE_EMP;
         std::cout << UIStrings::MENU_ROLE_LOGOUT;
-        displaySeparator();
+        std::cout << UIStrings::SEPARATOR;
         std::cout << UIStrings::PROMPT_CHOICE;
     }
 
-inline int getMenuChoice(int minVal, int maxVal)
-{
-    std::string input;
-
-    while (true)
+    inline int getMenuChoice(int minVal, int maxVal)
     {
-        std::getline(std::cin, input);
+        std::string input;
 
-        std::istringstream iss(input);
-        int choice;
-        char extra;
-
-        if (iss >> choice && !(iss >> extra) &&
-            choice >= minVal && choice <= maxVal)
+        while (true)
         {
-            return choice;
-        }
+            std::getline(std::cin, input);
 
-        std::cout << UIStrings::ERR_INVALID_CHOICE
-                  << minVal << "-" << maxVal << ": ";
+            std::istringstream iss(input);
+            int choice;
+            char extra;
+
+            if (iss >> choice && !(iss >> extra) &&
+                choice >= minVal && choice <= maxVal)
+            {
+                return choice;
+            }
+
+            std::cout << UIStrings::ERR_INVALID_CHOICE
+                    << minVal << "-" << maxVal << ": ";
+        }
     }
-}
 
 }
 
