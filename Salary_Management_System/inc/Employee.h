@@ -44,9 +44,9 @@ public:
     void setDepartment(const std::string& department);
     void setPosition(const std::string& position);
     void setPassword(const std::string& password);
-    void setHasAdminAccess(bool access);
-    void setBasicSalary(double amount);
-    void setLeavesTaken(int leaves);
+    void setHasAdminAccess(const bool access);
+    void setBasicSalary(const double amount);
+    void setLeavesTaken(const int leaves);
 
 };
 

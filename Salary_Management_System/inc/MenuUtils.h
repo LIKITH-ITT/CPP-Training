@@ -82,8 +82,7 @@ namespace MenuUtils
                 return choice;
             }
 
-            std::cout << UIStrings::ERR_INVALID_CHOICE
-                    << minVal << "-" << maxVal << ": ";
+            std::cout << UIStrings::ERR_INVALID_CHOICE << minVal << "-" << maxVal << ": ";
         }
     }
 

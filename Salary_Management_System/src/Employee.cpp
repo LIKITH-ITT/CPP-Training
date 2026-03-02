@@ -2,10 +2,10 @@
 #include "Constants.h"
 
 Employee::Employee(const std::string& id, const  std::string& name,
-                   const  std::string& dob, const  std::string& email, 
+                   const std::string& dob, const  std::string& email, 
                    const std::string& phone, const std::string& department, 
                    const std::string& position, const double basicSalary, 
-                   const  std::string& password)
+                   const std::string& password)
 : employeeID(id), name(name), dob(dob), email(email),phone(phone), department(department), position(position),password(password), hasAdminAccess(false),salary(basicSalary) {}
 
 std::string Employee::getEmployeeID() const
@@ -85,18 +85,18 @@ void Employee::setPassword(const std::string& p)
 { 
     password = p; 
 }
-void Employee::setHasAdminAccess(bool access) 
+void Employee::setHasAdminAccess(const bool access) 
 { 
     hasAdminAccess = access; 
 }
 
-void Employee::setBasicSalary(double amount) 
+void Employee::setBasicSalary(const double amount) 
 {
     salary.setBasicSalary(amount);
     salary.compute();
 }
 
-void Employee::setLeavesTaken(int leaves) 
+void Employee::setLeavesTaken(const int leaves) 
 {
     salary.setLeavesTaken(leaves);
     salary.compute();
