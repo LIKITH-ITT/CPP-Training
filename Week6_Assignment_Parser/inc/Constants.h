@@ -33,7 +33,7 @@ namespace Constants {
     constexpr const char* MSG_EMPTY_PATH       = "File path cannot be empty. Try again.\n";
     constexpr const char* MSG_UNSUPPORTED_TYPE = "Unsupported file type. Supported: .json, .csv, .xml\n\n";
     constexpr const char* MSG_CHECK_PATH       = " Please check the path and try again.\n\n";
-    const std::string MSG_FILE_NOT_FOUND = "File not found: ";
+    const std::string MSG_FILE_NOT_FOUND       = "File not found: ";
 
     constexpr const char* MSG_PARSE_SUCCESS  = "\nFile successfully parsed.\n";
     constexpr const char* MSG_PARSE_FAILED   = "\nParsing completed with errors.\n";
@@ -52,14 +52,14 @@ namespace Constants {
     constexpr const char* LABEL_XML = "XML";
     constexpr const char* LABEL_CSV = "CSV";
 
-    const std::string MSG_JSON_EMPTY_FAIL    = "\n[JsonParser] Empty file: ";
+    const std::string MSG_JSON_EMPTY_FAIL   = "\n[JsonParser] Empty file: ";
     const std::string MSG_JSON_SYNTAX_ERROR = "\n[JsonParser] Invalid JSON syntax: ";
     const std::string MSG_JSON_TYPE_ERROR   = "\n[JsonParser] Type mismatch: ";
     const std::string MSG_JSON_KEY_ERROR    = "\n[JsonParser] Key not found: ";
 
     const std::string MSG_CSV_READ_FAIL      = "[CsvParser] Could not read CSV file: ";
     const std::string MSG_CSV_OUT_OF_RANGE   = "[CsvParser] Out of range while reading CSV: ";
-    const std::string MSG_CSV_EMPTY_FILE   = "[CsvParser] Empty file: ";
+    const std::string MSG_CSV_EMPTY_FILE     = "[CsvParser] Empty file: ";
 
 
     const std::string MSG_XML_PARSE_FAIL     = "[XmlParser] Could not parse XML file: ";

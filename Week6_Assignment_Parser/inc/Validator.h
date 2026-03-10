@@ -11,7 +11,8 @@ namespace Validator {
 
     inline bool isSupportedExtension(const std::string& path) {
         int dotPosition = path.rfind(Constants::FULL_STOP);
-        if (dotPosition == std::string::npos) return false;
+        if (dotPosition == std::string::npos) 
+        return false;
 
         std::string extension = path.substr(dotPosition + 1);
         std::transform(extension.begin(), extension.end(), extension.begin(), ::toupper);

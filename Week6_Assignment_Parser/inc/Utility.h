@@ -15,7 +15,8 @@ namespace Utility {
         {
             Logger::printMessage(Constants::MSG_CONTINUE);
             std::getline(std::cin, choice);
-            if (Validator::isValidChoice(choice)) break;
+            if (Validator::isValidChoice(choice)) 
+                break;
         }
         return choice[0];
     }
@@ -26,7 +27,8 @@ namespace Utility {
         {
             Logger::printMessage(Constants::MSG_ENTER_FILE_PATH);
             std::getline(std::cin, path);
-            if (Validator::isValidFilePath(path)) break;
+            if (Validator::isValidFilePath(path)) 
+                break;
         }
         return path;
     }
