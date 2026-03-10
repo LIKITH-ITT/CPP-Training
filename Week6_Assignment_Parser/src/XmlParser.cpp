@@ -29,7 +29,7 @@ bool XmlParser::showParsedFile() {
         {
             Logger::printMessage(Constants::MSG_XML_NO_ROOT);
             Logger::printMessage(Logger::printNextLine());
-            return false;
+            return isDisplayedSuccessfully = false;
         }
 
         int recordCount = 0;
@@ -54,20 +54,16 @@ bool XmlParser::showParsedFile() {
         {
             int recordNumber = 1;
 
-            for (tinyxml2::XMLElement* child = root->FirstChildElement();
-                 child != nullptr;
-                 child = child->NextSiblingElement())
+            for (tinyxml2::XMLElement* child = root->FirstChildElement(); child != nullptr; child = child->NextSiblingElement())
             {
                 std::cout << Constants::MSG_RESULT_DIVIDER << recordNumber << Constants::MSG_RECORD_SUFFIX;
 
-                for (const auto& attr : child->getAttributes())
+                for (const auto& attribute : child->getAttributes())
                 {
-                    std::cout << "  " << std::left << std::setw(15) << attr.first << " : " << attr.second << Logger::printNextLine();
+                    std::cout << "  " << std::left << std::setw(15) << attribute.first << " : " << attribute.second << Logger::printNextLine();
                 }
 
-                for (tinyxml2::XMLElement* subchild = child->FirstChildElement();
-                     subchild != nullptr;
-                     subchild = subchild->NextSiblingElement())
+                for (tinyxml2::XMLElement* subchild = child->FirstChildElement(); subchild != nullptr; subchild = subchild->NextSiblingElement())
                 {
                     const char* text = subchild->GetText();
                     std::cout << "  " << std::left << std::setw(15) << subchild->Name() << " : " << (text ? text : "") << Logger::printNextLine();
