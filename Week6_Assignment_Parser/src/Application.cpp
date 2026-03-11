@@ -1,12 +1,18 @@
 #include "Application.h"
+#include "Utility.h"
 #include "ParserFactory.h"
 #include "Constants.h"
-#include "Logger.h"
-#include "Utility.h"
 
-Application::Application() : _parser(nullptr) {}
+Application::Application(): _parser(nullptr){}
 
-void Application::run() {
+Application::~Application()
+{
+    delete _parser;
+    _parser = nullptr;
+}
+
+void Application::run()
+{
     Logger::printMessage(Constants::MSG_WELCOME);
 
     while (true)

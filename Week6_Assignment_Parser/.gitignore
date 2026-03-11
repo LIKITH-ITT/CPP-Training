@@ -1,6 +1,0 @@
-*.o
-*.out
-lib/
-*.json
-*.csv
-*.xml

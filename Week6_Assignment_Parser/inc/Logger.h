@@ -1,23 +1,16 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <iostream>
-#include <iomanip>
 #include <string>
 
-namespace Logger {
+class Logger
+{
+public:
+    static void printMessage(const char* message);
+    static void printMessage(const std::string& message);
+    static std::string printNextLine();
 
-    inline void printMessage(const char* message) {
-        std::cout << message;
-    }
-
-    inline void printMessage(const std::string& message) {
-        std::cout << message;
-    }
-
-    inline std::string printNextLine(){
-        return "\n";
-    }
-}
+    ~Logger() {}
+};
 
 #endif

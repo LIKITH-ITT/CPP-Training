@@ -6,7 +6,7 @@
 #include <string>
 
 class XmlParser : public IParser {
-    std::string           _filePath;
+    std::string _filePath;
     tinyxml2::XMLDocument _xmlDocument;
 
 public:
