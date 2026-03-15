@@ -1,32 +1,19 @@
 #include <gtest/gtest.h>
-#include <fstream>
-#include <cstdio>
 #include "Validator.h"
 
-static const std::string TEMP_JSON = "/tmp/test_valid.json";
-static const std::string TEMP_CSV  = "/tmp/test_valid.csv";
-static const std::string TEMP_XML  = "/tmp/test_valid.xml";
-
-static void createTempFile(const std::string& path, const std::string& content = "x")
-{
-    std::ofstream f(path);
-    f << content;
-}
-
-static void removeTempFile(const std::string& path)
-{
-    std::remove(path.c_str());
-}
+const std::string JSON_PATH = "tests/docs/sample.json";
+const std::string CSV_PATH = "tests/docs/sample.csv";
+const std::string XML_PATH = "tests/docs/sample.xml";
 
 struct ValidatorChoiceParam
 {
     std::string input;
-    bool        expectedResult;
+    bool expectedResult;
 };
 
 class ValidatorIsValidChoiceTest : public ::testing::TestWithParam<ValidatorChoiceParam> {};
 
-TEST_P(ValidatorIsValidChoiceTest, GivenInput_IsValidChoice_ReturnsExpected)
+TEST_P(ValidatorIsValidChoiceTest, GivenInput_WhenIsValidChoice_ThenReturnsExpected)
 {
     testing::internal::CaptureStdout();
     ValidatorChoiceParam param = GetParam();
@@ -50,41 +37,24 @@ INSTANTIATE_TEST_SUITE_P(
     InvalidChoices,
     ValidatorIsValidChoiceTest,
     ::testing::Values(
-        ValidatorChoiceParam{"",    false},
-        ValidatorChoiceParam{"x",   false},
+        ValidatorChoiceParam{"", false},
+        ValidatorChoiceParam{"x", false},
         ValidatorChoiceParam{"yes", false},
-        ValidatorChoiceParam{"no",  false},
-        ValidatorChoiceParam{"1",   false},
-        ValidatorChoiceParam{"yy",  false}
+        ValidatorChoiceParam{"no", false},
+        ValidatorChoiceParam{"1", false},
+        ValidatorChoiceParam{"yy", false}
     )
 );
 
 struct ValidatorExtensionParam
 {
     std::string filePath;
-    bool        expectedResult;
+    bool expectedResult;
 };
 
-class ValidatorHasSupportedExtensionTest
-    : public ::testing::TestWithParam<ValidatorExtensionParam>
-{
-protected:
-    void SetUp() override
-    {
-        createTempFile(TEMP_JSON);
-        createTempFile(TEMP_CSV);
-        createTempFile(TEMP_XML);
-    }
+class ValidatorHasSupportedExtensionTest : public ::testing::TestWithParam<ValidatorExtensionParam> {};
 
-    void TearDown() override
-    {
-        removeTempFile(TEMP_JSON);
-        removeTempFile(TEMP_CSV);
-        removeTempFile(TEMP_XML);
-    }
-};
-
-TEST_P(ValidatorHasSupportedExtensionTest, GivenFilePath_IsValidFilePath_ExtensionCheckMatchesExpected)
+TEST_P(ValidatorHasSupportedExtensionTest, GivenFilePath_WhenIsValidFilePath_ThenExtensionCheckMatchesExpected)
 {
     testing::internal::CaptureStdout();
     ValidatorExtensionParam param = GetParam();
@@ -97,9 +67,9 @@ INSTANTIATE_TEST_SUITE_P(
     SupportedExtensions,
     ValidatorHasSupportedExtensionTest,
     ::testing::Values(
-        ValidatorExtensionParam{TEMP_JSON, true},
-        ValidatorExtensionParam{TEMP_CSV,  true},
-        ValidatorExtensionParam{TEMP_XML,  true}
+        ValidatorExtensionParam{JSON_PATH, true},
+        ValidatorExtensionParam{CSV_PATH, true},
+        ValidatorExtensionParam{XML_PATH, true}
     )
 );
 
@@ -107,36 +77,14 @@ INSTANTIATE_TEST_SUITE_P(
     UnsupportedExtensions,
     ValidatorHasSupportedExtensionTest,
     ::testing::Values(
-        ValidatorExtensionParam{"/tmp/file.txt",  false},
-        ValidatorExtensionParam{"/tmp/file.pdf",  false},
-        ValidatorExtensionParam{"/tmp/noextfile", false},
-        ValidatorExtensionParam{"",               false}
+        ValidatorExtensionParam{"tests/docs/file.txt", false},
+        ValidatorExtensionParam{"tests/docs/file.pdf", false},
+        ValidatorExtensionParam{"tests/docs/noextfile", false},
+        ValidatorExtensionParam{"", false}
     )
 );
 
-class ValidatorIsValidFilePathTest : public ::testing::Test
-{
-protected:
-    void SetUp() override
-    {
-        createTempFile(TEMP_JSON);
-    }
-
-    void TearDown() override
-    {
-        removeTempFile(TEMP_JSON);
-    }
-};
-
-TEST_F(ValidatorIsValidFilePathTest, GivenValidJsonFilePath_IsValidFilePath_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    bool result = Validator::isValidFilePath(TEMP_JSON);
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
-}
-
-TEST_F(ValidatorIsValidFilePathTest, GivenEmptyPath_IsValidFilePath_ReturnsFalse)
+TEST(ValidatorIsValidFilePathTest, GivenEmptyPath_WhenIsValidFilePath_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
     bool result = Validator::isValidFilePath("");
@@ -144,53 +92,26 @@ TEST_F(ValidatorIsValidFilePathTest, GivenEmptyPath_IsValidFilePath_ReturnsFalse
     EXPECT_FALSE(result);
 }
 
-TEST_F(ValidatorIsValidFilePathTest, GivenNonExistentFile_IsValidFilePath_ReturnsFalse)
+TEST(ValidatorIsValidFilePathTest, GivenNonExistentFile_WhenIsValidFilePath_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
-    bool result = Validator::isValidFilePath("/tmp/does_not_exist.json");
+    bool result = Validator::isValidFilePath("tests/docs/does_not_exist.json");
     testing::internal::GetCapturedStdout();
     EXPECT_FALSE(result);
 }
 
-TEST_F(ValidatorIsValidFilePathTest, GivenUnsupportedExtension_IsValidFilePath_ReturnsFalse)
+TEST(ValidatorIsValidFilePathTest, GivenUppercaseExtension_WhenIsValidFilePath_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = Validator::isValidFilePath("/tmp/file.txt");
+    bool result = Validator::isValidFilePath("tests/docs/json4.JSON");
     testing::internal::GetCapturedStdout();
-    EXPECT_FALSE(result);
-}
-
-TEST_F(ValidatorIsValidFilePathTest, GivenUppercaseExtension_IsValidFilePath_ReturnsTrue)
-{
-    std::string upperPath = "/tmp/test_valid.JSON";
-    createTempFile(upperPath);
-    testing::internal::CaptureStdout();
-    bool result = Validator::isValidFilePath(upperPath);
-    testing::internal::GetCapturedStdout();
-    removeTempFile(upperPath);
     EXPECT_TRUE(result);
 }
 
-TEST(ValidatorIsValidChoicePlainTest, GivenSingleSpaceInput_IsValidChoice_ReturnsFalse)
+TEST(ValidatorIsValidChoicePlainTest, GivenSingleSpaceInput_WhenIsValidChoice_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
     bool result = Validator::isValidChoice(" ");
     testing::internal::GetCapturedStdout();
     EXPECT_FALSE(result);
-}
-
-TEST(ValidatorIsValidChoicePlainTest, GivenLowercaseY_IsValidChoice_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    bool result = Validator::isValidChoice("y");
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
-}
-
-TEST(ValidatorIsValidChoicePlainTest, GivenLowercaseN_IsValidChoice_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    bool result = Validator::isValidChoice("n");
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
 }

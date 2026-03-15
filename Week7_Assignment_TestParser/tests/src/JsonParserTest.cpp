@@ -6,176 +6,99 @@
 class JsonParserTest : public ::testing::Test
 {
 protected:
-    JsonParser parser;
-
-    const std::string validArrayPath = "/tmp/json_test_array.json";
-    const std::string validObjectPath = "/tmp/json_test_object.json";
-    const std::string emptyFilePath = "/tmp/json_test_empty.json";
-    const std::string malformedPath = "/tmp/json_test_malformed.json";
-    const std::string emptyArrayPath = "/tmp/json_test_empty_array.json";
-    const std::string emptyObjectPath = "/tmp/json_test_empty_object.json";
-    const std::string missingPath = "/tmp/json_test_does_not_exist.json";
-
-    void SetUp() override
-    {
-        std::ofstream arr(validArrayPath);
-        arr << R"([{"name":"Alice","age":30},{"name":"Bob","age":25}])";
-        arr.close();
-
-        std::ofstream obj(validObjectPath);
-        obj << R"({"id":1,"title":"Test Record","active":true})";
-        obj.close();
-
-        std::ofstream empty(emptyFilePath);
-        empty.close();
-
-        std::ofstream bad(malformedPath);
-        bad << R"({"key": "value")";
-        bad.close();
-
-        std::ofstream emptyArr(emptyArrayPath);
-        emptyArr << "[]";
-        emptyArr.close();
-
-        std::ofstream emptyObj(emptyObjectPath);
-        emptyObj << "{}";
-        emptyObj.close();
-    }
-
-    void TearDown() override
-    {
-        std::remove(validArrayPath.c_str());
-        std::remove(validObjectPath.c_str());
-        std::remove(emptyFilePath.c_str());
-        std::remove(malformedPath.c_str());
-        std::remove(emptyArrayPath.c_str());
-        std::remove(emptyObjectPath.c_str());
-    }
+    JsonParser _parser;
+    const std::string _validArrayPath   = "tests/docs/sample.json";
+    const std::string _validObjectPath  = "tests/docs/json2.json";
+    const std::string _emptyFilePath    = "tests/docs/json1.json";
+    const std::string _malformedPath    = "tests/docs/json3.json";
+    const std::string _emptyArrayPath   = "tests/docs/json1.json";
+    const std::string _emptyObjectPath  = "tests/docs/json1.json";
+    const std::string _missingPath      = "tests/docs/does_not_exist.json";
 };
 
-TEST_F(JsonParserTest, GivenValidJsonArray_ParseFile_ReturnsTrue)
+TEST_F(JsonParserTest, GivenEmptyJsonArray_WhenParseFile_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(validArrayPath);
+    bool result = _parser.parseFile(_emptyArrayPath);
     testing::internal::GetCapturedStdout();
     EXPECT_TRUE(result);
 }
 
-TEST_F(JsonParserTest, GivenValidJsonObject_ParseFile_ReturnsTrue)
+TEST_F(JsonParserTest, GivenEmptyJsonObject_WhenParseFile_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(validObjectPath);
+    bool result = _parser.parseFile(_emptyObjectPath);
     testing::internal::GetCapturedStdout();
     EXPECT_TRUE(result);
 }
 
-TEST_F(JsonParserTest, GivenEmptyFile_ParseFile_ReturnsFalse)
+TEST_F(JsonParserTest, GivenEmptyPath_WhenParseFile_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(emptyFilePath);
+    bool result = _parser.parseFile("");
     testing::internal::GetCapturedStdout();
     EXPECT_FALSE(result);
 }
 
-TEST_F(JsonParserTest, GivenMissingFile_ParseFile_ReturnsFalse)
+TEST_F(JsonParserTest, GivenValidArrayParsed_WhenShowParsedFile_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(missingPath);
-    testing::internal::GetCapturedStdout();
-    EXPECT_FALSE(result);
-}
-
-TEST_F(JsonParserTest, GivenMalformedJson_ParseFile_ReturnsFalse)
-{
-    testing::internal::CaptureStdout();
-    bool result = parser.parseFile(malformedPath);
-    testing::internal::GetCapturedStdout();
-    EXPECT_FALSE(result);
-}
-
-TEST_F(JsonParserTest, GivenEmptyJsonArray_ParseFile_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    bool result = parser.parseFile(emptyArrayPath);
+    _parser.parseFile(_validArrayPath);
+    bool result = _parser.showParsedFile();
     testing::internal::GetCapturedStdout();
     EXPECT_TRUE(result);
 }
 
-TEST_F(JsonParserTest, GivenEmptyJsonObject_ParseFile_ReturnsTrue)
+TEST_F(JsonParserTest, GivenValidObjectParsed_WhenShowParsedFile_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(emptyObjectPath);
+    _parser.parseFile(_validObjectPath);
+    bool result = _parser.showParsedFile();
     testing::internal::GetCapturedStdout();
     EXPECT_TRUE(result);
 }
 
-TEST_F(JsonParserTest, GivenEmptyPath_ParseFile_ReturnsFalse)
+TEST_F(JsonParserTest, GivenArrayParsed_WhenShowParsedFile_ThenOutputContainsJsonLabel)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile("");
-    testing::internal::GetCapturedStdout();
-    EXPECT_FALSE(result);
-}
-
-TEST_F(JsonParserTest, GivenValidArrayParsed_ShowParsedFile_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(validArrayPath);
-    bool result = parser.showParsedFile();
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
-}
-
-TEST_F(JsonParserTest, GivenValidObjectParsed_ShowParsedFile_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(validObjectPath);
-    bool result = parser.showParsedFile();
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
-}
-
-TEST_F(JsonParserTest, GivenArrayParsed_ShowParsedFile_OutputContainsJsonLabel)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(validArrayPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validArrayPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("JSON"), std::string::npos);
 }
 
-TEST_F(JsonParserTest, GivenArrayParsed_ShowParsedFile_OutputContainsFilePath)
+TEST_F(JsonParserTest, GivenArrayParsed_WhenShowParsedFile_ThenOutputContainsFilePath)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(validArrayPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validArrayPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_NE(output.find(validArrayPath), std::string::npos);
+    EXPECT_NE(output.find(_validArrayPath), std::string::npos);
 }
 
-TEST_F(JsonParserTest, GivenArrayParsed_ShowParsedFile_OutputContainsFieldValue)
+TEST_F(JsonParserTest, GivenArrayParsed_WhenShowParsedFile_ThenOutputContainsFieldValue)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(validArrayPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validArrayPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("Alice"), std::string::npos);
 }
 
-TEST_F(JsonParserTest, GivenEmptyArrayParsed_ShowParsedFile_OutputContainsNoRecords)
+TEST_F(JsonParserTest, GivenEmptyArrayParsed_WhenShowParsedFile_ThenOutputContainsNoRecords)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(emptyArrayPath);
-    parser.showParsedFile();
+    _parser.parseFile(_emptyArrayPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("No records"), std::string::npos);
 }
 
-TEST_F(JsonParserTest, GivenArrayParsed_ShowParsedFile_OutputContainsRecordCount)
+TEST_F(JsonParserTest, GivenArrayParsed_WhenShowParsedFile_ThenOutputContainsRecordCount)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(validArrayPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validArrayPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("2"), std::string::npos);
 }

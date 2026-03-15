@@ -3,25 +3,26 @@
 #include "JsonParser.h"
 #include "CsvParser.h"
 #include "XmlParser.h"
+#include "Validator.h"
 #include <algorithm>
 
-IParser* ParserFactory::create(const std::string& filePath) {
-    int dotPosition = filePath.rfind(Constants::FULL_STOP);
-
-    if (dotPosition == (int)std::string::npos)
-        return nullptr;
-
-    std::string extension = filePath.substr(dotPosition + 1);
-    std::transform(extension.begin(), extension.end(), extension.begin(), ::toupper);
+IParser* ParserFactory::create(const std::string& filePath)
+{
+    IParser* parser = nullptr;
+    std::string extension = Validator::extractExtension(filePath);
 
     if (extension == Constants::FORMAT_JSON)
-        return new JsonParser();
+    {
+        parser = new JsonParser();
+    }
+    else if (extension == Constants::FORMAT_CSV)
+    {
+        parser = new CsvParser();
+    }
+    else if (extension == Constants::FORMAT_XML)
+    {
+        parser = new XmlParser();
+    }
 
-    if (extension == Constants::FORMAT_CSV)
-        return new CsvParser();
-
-    if (extension == Constants::FORMAT_XML)
-        return new XmlParser();
-
-    return nullptr;
+    return parser;
 }

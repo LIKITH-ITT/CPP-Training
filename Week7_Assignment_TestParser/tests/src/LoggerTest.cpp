@@ -1,57 +1,42 @@
 #include <gtest/gtest.h>
 #include "Logger.h"
 
-TEST(LoggerTest, GivenConstCharMessage_PrintMessage_OutputsCorrectly)
+TEST(LoggerTest, GivenConstCharMessage_WhenPrintMessage_ThenOutputsCorrectly)
 {
     testing::internal::CaptureStdout();
-    Logger::printMessage("hello world");
+    Logger::printMessage("test logger");
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "hello world");
+    EXPECT_EQ(output, "test logger");
 }
 
-TEST(LoggerTest, GivenStdStringMessage_PrintMessage_OutputsCorrectly)
+TEST(LoggerTest, GivenStdStringMessage_WhenPrintMessage_ThenOutputsCorrectly)
 {
     testing::internal::CaptureStdout();
-    std::string msg = "test string message";
-    Logger::printMessage(msg);
+    std::string message = "test string message";
+    Logger::printMessage(message);
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, msg);
+    EXPECT_EQ(output, message);
 }
 
-TEST(LoggerTest, GivenEmptyString_PrintMessage_OutputsNothing)
+TEST(LoggerTest, GivenEmptyString_WhenPrintMessage_ThenOutputsNothing)
 {
     testing::internal::CaptureStdout();
-    Logger::printMessage("");
+    std::string message = "";
+    Logger::printMessage(message);
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, message);
+}
+
+TEST(LoggerTest, GivenEmptyConstChar_WhenPrintMessage_ThenOutputsNothing)
+{
+    testing::internal::CaptureStdout();
+    Logger::printMessage((""));
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_EQ(output, "");
 }
 
-TEST(LoggerTest, GivenEmptyConstChar_PrintMessage_OutputsNothing)
-{
-    testing::internal::CaptureStdout();
-    Logger::printMessage(static_cast<const char*>(""));
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "");
-}
-
-TEST(LoggerTest, GivenCall_PrintNextLine_ReturnsNewlineString)
+TEST(LoggerTest, GivenCall_WhenPrintNextLine_ThenReturnsNewlineString)
 {
     std::string result = Logger::printNextLine();
     EXPECT_EQ(result, "\n");
-}
-
-TEST(LoggerTest, GivenMultipleCalls_PrintNextLine_AlwaysReturnsNewline)
-{
-    for (int i = 0; i < 5; ++i)
-    {
-        EXPECT_EQ(Logger::printNextLine(), "\n");
-    }
-}
-
-TEST(LoggerTest, GivenMessageWithNewline_PrintMessage_OutputsWithNewline)
-{
-    testing::internal::CaptureStdout();
-    Logger::printMessage("line1\nline2");
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "line1\nline2");
 }

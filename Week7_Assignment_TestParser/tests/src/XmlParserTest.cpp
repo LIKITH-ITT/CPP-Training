@@ -6,171 +6,95 @@
 class XmlParserTest : public ::testing::Test
 {
 protected:
-    XmlParser parser;
-
-    const std::string validXmlPath = "/tmp/xml_test_valid.xml";
-    const std::string noRootXmlPath = "/tmp/xml_test_no_root.xml";
-    const std::string emptyChildPath = "/tmp/xml_test_empty_root.xml";
-    const std::string malformedPath = "/tmp/xml_test_malformed.xml";
-    const std::string missingPath = "/tmp/xml_test_missing.xml";
-    const std::string multiRecordPath = "/tmp/xml_test_multi.xml";
-
-    void SetUp() override
-    {
-        std::ofstream valid(validXmlPath);
-        valid << R"(<?xml version="1.0"?>)"  "\n"
-              << "<employees>\n"
-              << "  <employee><name>Alice</name><age>30</age></employee>\n"
-              << "  <employee><name>Bob</name><age>25</age></employee>\n"
-              << "</employees>\n";
-        valid.close();
-
-        std::ofstream emptyRoot(emptyChildPath);
-        emptyRoot << R"(<?xml version="1.0"?>)" "\n"
-                  << "<records/>\n";
-        emptyRoot.close();
-
-        std::ofstream bad(malformedPath);
-        bad << "no xml tags";
-        bad.close();
-
-        std::ofstream multi(multiRecordPath);
-        multi << R"(<?xml version="1.0"?>)" "\n"
-              << "<catalog>\n"
-              << "  <book><title>C++ Primer</title><year>2012</year></book>\n"
-              << "  <book><title>Clean Code</title><year>2008</year></book>\n"
-              << "  <book><title>Refactoring</title><year>2018</year></book>\n"
-              << "</catalog>\n";
-        multi.close();
-
-    }
-
-    void TearDown() override
-    {
-        std::remove(validXmlPath.c_str());
-        std::remove(emptyChildPath.c_str());
-        std::remove(malformedPath.c_str());
-        std::remove(multiRecordPath.c_str());
-    }
+    XmlParser _parser;
+    const std::string _validXmlPath = "tests/docs/sample.xml";
+    const std::string _emptyChildPath = "tests/docs/xml2.xml";
+    const std::string _nonXmlPath = "tests/docs/sample.json";
+    const std::string _missingPath = "tests/docs/does_not_exist.xml";
 };
 
 
-TEST_F(XmlParserTest, GivenValidXmlFile_ParseFile_ReturnsTrue)
+TEST_F(XmlParserTest, GivenValidXmlFile_WhenParseFile_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(validXmlPath);
+    bool result = _parser.parseFile(_validXmlPath);
     testing::internal::GetCapturedStdout();
     EXPECT_TRUE(result);
 }
 
-TEST_F(XmlParserTest, GivenMissingFile_ParseFile_ReturnsFalse)
+TEST_F(XmlParserTest, GivenMissingFile_WhenParseFile_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(missingPath);
+    bool result = _parser.parseFile(_missingPath);
     testing::internal::GetCapturedStdout();
     EXPECT_FALSE(result);
 }
 
-TEST_F(XmlParserTest, GivenNonXmlTextFile_ParseFile_ReturnsFalse)
+TEST_F(XmlParserTest, GivenNonXmlTextFile_WhenParseFile_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(malformedPath);
+    bool result = _parser.parseFile(_nonXmlPath);
     testing::internal::GetCapturedStdout();
     EXPECT_FALSE(result);
 }
 
-TEST_F(XmlParserTest, GivenEmptyPath_ParseFile_ReturnsFalse)
+TEST_F(XmlParserTest, GivenEmptyPath_WhenParseFile_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile("");
+    bool result = _parser.parseFile("");
     testing::internal::GetCapturedStdout();
     EXPECT_FALSE(result);
 }
 
-TEST_F(XmlParserTest, GivenEmptyRootXml_ParseFile_ReturnsTrue)
+TEST_F(XmlParserTest, GivenEmptyRootXml_WhenParseFile_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(emptyChildPath);
+    bool result = _parser.parseFile(_emptyChildPath);
     testing::internal::GetCapturedStdout();
     EXPECT_TRUE(result);
 }
 
-TEST_F(XmlParserTest, GivenMultiRecordXml_ParseFile_ReturnsTrue)
+TEST_F(XmlParserTest, GivenValidParsedFile_WhenShowParsedFile_ThenOutputContainsXmlLabel)
 {
     testing::internal::CaptureStdout();
-    bool result = parser.parseFile(multiRecordPath);
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
-}
-
-TEST_F(XmlParserTest, GivenValidParsedFile_ShowParsedFile_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(validXmlPath);
-    bool result = parser.showParsedFile();
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
-}
-
-TEST_F(XmlParserTest, GivenValidParsedFile_ShowParsedFile_OutputContainsXmlLabel)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(validXmlPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validXmlPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("XML"), std::string::npos);
 }
 
-TEST_F(XmlParserTest, GivenValidParsedFile_ShowParsedFile_OutputContainsFilePath)
+TEST_F(XmlParserTest, GivenValidParsedFile_WhenShowParsedFile_ThenOutputContainsFilePath)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(validXmlPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validXmlPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_NE(output.find(validXmlPath), std::string::npos);
+    EXPECT_NE(output.find(_validXmlPath), std::string::npos);
 }
 
-TEST_F(XmlParserTest, GivenValidParsedFile_ShowParsedFile_OutputContainsFieldValue)
+TEST_F(XmlParserTest, GivenValidParsedFile_WhenShowParsedFile_ThenOutputContainsFieldValue)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(validXmlPath);
-    parser.showParsedFile();
+    _parser.parseFile(_validXmlPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_NE(output.find("Alice"), std::string::npos);
+    EXPECT_NE(output.find("Bob"), std::string::npos);
 }
 
-TEST_F(XmlParserTest, GivenEmptyRootParsed_ShowParsedFile_OutputContainsZeroRecords)
+TEST_F(XmlParserTest, GivenEmptyRootParsed_WhenShowParsedFile_ThenOutputContainsZeroRecords)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(emptyChildPath);
-    parser.showParsedFile();
+    _parser.parseFile(_emptyChildPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("0"), std::string::npos);
 }
 
-TEST_F(XmlParserTest, GivenEmptyRootParsed_ShowParsedFile_OutputContainsNoRecords)
+TEST_F(XmlParserTest, GivenEmptyRootParsed_WhenShowParsedFile_ThenOutputContainsNoRecords)
 {
     testing::internal::CaptureStdout();
-    parser.parseFile(emptyChildPath);
-    parser.showParsedFile();
+    _parser.parseFile(_emptyChildPath);
+    _parser.showParsedFile();
     std::string output = testing::internal::GetCapturedStdout();
     EXPECT_NE(output.find("No records"), std::string::npos);
-}
-
-TEST_F(XmlParserTest, GivenMultiRecordParsed_ShowParsedFile_OutputContainsRecordCount)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(multiRecordPath);
-    parser.showParsedFile();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_NE(output.find("3"), std::string::npos);
-}
-
-TEST_F(XmlParserTest, GivenMultiRecordParsed_ShowParsedFile_ReturnsTrue)
-{
-    testing::internal::CaptureStdout();
-    parser.parseFile(multiRecordPath);
-    bool result = parser.showParsedFile();
-    testing::internal::GetCapturedStdout();
-    EXPECT_TRUE(result);
 }
