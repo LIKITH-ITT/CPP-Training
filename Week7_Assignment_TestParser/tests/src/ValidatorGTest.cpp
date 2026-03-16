@@ -11,9 +11,9 @@ struct ValidatorChoiceParam
     bool expectedResult;
 };
 
-class ValidatorIsValidChoiceTest : public ::testing::TestWithParam<ValidatorChoiceParam> {};
+class GivenValidatorIsValidChoiceTest : public ::testing::TestWithParam<ValidatorChoiceParam> {};
 
-TEST_P(ValidatorIsValidChoiceTest, GivenInput_WhenIsValidChoice_ThenReturnsExpected)
+TEST_P(GivenValidatorIsValidChoiceTest, WhenInputProvided_ThenIsValidChoiceReturnsExpected)
 {
     testing::internal::CaptureStdout();
     ValidatorChoiceParam param = GetParam();
@@ -24,7 +24,7 @@ TEST_P(ValidatorIsValidChoiceTest, GivenInput_WhenIsValidChoice_ThenReturnsExpec
 
 INSTANTIATE_TEST_SUITE_P(
     ValidChoices,
-    ValidatorIsValidChoiceTest,
+    GivenValidatorIsValidChoiceTest,
     ::testing::Values(
         ValidatorChoiceParam{"y", true},
         ValidatorChoiceParam{"Y", true},
@@ -35,14 +35,14 @@ INSTANTIATE_TEST_SUITE_P(
 
 INSTANTIATE_TEST_SUITE_P(
     InvalidChoices,
-    ValidatorIsValidChoiceTest,
+    GivenValidatorIsValidChoiceTest,
     ::testing::Values(
-        ValidatorChoiceParam{"", false},
-        ValidatorChoiceParam{"x", false},
+        ValidatorChoiceParam{"",    false},
+        ValidatorChoiceParam{"x",   false},
         ValidatorChoiceParam{"yes", false},
-        ValidatorChoiceParam{"no", false},
-        ValidatorChoiceParam{"1", false},
-        ValidatorChoiceParam{"yy", false}
+        ValidatorChoiceParam{"no",  false},
+        ValidatorChoiceParam{"1",   false},
+        ValidatorChoiceParam{"yy",  false}
     )
 );
 
@@ -52,9 +52,9 @@ struct ValidatorExtensionParam
     bool expectedResult;
 };
 
-class ValidatorHasSupportedExtensionTest : public ::testing::TestWithParam<ValidatorExtensionParam> {};
+class GivenValidatorHasSupportedExtensionTest : public ::testing::TestWithParam<ValidatorExtensionParam> {};
 
-TEST_P(ValidatorHasSupportedExtensionTest, GivenFilePath_WhenIsValidFilePath_ThenExtensionCheckMatchesExpected)
+TEST_P(GivenValidatorHasSupportedExtensionTest, WhenFilePathProvided_ThenExtensionCheckMatchesExpected)
 {
     testing::internal::CaptureStdout();
     ValidatorExtensionParam param = GetParam();
@@ -65,17 +65,17 @@ TEST_P(ValidatorHasSupportedExtensionTest, GivenFilePath_WhenIsValidFilePath_The
 
 INSTANTIATE_TEST_SUITE_P(
     SupportedExtensions,
-    ValidatorHasSupportedExtensionTest,
+    GivenValidatorHasSupportedExtensionTest,
     ::testing::Values(
         ValidatorExtensionParam{JSON_PATH, true},
-        ValidatorExtensionParam{CSV_PATH, true},
-        ValidatorExtensionParam{XML_PATH, true}
+        ValidatorExtensionParam{CSV_PATH,  true},
+        ValidatorExtensionParam{XML_PATH,  true}
     )
 );
 
 INSTANTIATE_TEST_SUITE_P(
     UnsupportedExtensions,
-    ValidatorHasSupportedExtensionTest,
+    GivenValidatorHasSupportedExtensionTest,
     ::testing::Values(
         ValidatorExtensionParam{"tests/docs/file.txt", false},
         ValidatorExtensionParam{"tests/docs/file.pdf", false},
@@ -84,7 +84,7 @@ INSTANTIATE_TEST_SUITE_P(
     )
 );
 
-TEST(ValidatorIsValidFilePathTest, GivenEmptyPath_WhenIsValidFilePath_ThenReturnsFalse)
+TEST(GivenValidatorIsValidFilePathTest, WhenEmptyPath_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
     bool result = Validator::isValidFilePath("");
@@ -92,7 +92,7 @@ TEST(ValidatorIsValidFilePathTest, GivenEmptyPath_WhenIsValidFilePath_ThenReturn
     EXPECT_FALSE(result);
 }
 
-TEST(ValidatorIsValidFilePathTest, GivenNonExistentFile_WhenIsValidFilePath_ThenReturnsFalse)
+TEST(GivenValidatorIsValidFilePathTest, WhenNonExistentFile_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
     bool result = Validator::isValidFilePath("tests/docs/does_not_exist.json");
@@ -100,7 +100,7 @@ TEST(ValidatorIsValidFilePathTest, GivenNonExistentFile_WhenIsValidFilePath_Then
     EXPECT_FALSE(result);
 }
 
-TEST(ValidatorIsValidFilePathTest, GivenUppercaseExtension_WhenIsValidFilePath_ThenReturnsTrue)
+TEST(GivenValidatorIsValidFilePathTest, WhenUppercaseExtension_ThenReturnsTrue)
 {
     testing::internal::CaptureStdout();
     bool result = Validator::isValidFilePath("tests/docs/json4.JSON");
@@ -108,7 +108,7 @@ TEST(ValidatorIsValidFilePathTest, GivenUppercaseExtension_WhenIsValidFilePath_T
     EXPECT_TRUE(result);
 }
 
-TEST(ValidatorIsValidChoicePlainTest, GivenSingleSpaceInput_WhenIsValidChoice_ThenReturnsFalse)
+TEST(GivenValidatorIsValidChoicePlainTest, WhenSingleSpaceInput_ThenReturnsFalse)
 {
     testing::internal::CaptureStdout();
     bool result = Validator::isValidChoice(" ");

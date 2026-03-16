@@ -7,13 +7,13 @@ class JsonParserTest : public ::testing::Test
 {
 protected:
     JsonParser _parser;
-    const std::string _validArrayPath   = "tests/docs/sample.json";
-    const std::string _validObjectPath  = "tests/docs/json2.json";
-    const std::string _emptyFilePath    = "tests/docs/json1.json";
-    const std::string _malformedPath    = "tests/docs/json3.json";
-    const std::string _emptyArrayPath   = "tests/docs/json1.json";
-    const std::string _emptyObjectPath  = "tests/docs/json1.json";
-    const std::string _missingPath      = "tests/docs/does_not_exist.json";
+    const std::string _validArrayPath = "tests/docs/sample.json";
+    const std::string _validObjectPath = "tests/docs/json2.json";
+    const std::string _emptyFilePath = "tests/docs/json1.json";
+    const std::string _malformedPath = "tests/docs/json3.json";
+    const std::string _emptyArrayPath = "tests/docs/json1.json";
+    const std::string _emptyObjectPath = "tests/docs/json1.json";
+    const std::string _missingPath = "tests/docs/does_not_exist.json";
 };
 
 TEST_F(JsonParserTest, GivenEmptyJsonArray_WhenParseFile_ThenReturnsTrue)

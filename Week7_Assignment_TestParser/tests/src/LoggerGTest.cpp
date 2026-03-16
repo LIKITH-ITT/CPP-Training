@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "Logger.h"
 
-TEST(LoggerTest, GivenConstCharMessage_WhenPrintMessage_ThenOutputsCorrectly)
+TEST(GivenLoggerTest, WhenConstCharMessage_ThenOutputsCorrectly)
 {
     testing::internal::CaptureStdout();
     Logger::printMessage("test logger");
@@ -9,7 +9,7 @@ TEST(LoggerTest, GivenConstCharMessage_WhenPrintMessage_ThenOutputsCorrectly)
     EXPECT_EQ(output, "test logger");
 }
 
-TEST(LoggerTest, GivenStdStringMessage_WhenPrintMessage_ThenOutputsCorrectly)
+TEST(GivenLoggerTest, WhenStdStringMessage_ThenOutputsCorrectly)
 {
     testing::internal::CaptureStdout();
     std::string message = "test string message";
@@ -18,7 +18,7 @@ TEST(LoggerTest, GivenStdStringMessage_WhenPrintMessage_ThenOutputsCorrectly)
     EXPECT_EQ(output, message);
 }
 
-TEST(LoggerTest, GivenEmptyString_WhenPrintMessage_ThenOutputsNothing)
+TEST(GivenLoggerTest, WhenEmptyString_ThenOutputsNothing)
 {
     testing::internal::CaptureStdout();
     std::string message = "";
@@ -27,7 +27,7 @@ TEST(LoggerTest, GivenEmptyString_WhenPrintMessage_ThenOutputsNothing)
     EXPECT_EQ(output, message);
 }
 
-TEST(LoggerTest, GivenEmptyConstChar_WhenPrintMessage_ThenOutputsNothing)
+TEST(GivenLoggerTest, WhenEmptyConstChar_ThenOutputsNothing)
 {
     testing::internal::CaptureStdout();
     Logger::printMessage((""));
@@ -35,7 +35,7 @@ TEST(LoggerTest, GivenEmptyConstChar_WhenPrintMessage_ThenOutputsNothing)
     EXPECT_EQ(output, "");
 }
 
-TEST(LoggerTest, GivenCall_WhenPrintNextLine_ThenReturnsNewlineString)
+TEST(GivenLoggerTest, WhenPrintNextLineCalled_ThenReturnsNewlineString)
 {
     std::string result = Logger::printNextLine();
     EXPECT_EQ(result, "\n");
