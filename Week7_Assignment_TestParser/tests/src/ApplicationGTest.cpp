@@ -8,36 +8,50 @@
 
 const std::string filePath = "tests/docs/sample.json";
 
-TEST(GivenApplicationTest, WhenNullParser_ThenPrintsUnsupportedTypeMessage)
+class GivenApplicationTest : public ::testing::Test
 {
-    Application app(nullptr, filePath);
+protected:
+    MockIParser* mockParser;
+    Application* app;
 
+    void SetUp() override {
+        mockParser = new MockIParser();
+        app = new Application(mockParser, filePath);
+    }
+    void TearDown() override {
+        delete app;
+        delete mockParser;
+    }
+    void createNull() {
+        delete app;
+        app = new Application(nullptr, filePath);
+    }
+};
+
+TEST_F(GivenApplicationTest, WhenNullParser_ThenPrintsUnsupportedTypeMessage)
+{
+    createNull();
     testing::internal::CaptureStdout();
-    app.handleParsing();
+    app->handleParsing();
     std::string output = testing::internal::GetCapturedStdout();
+
     EXPECT_NE(output.find("Unsupported"), std::string::npos);
 }
-
-TEST(GivenApplicationTest, WhenParseFileFails_ThenPrintsParseFailedMessage)
+TEST_F(GivenApplicationTest, WhenParseFileFails_ThenPrintsParseFailedMessage)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(false));
 
-    Application app(mockParser, filePath);
-
     testing::internal::CaptureStdout();
-    app.handleParsing();
+    app->handleParsing();
     std::string output = testing::internal::GetCapturedStdout();
+
     EXPECT_NE(output.find("errors"), std::string::npos);
 }
 
-TEST(GivenApplicationTest, WhenParseFileFails_ThenShowParsedFileIsNotCalled)
+TEST_F(GivenApplicationTest, WhenParseFileFails_ThenShowParsedFileIsNotCalled)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(false));
@@ -45,17 +59,11 @@ TEST(GivenApplicationTest, WhenParseFileFails_ThenShowParsedFileIsNotCalled)
     EXPECT_CALL(*mockParser, showParsedFile())
         .Times(0);
 
-    Application app(mockParser, filePath);
-
-    testing::internal::CaptureStdout();
-    app.handleParsing();
-    testing::internal::GetCapturedStdout();
+    app->handleParsing();
 }
 
-TEST(GivenApplicationTest, WhenBothCallsSucceed_ThenPrintsParseSuccessMessage)
+TEST_F(GivenApplicationTest, WhenBothCallsSucceed_ThenPrintsParseSuccessMessage)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(true));
@@ -64,18 +72,15 @@ TEST(GivenApplicationTest, WhenBothCallsSucceed_ThenPrintsParseSuccessMessage)
         .Times(1)
         .WillOnce(::testing::Return(true));
 
-    Application app(mockParser, filePath);
-
     testing::internal::CaptureStdout();
-    app.handleParsing();
+    app->handleParsing();
     std::string output = testing::internal::GetCapturedStdout();
+
     EXPECT_NE(output.find("successfully"), std::string::npos);
 }
 
-TEST(GivenApplicationTest, WhenBothCallsSucceed_ThenShowParsedFileIsCalledExactlyOnce)
+TEST_F(GivenApplicationTest, WhenBothCallsSucceed_ThenShowParsedFileIsCalledExactlyOnce)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(true));
@@ -84,17 +89,11 @@ TEST(GivenApplicationTest, WhenBothCallsSucceed_ThenShowParsedFileIsCalledExactl
         .Times(1)
         .WillOnce(::testing::Return(true));
 
-    Application app(mockParser, filePath);
-
-    testing::internal::CaptureStdout();
-    app.handleParsing();
-    testing::internal::GetCapturedStdout();
+    app->handleParsing();
 }
 
-TEST(GivenApplicationTest, WhenShowParsedFileFails_ThenPrintsDisplayFailedMessage)
+TEST_F(GivenApplicationTest, WhenShowParsedFileFails_ThenPrintsDisplayFailedMessage)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(true));
@@ -103,18 +102,14 @@ TEST(GivenApplicationTest, WhenShowParsedFileFails_ThenPrintsDisplayFailedMessag
         .Times(1)
         .WillOnce(::testing::Return(false));
 
-    Application app(mockParser, filePath);
-
     testing::internal::CaptureStdout();
-    app.handleParsing();
+    app->handleParsing();
     std::string output = testing::internal::GetCapturedStdout();
+
     EXPECT_NE(output.find("Error"), std::string::npos);
 }
-
-TEST(GivenApplicationTest, WhenShowParsedFileFails_ThenParseSuccessMessageIsStillPrinted)
+TEST_F(GivenApplicationTest, WhenShowParsedFileFails_ThenParseSuccessMessageIsStillPrinted)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(true));
@@ -123,18 +118,15 @@ TEST(GivenApplicationTest, WhenShowParsedFileFails_ThenParseSuccessMessageIsStil
         .Times(1)
         .WillOnce(::testing::Return(false));
 
-    Application app(mockParser, filePath);
-
     testing::internal::CaptureStdout();
-    app.handleParsing();
+    app->handleParsing();
     std::string output = testing::internal::GetCapturedStdout();
+
     EXPECT_NE(output.find("successfully"), std::string::npos);
 }
 
-TEST(GivenApplicationTest, WhenValidParserProvided_ThenParseFileIsCalledExactlyOnce)
+TEST_F(GivenApplicationTest, WhenValidParserProvided_ThenParseFileIsCalledExactlyOnce)
 {
-    MockIParser* mockParser = new MockIParser();
-
     EXPECT_CALL(*mockParser, parseFile(filePath))
         .Times(1)
         .WillOnce(::testing::Return(true));
@@ -143,9 +135,5 @@ TEST(GivenApplicationTest, WhenValidParserProvided_ThenParseFileIsCalledExactlyO
         .Times(1)
         .WillOnce(::testing::Return(true));
 
-    Application app(mockParser, filePath);
-
-    testing::internal::CaptureStdout();
-    app.handleParsing();
-    testing::internal::GetCapturedStdout();
+    app->handleParsing();
 }
