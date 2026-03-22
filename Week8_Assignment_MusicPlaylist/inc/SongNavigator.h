@@ -17,7 +17,7 @@ public:
     Song current() const;
     bool hasCurrentSong() const;
     ErrorCode reset();
-    int getCurrentIdx() const;
+    int getCurrentIndex() const;
 
 private:
     const Playlist* playlist_;

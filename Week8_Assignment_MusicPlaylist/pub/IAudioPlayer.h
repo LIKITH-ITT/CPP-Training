@@ -9,7 +9,7 @@ class IAudioPlayer
 public:
     static const int STATE_STOPPED = 0;
     static const int STATE_PLAYING = 1;
-    static const int STATE_PAUSED = 2;
+    static const int STATE_PAUSED  = 2;
 
     virtual ~IAudioPlayer() {}
 
@@ -18,6 +18,7 @@ public:
     virtual ErrorCode resume() = 0;
     virtual ErrorCode stop() = 0;
     virtual int getState() = 0;
+    virtual bool isSongFinished() = 0;
 };
 
-#endif 
+#endif

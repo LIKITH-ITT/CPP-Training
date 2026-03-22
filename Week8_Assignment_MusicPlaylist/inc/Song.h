@@ -22,4 +22,4 @@ public:
     static std::string formatDuration(int seconds);
 };
 
-#endif // SONG_H
+#endif

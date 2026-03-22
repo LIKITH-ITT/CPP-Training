@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "ConsoleUI.h"
+#include "IConsoleUI.h"
 #include "PlaylistManager.h"
 #include "PlaylistRepository.h"
 #include "SystemAudioPlayer.h"
@@ -7,7 +7,7 @@
 
 int main()
 {
-    ConsoleUI ui;
+    IConsoleUI ui;
     PlaylistManager manager;
     PlaylistRepository repo;
     SystemAudioPlayer player;

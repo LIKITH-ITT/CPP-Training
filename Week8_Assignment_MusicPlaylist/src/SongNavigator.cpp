@@ -58,7 +58,7 @@ ErrorCode SongNavigator::reset()
     return ErrorCode::SUCCESS;
 }
 
-int SongNavigator::getCurrentIdx() const
+int SongNavigator::getCurrentIndex() const
 {
     return currentIndex_;
 }

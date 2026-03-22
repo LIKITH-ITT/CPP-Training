@@ -1,10 +1,10 @@
-#include "ConsoleUI.h"
+#include "IConsoleUI.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <vector>
 
-void ConsoleUI::showMainMenu() const
+void IConsoleUI::showMainMenu() const
 {
     std::cout << "\n=========================================\n";
     std::cout << "       MUSIC PLAYLIST MANAGER\n";
@@ -18,7 +18,7 @@ void ConsoleUI::showMainMenu() const
     std::cout << "\nEnter choice: ";
 }
 
-void ConsoleUI::showPlaylistMenu(const std::string& playlistName) const
+void IConsoleUI::showPlaylistMenu(const std::string& playlistName) const
 {
     std::cout << "\nPLAYLIST MENU — " << playlistName << "\n";
     std::cout << std::string(40, '-') << "\n";
@@ -37,7 +37,7 @@ void ConsoleUI::showPlaylistMenu(const std::string& playlistName) const
     std::cout << "\nEnter choice: ";
 }
 
-void ConsoleUI::showPlaylist(const Playlist& playlist) const
+void IConsoleUI::showPlaylist(const Playlist& playlist) const
 {
     std::cout << "\nPlaylist: " << playlist.name << "\n";
     std::cout << std::string(70, '-') << "\n";
@@ -63,7 +63,7 @@ void ConsoleUI::showPlaylist(const Playlist& playlist) const
     std::cout << std::string(70, '-') << "\n";
 }
 
-void ConsoleUI::showPlaybackStatus(int state, const Song* song) const
+void IConsoleUI::showPlaybackStatus(int state, const Song* song) const
 {
     std::cout << "\n--- Playback Status ---\n";
     if (state == IAudioPlayer::STATE_PLAYING && song != NULL)
@@ -87,7 +87,7 @@ void ConsoleUI::showPlaybackStatus(int state, const Song* song) const
     std::cout << "-----------------------\n";
 }
 
-void ConsoleUI::showAudioFiles(const std::vector<std::string>& files) const
+void IConsoleUI::showAudioFiles(const std::vector<std::string>& files) const
 {
     std::cout << "\nAvailable audio files:\n";
     std::cout << std::string(35, '-') << "\n";
@@ -104,7 +104,7 @@ void ConsoleUI::showAudioFiles(const std::vector<std::string>& files) const
     std::cout << std::string(35, '-') << "\n";
 }
 
-void ConsoleUI::showSavedPlaylists(const std::vector<std::string>& names) const
+void IConsoleUI::showSavedPlaylists(const std::vector<std::string>& names) const
 {
     std::cout << "\nSaved playlists:\n";
     std::cout << std::string(35, '-') << "\n";
@@ -121,25 +121,28 @@ void ConsoleUI::showSavedPlaylists(const std::vector<std::string>& names) const
     std::cout << std::string(35, '-') << "\n";
 }
 
-void ConsoleUI::showMessage(const std::string& msg) const
+void IConsoleUI::showMessage(const std::string& msg) const
 {
     std::cout << "\n" << msg << "\n";
 }
 
-void ConsoleUI::showError(ErrorCode code) const
+void IConsoleUI::showError(ErrorCode code) const
 {
     std::cout << "\n" << errorToString(code) << "\n";
 }
 
-std::string ConsoleUI::getInput() const
+std::string IConsoleUI::getInput() const
 {
     std::string input;
     std::getline(std::cin, input);
     return input;
 }
 
-std::string ConsoleUI::prompt(const std::string& label) const
+std::string IConsoleUI::prompt(const std::string& label) const
 {
     std::cout << label;
     return getInput();
 }
+
+IConsoleUI::IConsoleUI()  {}
+IConsoleUI::~IConsoleUI() {} 

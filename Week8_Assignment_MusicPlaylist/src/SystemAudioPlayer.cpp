@@ -1,101 +1,86 @@
 #include "SystemAudioPlayer.h"
 #include <fstream>
-#include <cstdlib>
 #include <string>
 
-
-SystemAudioPlayer::SystemAudioPlayer()
-    : state_(IAudioPlayer::STATE_STOPPED)
+SystemAudioPlayer::SystemAudioPlayer() : stoppedByUser_(false)
 {}
 
 SystemAudioPlayer::~SystemAudioPlayer()
 {
-    if (state_ != IAudioPlayer::STATE_STOPPED)
-    {
-        killProcess();
-    }
+    music_.stop();
 }
 
 ErrorCode SystemAudioPlayer::play(const std::string& filePath)
 {
+    ErrorCode errorCode = ErrorCode::SUCCESS;
     std::ifstream file(filePath.c_str());
     if (!file.is_open())
     {
-        return ErrorCode::FILE_NOT_FOUND;
+        errorCode = ErrorCode::FILE_NOT_FOUND;
     }
     file.close();
 
-    killProcess();
+    music_.stop();
 
-    std::string command;
+    if (!music_.openFromFile(filePath))
+    {
+        errorCode = ErrorCode::FILE_READ_ERROR;
+    }
 
-#ifdef __APPLE__
-    command = "afplay \"" + filePath + "\" &";
-#else
-    command = "aplay \"" + filePath + "\" > /dev/null 2>&1 &";
-#endif
-
-    std::system(command.c_str());
-    state_ = IAudioPlayer::STATE_PLAYING;
-    return ErrorCode::SUCCESS;
+    music_.setLoop(false);
+    music_.play();
+    stoppedByUser_ = false;
+    return errorCode;
 }
 
 ErrorCode SystemAudioPlayer::pause()
 {
-    if (state_ != IAudioPlayer::STATE_PLAYING)
+    ErrorCode errorCode = ErrorCode::SUCCESS;
+    if (music_.getStatus() != sf::Music::Playing)
     {
-        return ErrorCode::NOTHING_PLAYING;
+        errorCode = ErrorCode::NOTHING_PLAYING;
     }
-
-#ifdef __APPLE__
-    std::system("kill -STOP $(pgrep afplay) 2>/dev/null");
-#else
-    std::system("kill -STOP $(pgrep aplay) 2>/dev/null");
-#endif
-
-    state_ = IAudioPlayer::STATE_PAUSED;
-    return ErrorCode::SUCCESS;
+    music_.pause();
+    return errorCode;
 }
 
 ErrorCode SystemAudioPlayer::resume()
 {
-    if (state_ != IAudioPlayer::STATE_PAUSED)
+    ErrorCode errorCode = ErrorCode::SUCCESS;
+    if (music_.getStatus() != sf::Music::Paused)
     {
-        return ErrorCode::NOTHING_PLAYING;
+        errorCode = ErrorCode::NOTHING_PLAYING;
     }
-
-#ifdef __APPLE__
-    std::system("kill -CONT $(pgrep afplay) 2>/dev/null");
-#else
-    std::system("kill -CONT $(pgrep aplay) 2>/dev/null");
-#endif
-
-    state_ = IAudioPlayer::STATE_PLAYING;
-    return ErrorCode::SUCCESS;
+    music_.play();
+    return errorCode;
 }
 
 ErrorCode SystemAudioPlayer::stop()
 {
-    if (state_ == IAudioPlayer::STATE_STOPPED)
+    ErrorCode errorCode = ErrorCode::SUCCESS;
+    if (music_.getStatus() == sf::Music::Stopped && stoppedByUser_)
     {
-        return ErrorCode::ALREADY_STOPPED;
+        errorCode = ErrorCode::ALREADY_STOPPED;
     }
-
-    killProcess();
-    state_ = IAudioPlayer::STATE_STOPPED;
-    return ErrorCode::SUCCESS;
+    music_.stop();
+    stoppedByUser_ = true;
+    return errorCode;
 }
 
 int SystemAudioPlayer::getState()
 {
-    return state_;
+    int state = IAudioPlayer::STATE_STOPPED;
+    switch (music_.getStatus())
+    {
+        case sf::Music::Playing: 
+            state = IAudioPlayer::STATE_PLAYING;
+        case sf::Music::Paused:  
+            state = IAudioPlayer::STATE_PAUSED;
+    }
+    return state;
 }
 
-void SystemAudioPlayer::killProcess()
+bool SystemAudioPlayer::isSongFinished()
 {
-#ifdef __APPLE__
-    std::system("killall afplay 2>/dev/null");
-#else
-    std::system("killall aplay 2>/dev/null");
-#endif
+    return music_.getStatus() == sf::Music::Stopped && !stoppedByUser_;
 }

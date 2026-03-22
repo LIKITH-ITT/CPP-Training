@@ -2,6 +2,7 @@
 #define SYSTEMAUDIOPLAYER_H
 
 #include <string>
+#include <SFML/Audio.hpp>
 #include "IAudioPlayer.h"
 #include "ErrorCode.h"
 
@@ -16,10 +17,11 @@ public:
     ErrorCode resume();
     ErrorCode stop();
     int getState();
+    bool isSongFinished();
 
 private:
-    int state_;
-    void killProcess();
+    sf::Music music_;
+    bool stoppedByUser_;
 };
 
 #endif

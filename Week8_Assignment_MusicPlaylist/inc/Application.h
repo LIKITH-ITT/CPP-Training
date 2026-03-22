@@ -5,25 +5,17 @@
 #include "IPlaylistManager.h"
 #include "IPlaylistRepository.h"
 #include "IAudioPlayer.h"
-#include "ConsoleUI.h"
+#include "IConsoleUI.h"
 #include "SongNavigator.h"
 #include "ErrorCode.h"
 
 class Application
 {
 public:
-    Application(ConsoleUI* ui, IPlaylistManager* manager, IPlaylistRepository* repo, IAudioPlayer* player, SongNavigator* navigator);
+    Application(IConsoleUI* ui, IPlaylistManager* manager, IPlaylistRepository* repo, IAudioPlayer* player, SongNavigator* navigator);
     ~Application() {}
 
     ErrorCode run();
-
-private:
-    ConsoleUI* ui_;
-    IPlaylistManager* manager_;
-    IPlaylistRepository* repo_;
-    IAudioPlayer* player_;
-    SongNavigator* navigator_;
-    std::string activePlaylistName_;
 
     ErrorCode handleCreatePlaylist();
     ErrorCode handleOpenPlaylist();
@@ -41,10 +33,22 @@ private:
     ErrorCode handleStop();
     ErrorCode handleNext();
     ErrorCode handlePrev();
+    void setActivePlaylistName(const std::string& name);
+    const std::string& getActivePlaylistName() const;
 
+private:
+    IConsoleUI* ui_;
+    IPlaylistManager* manager_;
+    IPlaylistRepository* repo_;
+    IAudioPlayer* player_;
+    SongNavigator* navigator_;
+    std::string activePlaylistName_;
+
+    
     bool isValidPlaylistOpen() const;
     int parseIntInput(const std::string& input, bool& valid) const;
     std::string runPlaylistMenu();
+    ErrorCode checkAndAdvance();
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include <cctype>
 #include <cstdlib>
 
-Application::Application(ConsoleUI* ui, IPlaylistManager* manager, IPlaylistRepository* repo, IAudioPlayer* player, SongNavigator* navigator)
+Application::Application(IConsoleUI* ui, IPlaylistManager* manager, IPlaylistRepository* repo, IAudioPlayer* player, SongNavigator* navigator)
     : ui_(ui), manager_(manager), repo_(repo), player_(player), navigator_(navigator), activePlaylistName_("")
 {}
 
@@ -491,6 +491,16 @@ ErrorCode Application::handlePrev()
     return ErrorCode::SUCCESS;
 }
 
+void Application::setActivePlaylistName(const std::string& name)
+{
+    activePlaylistName_ = name;
+}
+
+const std::string& Application::getActivePlaylistName() const
+{
+    return activePlaylistName_;
+}
+
 bool Application::isValidPlaylistOpen() const
 {
     return !activePlaylistName_.empty();
@@ -513,4 +523,34 @@ int Application::parseIntInput(const std::string& input, bool& valid) const
     }
     valid = true;
     return std::atoi(input.c_str());
+}
+
+ErrorCode Application::checkAndAdvance()
+{
+    ErrorCode errorCode = ErrorCode::SUCCESS;
+    if (!isValidPlaylistOpen())
+    {
+        errorCode = ErrorCode::PLAYLIST_NOT_FOUND;
+    }
+
+    if (!player_->isSongFinished())
+    {
+        errorCode = ErrorCode::SUCCESS; 
+    }
+
+    Playlist& playlist = manager_->getPlaylist(activePlaylistName_);
+    if (playlist.isEmpty())
+    {
+        errorCode = ErrorCode::EMPTY_PLAYLIST;
+    }
+
+    Song next = navigator_->next();
+    errorCode = player_->play(next.filePath);
+
+    if (errorCode == ErrorCode::SUCCESS)
+    {
+        ui_->showMessage("Auto-playing: " + next.title + " — " + next.artist + "  [" + Song::formatDuration(next.duration) + "]");
+    }
+
+    return errorCode;
 }
