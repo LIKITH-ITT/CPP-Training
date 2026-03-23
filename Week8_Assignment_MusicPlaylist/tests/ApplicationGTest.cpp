@@ -53,19 +53,19 @@ protected:
     }
 };
 
-TEST_F(GivenAnApplication, WhenHandlePlayCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandlePlayIsCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handlePlay(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePlayCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
+TEST_F(GivenAnApplication, WhenHandlePlayIsCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(emptyPlaylist));
     app->setActivePlaylistName("rock");
     EXPECT_EQ(app->handlePlay(), ErrorCode::EMPTY_PLAYLIST);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePlayCalledWhileStopped_ThenCallsPlayerPlayWithCorrectFilePath)
+TEST_F(GivenAnApplication, WhenHandlePlayIsCalledWhileStopped_ThenCallsPlayerPlayWithCorrectFilePath)
 {
     rockPlaylist.addSong(song1);
     openRockPlaylist();
@@ -75,7 +75,7 @@ TEST_F(GivenAnApplication, WhenHandlePlayCalledWhileStopped_ThenCallsPlayerPlayW
     EXPECT_EQ(app->handlePlay(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePlayCalledWhilePaused_ThenCallsResumeAndNotPlay)
+TEST_F(GivenAnApplication, WhenHandlePlayIsCalledWhilePaused_ThenCallsResumeAndNotPlay)
 {
     rockPlaylist.addSong(song1);
     openRockPlaylist();
@@ -86,7 +86,7 @@ TEST_F(GivenAnApplication, WhenHandlePlayCalledWhilePaused_ThenCallsResumeAndNot
     EXPECT_EQ(app->handlePlay(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePlayCalledAndPlayerReturnsFileNotFound_ThenReturnsFileNotFound)
+TEST_F(GivenAnApplication, WhenHandlePlayIsCalledAndPlayerReturnsFileNotFound_ThenReturnsFileNotFound)
 {
     rockPlaylist.addSong(song1);
     openRockPlaylist();
@@ -96,43 +96,43 @@ TEST_F(GivenAnApplication, WhenHandlePlayCalledAndPlayerReturnsFileNotFound_Then
     EXPECT_EQ(app->handlePlay(), ErrorCode::FILE_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePauseCalledWhilePlaying_ThenReturnsSuccess)
+TEST_F(GivenAnApplication, WhenHandlePauseIsCalledWhilePlaying_ThenReturnsSuccess)
 {
     EXPECT_CALL(mockPlayer, pause()).WillOnce(::testing::Return(ErrorCode::SUCCESS));
     EXPECT_EQ(app->handlePause(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePauseCalledWhileNotPlaying_ThenReturnsNothingPlaying)
+TEST_F(GivenAnApplication, WhenHandlePauseIsCalledWhileNotPlaying_ThenReturnsNothingPlaying)
 {
     EXPECT_CALL(mockPlayer, pause()).WillOnce(::testing::Return(ErrorCode::NOTHING_PLAYING));
     EXPECT_EQ(app->handlePause(), ErrorCode::NOTHING_PLAYING);
 }
 
-TEST_F(GivenAnApplication, WhenHandleStopCalledWhilePlaying_ThenReturnsSuccess)
+TEST_F(GivenAnApplication, WhenHandleStopIsCalledWhilePlaying_ThenReturnsSuccess)
 {
     EXPECT_CALL(mockPlayer, stop()).WillOnce(::testing::Return(ErrorCode::SUCCESS));
     EXPECT_EQ(app->handleStop(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleStopCalledWhileAlreadyStopped_ThenReturnsAlreadyStopped)
+TEST_F(GivenAnApplication, WhenHandleStopIsCalledWhileAlreadyStopped_ThenReturnsAlreadyStopped)
 {
     EXPECT_CALL(mockPlayer, stop()).WillOnce(::testing::Return(ErrorCode::ALREADY_STOPPED));
     EXPECT_EQ(app->handleStop(), ErrorCode::ALREADY_STOPPED);
 }
 
-TEST_F(GivenAnApplication, WhenHandleNextCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandleNextIsCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handleNext(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleNextCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
+TEST_F(GivenAnApplication, WhenHandleNextIsCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(emptyPlaylist));
     app->setActivePlaylistName("rock");
     EXPECT_EQ(app->handleNext(), ErrorCode::EMPTY_PLAYLIST);
 }
 
-TEST_F(GivenAnApplication, WhenHandleNextCalledWithTwoSongs_ThenPlaysSecondSong)
+TEST_F(GivenAnApplication, WhenHandleNextIsCalledWithTwoSongs_ThenPlaysSecondSong)
 {
     rockPlaylist.addSong(song1);
     rockPlaylist.addSong(song2);
@@ -142,7 +142,7 @@ TEST_F(GivenAnApplication, WhenHandleNextCalledWithTwoSongs_ThenPlaysSecondSong)
     EXPECT_EQ(app->handleNext(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleNextCalledAtLastSong_ThenWrapsAroundAndPlaysFirstSong)
+TEST_F(GivenAnApplication, WhenHandleNextIsCalledAtLastSong_ThenWrapsAroundAndPlaysFirstSong)
 {
     rockPlaylist.addSong(song1);
     rockPlaylist.addSong(song2);
@@ -153,19 +153,19 @@ TEST_F(GivenAnApplication, WhenHandleNextCalledAtLastSong_ThenWrapsAroundAndPlay
     EXPECT_EQ(app->handleNext(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePrevCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandlePrevIsCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handlePrev(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePrevCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
+TEST_F(GivenAnApplication, WhenHandlePrevIsCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(emptyPlaylist));
     app->setActivePlaylistName("rock");
     EXPECT_EQ(app->handlePrev(), ErrorCode::EMPTY_PLAYLIST);
 }
 
-TEST_F(GivenAnApplication, WhenHandlePrevCalledFromFirstSong_ThenWrapsAroundAndPlaysLastSong)
+TEST_F(GivenAnApplication, WhenHandlePrevIsCalledFromFirstSong_ThenWrapsAroundAndPlaysLastSong)
 {
     rockPlaylist.addSong(song1);
     rockPlaylist.addSong(song2);
@@ -175,12 +175,12 @@ TEST_F(GivenAnApplication, WhenHandlePrevCalledFromFirstSong_ThenWrapsAroundAndP
     EXPECT_EQ(app->handlePrev(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleSavePlaylistCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandleSaveAndPlaylistCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handleSavePlaylist(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleSavePlaylistCalledWithActivePlaylist_ThenCallsRepoSaveAndReturnsSuccess)
+TEST_F(GivenAnApplication, WhenHandleSaveAndPlaylistCalledWithActivePlaylist_ThenCallsRepoSaveAndReturnsSuccess)
 {
     rockPlaylist.addSong(song1);
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(rockPlaylist));
@@ -189,7 +189,7 @@ TEST_F(GivenAnApplication, WhenHandleSavePlaylistCalledWithActivePlaylist_ThenCa
     EXPECT_EQ(app->handleSavePlaylist(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleSavePlaylistCalledAndWriteFails_ThenReturnsFileWriteError)
+TEST_F(GivenAnApplication, WhenHandleSaveAndPlaylistCalledAndWriteFails_ThenReturnsFileWriteError)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(rockPlaylist));
     EXPECT_CALL(mockRepository, save(::testing::_)).WillOnce(::testing::Return(ErrorCode::FILE_WRITE_ERROR));
@@ -197,20 +197,20 @@ TEST_F(GivenAnApplication, WhenHandleSavePlaylistCalledAndWriteFails_ThenReturns
     EXPECT_EQ(app->handleSavePlaylist(), ErrorCode::FILE_WRITE_ERROR);
 }
 
-TEST_F(GivenAnApplication, WhenHandleCreatePlaylistCalledWithEmptyName_ThenReturnsInvalidInput)
+TEST_F(GivenAnApplication, WhenHandleCreateAndPlaylistCalledWithEmptyName_ThenReturnsInvalidInput)
 {
     EXPECT_CALL(mockUI, prompt(::testing::_)).WillOnce(::testing::Return(""));
     EXPECT_EQ(app->handleCreatePlaylist(), ErrorCode::INVALID_INPUT);
 }
 
-TEST_F(GivenAnApplication, WhenHandleCreatePlaylistCalledWithDuplicateName_ThenReturnsPlaylistAlreadyExists)
+TEST_F(GivenAnApplication, WhenHandleCreateAndPlaylistCalledWithDuplicateName_ThenReturnsPlaylistAlreadyExists)
 {
     EXPECT_CALL(mockUI, prompt(::testing::_)).WillOnce(::testing::Return("rock"));
     EXPECT_CALL(mockManager, createPlaylist("rock")).WillOnce(::testing::Return(ErrorCode::PLAYLIST_ALREADY_EXISTS));
     EXPECT_EQ(app->handleCreatePlaylist(), ErrorCode::PLAYLIST_ALREADY_EXISTS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleCreatePlaylistCalledWithValidName_ThenCallsManagerCreateAndReturnsSuccess)
+TEST_F(GivenAnApplication, WhenHandleCreateAndPlaylistCalledWithValidName_ThenCallsManagerCreateAndReturnsSuccess)
 {
     EXPECT_CALL(mockUI, prompt(::testing::_)).WillOnce(::testing::Return("rock"));
     EXPECT_CALL(mockManager, createPlaylist("rock")).WillOnce(::testing::Return(ErrorCode::SUCCESS));
@@ -220,13 +220,13 @@ TEST_F(GivenAnApplication, WhenHandleCreatePlaylistCalledWithValidName_ThenCalls
     EXPECT_EQ(app->handleCreatePlaylist(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithNoSavedPlaylists_ThenReturnsFileNotFound)
+TEST_F(GivenAnApplication, WhenHandleDeleteAndPlaylistCalledWithNoSavedPlaylists_ThenReturnsFileNotFound)
 {
     EXPECT_CALL(mockRepository, listSaved()).WillOnce(::testing::Return(std::vector<std::string>()));
     EXPECT_EQ(app->handleDeletePlaylist(), ErrorCode::FILE_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithEmptyInput_ThenReturnsInvalidInput)
+TEST_F(GivenAnApplication, WhenHandleDeleteAndPlaylistCalledWithEmptyInput_ThenReturnsInvalidInput)
 {
     std::vector<std::string> saved = {"rock"};
     EXPECT_CALL(mockRepository, listSaved()).WillOnce(::testing::Return(saved));
@@ -234,7 +234,7 @@ TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithEmptyInput_ThenRetu
     EXPECT_EQ(app->handleDeletePlaylist(), ErrorCode::INVALID_INPUT);
 }
 
-TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithValidName_ThenCallsRepoRemoveAndManagerDelete)
+TEST_F(GivenAnApplication, WhenHandleDeleteAndPlaylistCalledWithValidName_ThenCallsRepoRemoveAndManagerDelete)
 {
     std::vector<std::string> saved = {"rock"};
     EXPECT_CALL(mockRepository, listSaved()).WillOnce(::testing::Return(saved));
@@ -244,7 +244,7 @@ TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithValidName_ThenCalls
     EXPECT_EQ(app->handleDeletePlaylist(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithNonExistentName_ThenReturnsFileNotFound)
+TEST_F(GivenAnApplication, WhenHandleDeleteAndPlaylistCalledWithNonExistentName_ThenReturnsFileNotFound)
 {
     std::vector<std::string> saved = {"rock"};
     EXPECT_CALL(mockRepository, listSaved()).WillOnce(::testing::Return(saved));
@@ -253,19 +253,19 @@ TEST_F(GivenAnApplication, WhenHandleDeletePlaylistCalledWithNonExistentName_The
     EXPECT_EQ(app->handleDeletePlaylist(), ErrorCode::FILE_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleRemoveSongCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandleRemoveSongIsCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handleRemoveSong(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleRemoveSongCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
+TEST_F(GivenAnApplication, WhenHandleRemoveSongIsCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(emptyPlaylist));
     app->setActivePlaylistName("rock");
     EXPECT_EQ(app->handleRemoveSong(), ErrorCode::EMPTY_PLAYLIST);
 }
 
-TEST_F(GivenAnApplication, WhenHandleRemoveSongCalledWithNonNumericInput_ThenReturnsInvalidIndex)
+TEST_F(GivenAnApplication, WhenHandleRemoveSongIsCalledWithNonNumericInput_ThenReturnsInvalidIndex)
 {
     rockPlaylist.addSong(song1);
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(rockPlaylist));
@@ -274,7 +274,7 @@ TEST_F(GivenAnApplication, WhenHandleRemoveSongCalledWithNonNumericInput_ThenRet
     EXPECT_EQ(app->handleRemoveSong(), ErrorCode::INVALID_INDEX);
 }
 
-TEST_F(GivenAnApplication, WhenHandleRemoveSongCalledWithValidIndex_ThenCallsManagerRemoveSongAndReturnsSuccess)
+TEST_F(GivenAnApplication, WhenHandleRemoveSongIsCalledWithValidIndex_ThenCallsManagerRemoveSongAndReturnsSuccess)
 {
     rockPlaylist.addSong(song1);
     openRockPlaylist();
@@ -284,24 +284,24 @@ TEST_F(GivenAnApplication, WhenHandleRemoveSongCalledWithValidIndex_ThenCallsMan
     EXPECT_EQ(app->handleRemoveSong(), ErrorCode::SUCCESS);
 }
 
-TEST_F(GivenAnApplication, WhenHandleMoveSongUpCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandleMoveSongUpIsCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handleMoveSongUp(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleMoveSongUpCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
+TEST_F(GivenAnApplication, WhenHandleMoveSongUpIsCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(emptyPlaylist));
     app->setActivePlaylistName("rock");
     EXPECT_EQ(app->handleMoveSongUp(), ErrorCode::EMPTY_PLAYLIST);
 }
 
-TEST_F(GivenAnApplication, WhenHandleMoveSongDownCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
+TEST_F(GivenAnApplication, WhenHandleMoveSongDownIsCalledWithNoActivePlaylist_ThenReturnsPlaylistNotFound)
 {
     EXPECT_EQ(app->handleMoveSongDown(), ErrorCode::PLAYLIST_NOT_FOUND);
 }
 
-TEST_F(GivenAnApplication, WhenHandleMoveSongDownCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
+TEST_F(GivenAnApplication, WhenHandleMoveSongDownIsCalledWithEmptyPlaylist_ThenReturnsEmptyPlaylist)
 {
     EXPECT_CALL(mockManager, getPlaylist("rock")).WillRepeatedly(::testing::ReturnRef(emptyPlaylist));
     app->setActivePlaylistName("rock");
