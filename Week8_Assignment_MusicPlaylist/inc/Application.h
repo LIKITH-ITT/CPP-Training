@@ -44,7 +44,6 @@ private:
     SongNavigator* navigator_;
     std::string activePlaylistName_;
 
-    
     bool isValidPlaylistOpen() const;
     int parseIntInput(const std::string& input, bool& valid) const;
     std::string runPlaylistMenu();

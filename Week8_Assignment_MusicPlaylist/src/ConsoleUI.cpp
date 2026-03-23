@@ -49,9 +49,9 @@ void IConsoleUI::showPlaylist(const Playlist& playlist) const
         return;
     }
 
-    for (size_t i = 0; i < playlist.size(); ++i)
+    for (int i = 0; i < playlist.size(); ++i)
     {
-        const Song& s = playlist.getSong(static_cast<int>(i));
+        const Song& s = playlist.getSong(i);
         std::cout << std::setw(3) << (i + 1) << ". "
                   << std::left
                   << std::setw(25) << s.title
@@ -97,7 +97,7 @@ void IConsoleUI::showAudioFiles(const std::vector<std::string>& files) const
         std::cout << std::string(35, '-') << "\n";
         return;
     }
-    for (size_t i = 0; i < files.size(); ++i)
+    for (int i = 0; i < files.size(); ++i)
     {
         std::cout << std::setw(3) << (i + 1) << ". " << files[i] << "\n";
     }
@@ -114,7 +114,7 @@ void IConsoleUI::showSavedPlaylists(const std::vector<std::string>& names) const
         std::cout << std::string(35, '-') << "\n";
         return;
     }
-    for (size_t i = 0; i < names.size(); ++i)
+    for (int i = 0; i < names.size(); ++i)
     {
         std::cout << std::setw(3) << (i + 1) << ". " << names[i] << "\n";
     }

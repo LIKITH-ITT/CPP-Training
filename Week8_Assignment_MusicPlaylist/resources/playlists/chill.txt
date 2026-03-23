@@ -1,5 +1,6 @@
 chill
-1,atlantic,Unknown,123,resources/audio/atlantic.wav
-2,miradar,Unknown,164,resources/audio/miradar.wav
-3,kornev,Unknown,120,resources/audio/kornev.wav
-4,berry,Unknown,142,resources/audio/berry.wav
+1,miradar,Unknown,164,resources/audio/miradar.wav
+2,kornev,Unknown,120,resources/audio/kornev.wav
+3,berry,Unknown,142,resources/audio/berry.wav
+4,twisterion,Unknown,59,resources/audio/twisterion.wav
+5,atlantic,Unknown,123,resources/audio/atlantic.wav

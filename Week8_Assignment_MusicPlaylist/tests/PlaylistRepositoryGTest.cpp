@@ -158,7 +158,7 @@ TEST_F(GivenAPlaylistRepositoryWithSavedPlaylist, WhenListSavedCalledAfterRemove
     repo.remove(TEST_NAME);
     std::vector<std::string> names = repo.listSaved();
     bool found = false;
-    for (size_t index = 0; index < names.size(); ++index)
+    for (int index = 0; index < names.size(); ++index)
     {
         if (names[index] == TEST_NAME) { found = true; break; }
     }

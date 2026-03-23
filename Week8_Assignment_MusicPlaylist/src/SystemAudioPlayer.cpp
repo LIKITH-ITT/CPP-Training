@@ -27,7 +27,7 @@ ErrorCode SystemAudioPlayer::play(const std::string& filePath)
         errorCode = ErrorCode::FILE_READ_ERROR;
     }
 
-    music_.setLoop(false);
+    music_.setLoop(true);
     music_.play();
     stoppedByUser_ = false;
     return errorCode;

@@ -6,25 +6,29 @@
 #include <cstdlib>
 
 Application::Application(IConsoleUI* ui, IPlaylistManager* manager, IPlaylistRepository* repo, IAudioPlayer* player, SongNavigator* navigator)
-    : ui_(ui), manager_(manager), repo_(repo), player_(player), navigator_(navigator), activePlaylistName_("")
+: ui_(ui), manager_(manager), repo_(repo), player_(player), navigator_(navigator), activePlaylistName_("")
 {}
 
 ErrorCode Application::run()
 {
-    while (true)
+    bool isRunning = true;
+    while (isRunning)
     {
         ui_->showMainMenu();
         std::string choice = ui_->getInput();
 
         ErrorCode errorCode = ErrorCode::SUCCESS;
 
-        if  (choice == "1") errorCode = handleCreatePlaylist();
-        else if (choice == "2") errorCode = handleOpenPlaylist();
-        else if (choice == "3") errorCode = handleDeletePlaylist();
+        if (choice == "1") 
+        errorCode = handleCreatePlaylist();
+        else if (choice == "2") 
+        errorCode = handleOpenPlaylist();
+        else if (choice == "3") 
+        errorCode = handleDeletePlaylist();
         else if (choice == "4")
         {
             ui_->showMessage("Exiting Music Playlist...!");
-            return ErrorCode::SUCCESS;
+            isRunning = false;
         }
         else
         {
@@ -36,6 +40,8 @@ ErrorCode Application::run()
             ui_->showError(errorCode);
         }
     }
+
+    return ErrorCode::SUCCESS;
 }
 
 std::string Application::runPlaylistMenu()
@@ -48,14 +54,14 @@ std::string Application::runPlaylistMenu()
         ErrorCode errorCode = ErrorCode::SUCCESS;
 
         if (choice == "1")  errorCode = handleAddSong();
-        else if (choice == "2")  errorCode = handleRemoveSong();
-        else if (choice == "3")  errorCode = handleMoveSongUp();
-        else if (choice == "4")  errorCode = handleMoveSongDown();
-        else if (choice == "5")  errorCode = handleDisplaySongs();
-        else if (choice == "6")  errorCode = handlePlay();
-        else if (choice == "7")  errorCode = handlePause();
-        else if (choice == "8")  errorCode = handleStop();
-        else if (choice == "9")  errorCode = handleNext();
+        else if (choice == "2") errorCode = handleRemoveSong();
+        else if (choice == "3") errorCode = handleMoveSongUp();
+        else if (choice == "4") errorCode = handleMoveSongDown();
+        else if (choice == "5") errorCode = handleDisplaySongs();
+        else if (choice == "6") errorCode = handlePlay();
+        else if (choice == "7") errorCode = handlePause();
+        else if (choice == "8") errorCode = handleStop();
+        else if (choice == "9") errorCode = handleNext();
         else if (choice == "10") errorCode = handlePrev();
         else if (choice == "11") errorCode = handleSavePlaylist();
         else if (choice == "12")
@@ -513,7 +519,7 @@ int Application::parseIntInput(const std::string& input, bool& valid) const
         valid = false;
         return -1;
     }
-    for (size_t i = 0; i < input.size(); ++i)
+    for (int i = 0; i < input.size(); ++i)
     {
         if (!std::isdigit(static_cast<unsigned char>(input[i])))
         {

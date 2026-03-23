@@ -13,35 +13,38 @@ ErrorCode Playlist::addSong(const Song& song)
 
 ErrorCode Playlist::removeSong(int index)
 {
+    ErrorCode errorCode = ErrorCode::SUCCESS;
     if (index < 0 || index >= songs.size())
     {
-        return ErrorCode::INVALID_INDEX;
+        errorCode = ErrorCode::INVALID_INDEX;
     }
 
     songs.erase(songs.begin() + index);
-    return ErrorCode::SUCCESS;
+    return errorCode;
 }
 
 ErrorCode Playlist::moveSongUp(int index)
 {
+    ErrorCode errorCode = ErrorCode::SUCCESS;
     if (index <= 0 || index >= songs.size())
     {
-        return ErrorCode::INVALID_INDEX;
+        errorCode = ErrorCode::INVALID_INDEX;
     }
 
     std::swap(songs[index], songs[index - 1]);
-    return ErrorCode::SUCCESS;
+    return errorCode;
 }
 
 ErrorCode Playlist::moveSongDown(int index)
 {
+    ErrorCode errorCode = ErrorCode::SUCCESS;
     if (index < 0 || index >= songs.size() - 1)
     {
-        return ErrorCode::INVALID_INDEX;
+        errorCode = ErrorCode::INVALID_INDEX;
     }
 
     std::swap(songs[index], songs[index + 1]);
-    return ErrorCode::SUCCESS;
+    return errorCode;
 }
 
 Song& Playlist::getSong(int index)

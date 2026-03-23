@@ -20,7 +20,7 @@ Song SongNavigator::next()
     {
         return Song();
     }
-    currentIndex_ = (currentIndex_ + 1) % static_cast<int>(playlist_->size());
+    currentIndex_ = (currentIndex_ + 1) % playlist_->size();
     return playlist_->getSong(currentIndex_);
 }
 

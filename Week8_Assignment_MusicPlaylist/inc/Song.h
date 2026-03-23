@@ -2,6 +2,7 @@
 #define SONG_H
 
 #include <string>
+#include <SFML/Audio.hpp>
 
 class Song
 {
