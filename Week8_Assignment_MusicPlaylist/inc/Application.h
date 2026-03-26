@@ -15,7 +15,7 @@ public:
     Application(IConsoleUI* ui, IPlaylistManager* manager, IPlaylistRepository* repo, IAudioPlayer* player, SongNavigator* navigator);
     ~Application() {}
 
-    ErrorCode run();
+    void run();
 
     ErrorCode handleCreatePlaylist();
     ErrorCode handleOpenPlaylist();

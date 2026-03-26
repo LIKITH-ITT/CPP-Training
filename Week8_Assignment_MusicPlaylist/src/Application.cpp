@@ -9,7 +9,7 @@ Application::Application(IConsoleUI* ui, IPlaylistManager* manager, IPlaylistRep
 : ui_(ui), manager_(manager), repo_(repo), player_(player), navigator_(navigator), activePlaylistName_("")
 {}
 
-ErrorCode Application::run()
+void Application::run()
 {
     bool isRunning = true;
     while (isRunning)
@@ -41,7 +41,7 @@ ErrorCode Application::run()
         }
     }
 
-    return ErrorCode::SUCCESS;
+    return;
 }
 
 std::string Application::runPlaylistMenu()

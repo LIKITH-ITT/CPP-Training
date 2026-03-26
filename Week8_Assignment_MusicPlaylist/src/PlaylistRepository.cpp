@@ -161,10 +161,7 @@ bool PlaylistRepository::parseLine(const std::string& line, int& playlistIndex, 
     return isParsed;
 }
 
-std::vector<std::string> PlaylistRepository::scanDirectory(
-    const std::string& dirPath,
-    const std::string& extension,
-    bool stripExtension) const
+std::vector<std::string> PlaylistRepository::scanDirectory(const std::string& dirPath, const std::string& extension, bool stripExtension) const
 {
     std::vector<std::string> results;
 

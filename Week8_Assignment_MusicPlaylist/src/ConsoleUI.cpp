@@ -40,27 +40,27 @@ void IConsoleUI::showPlaylistMenu(const std::string& playlistName) const
 void IConsoleUI::showPlaylist(const Playlist& playlist) const
 {
     std::cout << "\nPlaylist: " << playlist.name << "\n";
-    std::cout << std::string(70, '-') << "\n";
+    std::cout << std::string(63, '-') << "\n";
 
     if (playlist.isEmpty())
     {
         std::cout << "  (empty)\n";
-        std::cout << std::string(70, '-') << "\n";
+        std::cout << std::string(63, '-') << "\n";
         return;
     }
 
     for (int i = 0; i < playlist.size(); ++i)
     {
-        const Song& s = playlist.getSong(i);
-        std::cout << std::setw(3) << (i + 1) << ". "
-                  << std::left
-                  << std::setw(25) << s.title
-                  << " | " << std::setw(20) << s.artist
-                  << " | " << Song::formatDuration(s.duration)
-                  << " | " << s.filePath
-                  << "\n";
-    }
-    std::cout << std::string(70, '-') << "\n";
+    const Song& s = playlist.getSong(i);
+
+    std::cout << std::right << std::setw(3) << (i + 1) << ". "
+              << std::left
+              << std::setw(25) << s.title
+              << " | " << std::setw(20) << s.artist
+              << " | " << Song::formatDuration(s.duration)
+              << "\n";
+}
+    std::cout << std::string(63, '-') << "\n";
 }
 
 void IConsoleUI::showPlaybackStatus(int state, const Song* song) const

@@ -14,5 +14,6 @@ int main()
     SongNavigator navigator;
 
     Application app(&ui, &manager, &repo, &player, &navigator);
-    return static_cast<int>(app.run());
+    app.run();
+    return 0;
 }
