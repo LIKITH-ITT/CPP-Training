@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ILANE_H
+#define ILANE_H
 
 #include "Enums.h"
 
@@ -15,6 +16,9 @@ public:
     virtual void setLight(ITrafficLight* light) = 0;
     virtual LaneId getLaneId() const = 0;
     virtual void notify() = 0;
+    virtual void shutdown() = 0;
     virtual int getWaitSeconds() const = 0;
-    virtual int  getCarsInside() const = 0;
+    virtual int getCarsInside() const = 0;
 };
+
+#endif

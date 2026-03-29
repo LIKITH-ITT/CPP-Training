@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONSOLEUI_H
+#define CONSOLEUI_H
 
 #include <mutex>
 #include <string>
@@ -27,3 +28,5 @@ private:
 
     mutable std::mutex printMutex_;
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ICONSOLEUI_H
+#define ICONSOLEUI_H
 
 #include "Enums.h"
 #include <string>
@@ -16,3 +17,5 @@ public:
     virtual void showStatus(const QueryResult& result) = 0;
     virtual bool askRepeat() = 0;
 };
+
+#endif

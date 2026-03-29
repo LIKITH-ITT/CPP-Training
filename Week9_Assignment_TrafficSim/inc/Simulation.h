@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SIMULATION_H
+#define SIMULATION_H
 
 #include <atomic>
 #include "IConsoleUI.h"
@@ -24,3 +25,5 @@ private:
     std::atomic<bool> running_;
     std::atomic<bool> stopped_;
 };
+
+#endif 

@@ -1,13 +1,21 @@
 #include "Semaphore.h"
 
-Semaphore::Semaphore(int count) : count_(count)
+Semaphore::Semaphore(int count) : count_(count), shutdown_(false)
 {}
 
-void Semaphore::acquire()
+bool Semaphore::acquire()
 {
     std::unique_lock<std::mutex> lock(mutex_);
-    conditionVariable_.wait(lock, [this]{ return count_ > 0; });
-    --count_;
+    conditionVariable_.wait(lock, [this]{ return count_ > 0 || shutdown_;
+    });
+
+    bool result = false;
+    if (!shutdown_)
+    {
+        --count_;
+        result = true;
+    }
+    return result;
 }
 
 void Semaphore::release()
@@ -17,6 +25,15 @@ void Semaphore::release()
         ++count_;
     }
     conditionVariable_.notify_one();
+}
+
+void Semaphore::shutdown()
+{
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        shutdown_ = true;
+    }
+    conditionVariable_.notify_all();
 }
 
 int Semaphore::getCount() const

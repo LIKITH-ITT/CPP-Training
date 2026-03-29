@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEMAPHORE_H
+#define SEMAPHORE_H
 
 #include <mutex>
 #include <condition_variable>
@@ -8,12 +9,16 @@ class Semaphore
 public:
     explicit Semaphore(int count);
 
-    void acquire();
+    bool acquire();
     void release();
-    int  getCount() const;
+    int getCount() const;
+    void shutdown();
 
 private:
     int count_;
+    bool shutdown_;
     mutable std::mutex mutex_;
     std::condition_variable conditionVariable_;
 };
+
+#endif 

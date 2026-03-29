@@ -1,5 +1,6 @@
 #include "QueryEngine.h"
 #include "Intersection.h"
+#include "ILane.h"
 #include "Constants.h"
 
 static int laneIndex(LaneId id)
@@ -22,26 +23,32 @@ QueryEngine::QueryEngine(Intersection* intersection) : intersection_(intersectio
 QueryResult QueryEngine::resolve(LaneId from, LaneId to) const
 {
     PhaseInfo phase = intersection_->getPhaseInfo();
-    ILane* lane = intersection_->getLane(from);
 
-    LightState laneState = (phase.currentGreen == from) ? LightState::GREEN : LightState::RED;
+    LightState laneState;
+    if (phase.currentGreen == from)
+    {
+        laneState = LightState::GREEN;
+    }
+    else
+    {
+        laneState = LightState::RED;
+    }
 
     MoveType move = calcMoveType(from, to);
-    bool free = isFreeMove(from, to, phase.currentGreen);
+    bool free = isFreeMove(from, to);
     int waitSecs = calcWait(from);
+
+    ILane* lane = intersection_->getLane(from);
+    int carsInside = lane->getCarsInside();
+
+    int estDelaySecs = carsInside * Timing::CAR_CROSS_DURATION;
 
     if (free)
     {
         move = MoveType::FREE_MOVE;
         laneState = LightState::GREEN;
         waitSecs = 0;
-    }
-
-    int carsInside = lane->getCarsInside();
-    int estDelay = 0;
-    if (laneState == LightState::GREEN && carsInside >= Config::MAX_CARS)
-    {
-        estDelay = Timing::CAR_CROSS_DURATION;
+        estDelaySecs = 0;
     }
 
     QueryResult result;
@@ -53,21 +60,26 @@ QueryResult QueryEngine::resolve(LaneId from, LaneId to) const
     result.secondsRemaining = phase.secondsRemaining;
     result.waitSeconds = waitSecs;
     result.carsInside = carsInside;
-    result.estDelaySecs = estDelay;
+    result.estDelaySecs = estDelaySecs;
+
     return result;
 }
 
 MoveType QueryEngine::calcMoveType(LaneId from, LaneId to) const
 {
-    int fromIndex = laneIndex(from);
-    int toIndex = laneIndex(to);
-    int delta = (toIndex - fromIndex + Config::LANE_COUNT) % Config::LANE_COUNT;
+    int fromIdx = laneIndex(from);
+    int toIdx = laneIndex(to);
+    int delta = (toIdx - fromIdx + Config::LANE_COUNT) % Config::LANE_COUNT;
 
     MoveType result;
-    if (delta == 0) { result = MoveType::U_TURN;     }
-    else if (delta == 1) { result = MoveType::LEFT_TURN;  }
-    else if (delta == 2) { result = MoveType::STRAIGHT;   }
-    else { result = MoveType::RIGHT_TURN; }
+    if (delta == 0) 
+    result = MoveType::U_TURN;
+    else if (delta == 1) 
+    result = MoveType::LEFT_TURN;
+    else if (delta == 2) 
+    result = MoveType::STRAIGHT;
+    else 
+    result = MoveType::RIGHT_TURN;
 
     return result;
 }
@@ -82,9 +94,9 @@ int QueryEngine::calcWait(LaneId id) const
     {
         int timeLeftInCurrent = phase.secondsRemaining + Timing::YELLOW_DURATION;
 
-        int greenIndex = laneIndex(phase.currentGreen);
-        int targetIndex = laneIndex(id);
-        int steps = (targetIndex - greenIndex + Config::LANE_COUNT) % Config::LANE_COUNT;
+        int greenIdx = laneIndex(phase.currentGreen);
+        int targetIdx = laneIndex(id);
+        int steps = (targetIdx - greenIdx + Config::LANE_COUNT) % Config::LANE_COUNT;
 
         int fullPhase = Timing::GREEN_DURATION + Timing::YELLOW_DURATION;
 
@@ -94,8 +106,8 @@ int QueryEngine::calcWait(LaneId id) const
     return result;
 }
 
-bool QueryEngine::isFreeMove(LaneId from, LaneId to, LaneId green) const
+bool QueryEngine::isFreeMove(LaneId from, LaneId to) const
 {
     MoveType move = calcMoveType(from, to);
-    return move == MoveType::LEFT_TURN;
+    return (move == MoveType::LEFT_TURN);
 }

@@ -4,10 +4,7 @@
 #include <thread>
 #include <chrono>
 
-CarSpawner::CarSpawner(ILane* north, ILane* east, ILane* south, ILane* west)
-    : running_(false)
-    , nextCarId_(1)
-    , activeCars_(0)
+CarSpawner::CarSpawner(ILane* north, ILane* east, ILane* south, ILane* west) : running_(false), nextCarId_(1), activeCars_(0)
 {
     lanes_[0] = north;
     lanes_[1] = east;
@@ -22,7 +19,7 @@ CarSpawner::~CarSpawner()
 
 void CarSpawner::start()
 {
-    running_       = true;
+    running_ = true;
     spawnerThread_ = std::thread(&CarSpawner::runSpawner, this);
 }
 
@@ -34,9 +31,6 @@ void CarSpawner::stop()
         {
             spawnerThread_.join();
         }
-        // Spin-wait until every detached car thread has finished.
-        // Intersection::stop() must be called before this so that any car
-        // thread blocked in lane.enter() is unblocked via lane.shutdown().
         while (activeCars_.load() > 0)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -44,21 +38,24 @@ void CarSpawner::stop()
     }
 }
 
-// ── Private ───────────────────────────────────────────────────────────────────
-
 void CarSpawner::runSpawner()
 {
+    const int tickMs = 100;
+    const int totalTicks = (Timing::CAR_SPAWN_INTERVAL * 1000) / tickMs;
+
     while (running_)
     {
-        std::this_thread::sleep_for(
-            std::chrono::seconds(Timing::CAR_SPAWN_INTERVAL));
+        for (int t = 0; t < totalTicks && running_; ++t)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(tickMs));
+        }
 
         if (!running_) { break; }
 
         for (int i = 0; i < Config::LANE_COUNT; ++i)
         {
-            int    carId = nextCarId_++;
-            ILane* lane  = lanes_[i];
+            int carId = nextCarId_++;
+            ILane* lane = lanes_[i];
 
             ++activeCars_;
             std::thread t(&CarSpawner::runCar, this, lane, carId);
@@ -67,12 +64,9 @@ void CarSpawner::runSpawner()
     }
 }
 
-// Car thread — silently enters the lane and crosses.
-// No logging; car activity is reflected only via Lane::getCarsInside()
-// which QueryEngine reads when building a QueryResult.
 void CarSpawner::runCar(ILane* lane, int carId)
 {
-    (void)carId;        // id reserved for future use
-    lane->enter();      // blocks until green + semaphore slot free, then crosses
+    (void)carId;
+    lane->enter();
     --activeCars_;
 }

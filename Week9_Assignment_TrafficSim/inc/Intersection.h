@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INTERSECTION_H
+#define INTERSECTION_H
 
 #include <map>
 #include <thread>
@@ -32,3 +33,5 @@ private:
     PhaseInfo phaseInfo_;
     mutable std::mutex phaseMutex_;
 };
+
+#endif 

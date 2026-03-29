@@ -1,4 +1,5 @@
-#pragma once
+#ifndef QUERYRESULT_H
+#define QUERYRESULT_H
 
 #include "Enums.h"
 
@@ -14,3 +15,5 @@ struct QueryResult
     int carsInside;
     int estDelaySecs;
 };
+
+#endif 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LANE_H
+#define LANE_H
 
 #include <mutex>
 #include <condition_variable>
@@ -9,11 +10,12 @@
 class Lane : public ILane
 {
 public:
-    Lane(LaneId laneId);
+    explicit Lane(LaneId laneId);
 
     void enter() override;
     void stop() override;
     void release() override;
+    void shutdown() override;
     void setLight(ITrafficLight* light) override;
     LaneId getLaneId() const override;
     void notify() override;
@@ -27,6 +29,8 @@ private:
     std::condition_variable conditionVariable_;
     ITrafficLight* light_;
     bool stopped_;
+    bool shutdown_;
     std::chrono::steady_clock::time_point phaseStart_;
-    int carsInside_;
 };
+
+#endif 

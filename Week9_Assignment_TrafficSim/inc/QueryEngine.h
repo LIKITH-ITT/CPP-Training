@@ -1,4 +1,5 @@
-#pragma once
+#ifndef QUERYENGINE_H
+#define QUERYENGINE_H
 
 #include "QueryResult.h"
 #include "Enums.h"
@@ -15,7 +16,8 @@ public:
 private:
     MoveType calcMoveType(LaneId from, LaneId to) const;
     int calcWait(LaneId id) const;
-    bool isFreeMove(LaneId from, LaneId to, LaneId green) const;
-
+    bool isFreeMove(LaneId from, LaneId to) const;
     Intersection* intersection_;
 };
+
+#endif 

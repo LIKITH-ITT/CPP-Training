@@ -34,8 +34,7 @@ void Intersection::stop()
     {
         for (auto& [id, lane] : lanes_)
         {
-            lane->release();
-            lane->stop();
+            lane->shutdown();
         }
         if (controllerThread_.joinable())
         {
@@ -69,6 +68,17 @@ void Intersection::runController()
 
 void Intersection::runPhase(LaneId laneId)
 {
+    auto interruptibleSleep = [this](int seconds)
+    {
+        const int ticksPerSecond = 10;
+        const int totalTicks = seconds * ticksPerSecond;
+
+        for (int t = 0; t < totalTicks && running_; ++t)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+    };
+
     {
         std::lock_guard<std::mutex> lock(phaseMutex_);
         phaseInfo_ = { laneId, Timing::GREEN_DURATION, std::chrono::steady_clock::now() };
@@ -83,10 +93,11 @@ void Intersection::runPhase(LaneId laneId)
             std::lock_guard<std::mutex> lock(phaseMutex_);
             phaseInfo_.secondsRemaining = remaining;
         }
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        interruptibleSleep(1);
     }
 
-    if (!running_) { return; }
+    if (!running_) 
+    return;
 
     {
         std::lock_guard<std::mutex> lock(phaseMutex_);
@@ -95,16 +106,18 @@ void Intersection::runPhase(LaneId laneId)
 
     light_->setState(laneId, LightState::YELLOW);
     lanes_.at(laneId)->stop();
+
     for (int remaining = Timing::YELLOW_DURATION; remaining > 0 && running_; --remaining)
     {
         {
             std::lock_guard<std::mutex> lock(phaseMutex_);
             phaseInfo_.secondsRemaining = remaining;
         }
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        interruptibleSleep(1);
     }
 
-    if (!running_) { return; }
+    if (!running_) 
+    return;
 
     light_->setState(laneId, LightState::RED);
 

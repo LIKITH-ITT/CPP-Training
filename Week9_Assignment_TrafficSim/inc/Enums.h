@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENUMS_H
+#define ENUMS_H
 
 enum class LightState
 {
@@ -23,3 +24,5 @@ enum class MoveType
     U_TURN,
     FREE_MOVE
 };
+
+#endif 

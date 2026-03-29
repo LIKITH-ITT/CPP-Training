@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TRAFFICLIGHT_H
+#define TRAFFICLIGHT_H
 
 #include <map>
 #include <mutex>
@@ -18,3 +19,5 @@ private:
     std::map<LaneId, ILane*> lanes_;
     mutable std::mutex mutex_;
 };
+
+#endif 
