@@ -6,8 +6,7 @@ Semaphore::Semaphore(int count) : count_(count), shutdown_(false)
 bool Semaphore::acquire()
 {
     std::unique_lock<std::mutex> lock(mutex_);
-    conditionVariable_.wait(lock, [this]{ return count_ > 0 || shutdown_;
-    });
+    conditionVariable_.wait(lock, [this]{ return count_ > 0 || shutdown_;});
 
     bool result = false;
     if (!shutdown_)

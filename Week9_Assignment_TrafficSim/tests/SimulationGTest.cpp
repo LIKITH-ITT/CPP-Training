@@ -3,9 +3,9 @@
 
 #include "Simulation.h"
 #include "Intersection.h"
-#include "MockConsoleUI.h"
-#include "MockLane.h"
-#include "MockTrafficLight.h"
+#include "MockIConsoleUI.h"
+#include "MockILane.h"
+#include "MockITrafficLight.h"
 #include "QueryResult.h"
 
 using ::testing::Return;

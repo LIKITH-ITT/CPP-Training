@@ -5,7 +5,8 @@
 #include <chrono>
 
 #include "CarSpawner.h"
-#include "MockLane.h"
+#include "MockILane.h"
+#include "Constants.h"
 
 using ::testing::_;
 using ::testing::Return;
@@ -86,7 +87,7 @@ TEST_F(GivenCarSpawnerGTest, WhenSpawnerRunsThenCallsEnterOnAllFourLanes)
 
     CarSpawner spawner(&north_, &east_, &south_, &west_);
     spawner.start();
-    std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+    std::this_thread::sleep_for(std::chrono::milliseconds((Timing::CAR_SPAWN_INTERVAL * 1000) + 500));
     spawner.stop();
 }
 
@@ -118,7 +119,7 @@ TEST_F(GivenCarSpawnerGTest, WhenStopIsCalledThenBlocksUntilAllCarThreadsFinish)
     CarSpawner spawner(&north_, &east_, &south_, &west_);
     spawner.start();
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+    std::this_thread::sleep_for(std::chrono::milliseconds((Timing::CAR_SPAWN_INTERVAL * 1000) + 500));
     spawner.stop();
 
     int done = enterCallsDone.load();

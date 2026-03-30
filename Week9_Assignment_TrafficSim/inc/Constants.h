@@ -7,15 +7,14 @@
 namespace Timing
 {
     constexpr int GREEN_DURATION = 10;
-    constexpr int YELLOW_DURATION = 3;
+    constexpr int YELLOW_DURATION = 2;
     constexpr int CAR_CROSS_DURATION = 2;
-    constexpr int CAR_SPAWN_INTERVAL = 2;
-    constexpr int SIMULATION_DURATION = 60;
+    constexpr int CAR_SPAWN_INTERVAL = 4;
 }
 
 namespace Config
 {
-    constexpr int MAX_CARS = 3;
+    constexpr int MAX_CARS = 5;
     constexpr int LANE_COUNT = 4;
     const LaneId CYCLE_ORDER[LANE_COUNT] = {LaneId::NORTH, LaneId::EAST, LaneId::SOUTH, LaneId::WEST};
 }

@@ -10,17 +10,20 @@ Lane::Lane(LaneId laneId)
 
 void Lane::enter()
 {
+    bool acquired = semaphore_.acquire();
+    if (!acquired) 
+        return;
+
     {
         std::unique_lock<std::mutex> lock(mutex_);
         conditionVariable_.wait(lock, [this]{ return shutdown_ || (!stopped_ && light_ != nullptr && light_->getState(laneId_) == LightState::GREEN); });
 
         if (shutdown_) 
-        return;
+        {
+            semaphore_.release();
+            return;
+        }
     }
-
-    bool acquired = semaphore_.acquire();
-    if (!acquired) 
-    return;
 
     std::this_thread::sleep_for(std::chrono::seconds(Timing::CAR_CROSS_DURATION));
     semaphore_.release();

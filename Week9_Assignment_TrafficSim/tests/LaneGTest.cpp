@@ -5,7 +5,7 @@
 #include <chrono>
 
 #include "Lane.h"
-#include "MockTrafficLight.h"
+#include "MockITrafficLight.h"
 #include "Constants.h"
 
 using ::testing::Return;

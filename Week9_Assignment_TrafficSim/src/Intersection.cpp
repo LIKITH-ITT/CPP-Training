@@ -73,7 +73,7 @@ void Intersection::runPhase(LaneId laneId)
         const int ticksPerSecond = 10;
         const int totalTicks = seconds * ticksPerSecond;
 
-        for (int t = 0; t < totalTicks && running_; ++t)
+        for (int index = 0; index < totalTicks && running_; ++index)
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }

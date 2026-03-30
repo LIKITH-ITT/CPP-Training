@@ -152,14 +152,18 @@ bool ConsoleUI::parseLaneInput(const std::string& line, char& c) const
         std::string lower = token;
         std::transform(lower.begin(), lower.end(), lower.begin(), [](unsigned char ch){ return std::tolower(ch); });
 
-        if (lower == "n" || lower == "north")
-        c = 'N'; result = true;
-        else if (lower == "s" || lower == "south")
-        c = 'S'; result = true;
-        else if (lower == "e" || lower == "east")
-        c = 'E'; result = true;
-        else if (lower == "w" || lower == "west")
-        c = 'W'; result = true;
+        if (lower == "n" || lower == "north") {
+            c = 'N'; result = true;
+        }
+        else if (lower == "s" || lower == "south") {
+            c = 'S'; result = true;
+        }
+        else if (lower == "e" || lower == "east") {
+            c = 'E'; result = true;
+        }
+        else if (lower == "w" || lower == "west") {
+            c = 'W'; result = true;
+        }
     }
 
     return result;
@@ -179,10 +183,12 @@ bool ConsoleUI::parseYesNoInput(const std::string& line, bool& value) const
         std::string lower = token;
         std::transform(lower.begin(), lower.end(), lower.begin(), [](unsigned char ch){ return std::tolower(ch); });
 
-        if (lower == "y" || lower == "yes")
-        value = true; result = true;
-        else if (lower == "n" || lower == "no")
-        value = false; result = true;
+        if (lower == "y" || lower == "yes") {
+            value = true; result = true;
+        }
+        else if (lower == "n" || lower == "no") {
+            value = false; result = true;
+        }
     }
 
     return result;

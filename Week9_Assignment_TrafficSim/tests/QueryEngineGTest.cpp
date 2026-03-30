@@ -3,8 +3,8 @@
 
 #include "QueryEngine.h"
 #include "Intersection.h"
-#include "MockLane.h"
-#include "MockTrafficLight.h"
+#include "MockILane.h"
+#include "MockITrafficLight.h"
 #include "Constants.h"
 
 using ::testing::Return;

@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 
 #include "TrafficLight.h"
-#include "MockLane.h"
+#include "MockILane.h"
 
 using ::testing::_;
 using ::testing::Return;
